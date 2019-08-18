@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
+
+    <string name="error_happened">An error is happened</string>
+    <string name="saved">Saved</string>
+
+
 </resources>
