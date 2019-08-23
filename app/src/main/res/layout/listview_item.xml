@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_restaurant_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <!--REAL ESTATE PHOTO-->
+    <ImageView
+        android:id="@+id/real_estate_imageView"
+        android:layout_width="160dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="Image photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_image" />
+
+        <!--REAL ESTATE TYPE-->
+    <TextView
+        android:id="@+id/real_estate_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:textSize="20sp"
+        android:text="Type"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/real_estate_imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <!--REAL ESTATE TYPE & ADDRESS-->
+    <TextView
+        android:id="@+id/real_estate_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="12dp"
+        android:text="lieu"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/real_estate_type" />
+
+        <!--REAL ESTATE PRICE-->
+    <TextView
+        android:id="@+id/real_estate_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="12dp"
+        android:text="price"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/real_estate_place" />
+
+
+        <!--SEPARATION-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/real_estate_imageView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="5dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
