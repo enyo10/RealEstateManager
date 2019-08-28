@@ -12,8 +12,8 @@ import java.util.List;
 
 @Dao
 public interface RealEstateDao {
-  @Query("SELECT * FROM RealEstate WHERE adminId = :adminId")
-  LiveData<List<RealEstate>> getItems(long adminId);
+  @Query("SELECT * FROM RealEstate WHERE userId = :userId")
+  LiveData<List<RealEstate>> getItems(long userId);
 
   @Insert
   long insertItem(RealEstate realEstate);

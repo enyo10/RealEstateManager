@@ -1,31 +1,33 @@
 package com.openclassrooms.realestatemanager.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Administrator {
+public class User {
 
     @PrimaryKey
-    private Long id;
+    @NonNull
+    private String id;
     private String firstName;
     private String lastName;
     private String photoUrl;
 
-    public Administrator(){}
+    public User(){}
 
-    public Administrator(Long id, String first_name, String last_name, String photoUrl) {
-        this.id = id;
+    public User(String email, String first_name, String last_name, String photoUrl) {
+        this.id = email;
         this.firstName= first_name;
         this.lastName = last_name;
         this.photoUrl = photoUrl;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,5 +53,14 @@ public class Administrator {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

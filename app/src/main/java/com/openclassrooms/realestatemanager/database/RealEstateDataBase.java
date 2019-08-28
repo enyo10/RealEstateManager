@@ -8,21 +8,24 @@ import androidx.room.Database;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.openclassrooms.realestatemanager.database.dao.AdminDao;
+import com.openclassrooms.realestatemanager.database.dao.UserDao;
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
-import com.openclassrooms.realestatemanager.models.Administrator;
+import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.utils.DateConverter;
 
-@Database(entities = {RealEstate.class, Administrator.class}, version = 1, exportSchema = false)
+@Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
+@TypeConverters(DateConverter.class)
 public abstract class RealEstateDataBase extends RoomDatabase {
     // --- SINGLETON ---
     private static volatile RealEstateDataBase INSTANCE;
 
     // --- DAO ---
     public abstract RealEstateDao realEstateDao();
-    public abstract AdminDao adminDao();
+    public abstract UserDao userDao();
 
     // --- INSTANCE ---
     public static RealEstateDataBase getInstance(Context context) {
@@ -49,8 +52,9 @@ public abstract class RealEstateDataBase extends RoomDatabase {
                 super.onCreate(db);
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("id", 1);
-                contentValues.put("username", "Philippe");
+                contentValues.put("id", "enyo10@yahoo.fr");
+                contentValues.put("firstName", "Enyo");
+                contentValues.put("lastName","Tovissou");
 
 
                 db.insert("User", OnConflictStrategy.IGNORE, contentValues);

@@ -1,30 +1,40 @@
 package com.openclassrooms.realestatemanager.models;
 
+import android.text.format.DateUtils;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
-import java.util.Date;
+import java.sql.Date;
 
-@Entity(foreignKeys = @ForeignKey(entity = Administrator.class,
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id",
-        childColumns = "adminId"))
-
+        childColumns = "userId",onDelete = CASCADE,
+        onUpdate = CASCADE ),indices=@Index(value="userId"))
 public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
-    private Long adminId;
+    private String userId;
 
     private int mPrice;
     private double mArea;
     private int mNumberOfPiece;
     private String mCompleteDescription;
     private String mPhotoUrl;
-  //  private Address mAddress;
-  //  private Status mStatus;
- //   private Date mDateOfEntry;
-  //  private Date mDateOfSale;
+    private Address mAddress;
+    private Status mStatus;
+
+    @TypeConverters( DateUtils.class)
+    private Date mDateOfEntry;
+    @TypeConverters(DateUtils.class)
+    private Date mDateOfSale;
 
 
 
@@ -32,7 +42,9 @@ public class RealEstate {
 
     }
 
-   /* public RealEstate(int price, double area, int numberOfPiece, String completeDescription, String photoUrl, Address address, Status status, Date dateOfEntry, Date dateOfSale, Administrator administrator) {
+    public RealEstate( String userId, int price, double area, int numberOfPiece, String completeDescription, String photoUrl, Address address, Status status, Date dateOfEntry, Date dateOfSale) {
+
+        this.userId = userId;
         mPrice = price;
         mArea = area;
         mNumberOfPiece = numberOfPiece;
@@ -42,8 +54,7 @@ public class RealEstate {
         mStatus = status;
         mDateOfEntry = dateOfEntry;
         mDateOfSale = dateOfSale;
-
-    }*/
+    }
 
     public int getPrice() {
         return mPrice;
@@ -84,7 +95,16 @@ public class RealEstate {
     public void setPhotoUrl(String photoUrl) {
         mPhotoUrl = photoUrl;
     }
-/*
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+
 
     public Address getAddress() {
         return mAddress;
@@ -101,9 +121,9 @@ public class RealEstate {
     public void setStatus(Status status) {
         mStatus = status;
     }
-*/
 
-   /* public Date getDateOfEntry() {
+
+    public Date getDateOfEntry() {
         return mDateOfEntry;
     }
 
@@ -118,7 +138,6 @@ public class RealEstate {
     public void setDateOfSale(Date dateOfSale) {
         mDateOfSale = dateOfSale;
     }
-*/
 
 
     public Long getId() {
@@ -129,11 +148,5 @@ public class RealEstate {
         this.id = id;
     }
 
-    public Long getAdminId() {
-        return adminId;
-    }
 
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
-    }
 }
