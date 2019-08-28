@@ -1,4 +1,4 @@
 package com.openclassrooms.realestatemanager.models;
 
-public enum Type {
+@interface Type {
 }

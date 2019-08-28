@@ -41,6 +41,8 @@ dependencies {
 
     implementation 'com.android.support:support-annotations:28.0.0'
 
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 
     //BUTTER KNIFE
     implementation 'com.jakewharton:butterknife:10.1.0'

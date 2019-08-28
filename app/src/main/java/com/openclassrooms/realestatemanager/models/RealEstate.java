@@ -6,17 +6,27 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
+
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(entity = User.class,
+/*@Entity(foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "userId",onDelete = CASCADE,
-        onUpdate = CASCADE ),indices=@Index(value="userId"))
+        onUpdate = CASCADE ),indices=@Index(value="userId"))*/
+
+@Entity(foreignKeys = {
+        @ForeignKey(entity = User.class,
+        parentColumns = "id",
+        childColumns = "userId",onDelete = CASCADE,
+        onUpdate = CASCADE ),
+        @ForeignKey(entity = Address.class,
+        parentColumns = "id", childColumns = "mAddressId")},indices=@Index(value="userId"))
+
 public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,14 +37,11 @@ public class RealEstate {
     private double mArea;
     private int mNumberOfPiece;
     private String mCompleteDescription;
-    private String mPhotoUrl;
-    private Address mAddress;
+    private long mAddressId;
     private Status mStatus;
-
-    @TypeConverters( DateUtils.class)
     private Date mDateOfEntry;
-    @TypeConverters(DateUtils.class)
     private Date mDateOfSale;
+    private ArrayList<String>photosUrls=new ArrayList<>();
 
 
 
@@ -42,15 +49,16 @@ public class RealEstate {
 
     }
 
-    public RealEstate( String userId, int price, double area, int numberOfPiece, String completeDescription, String photoUrl, Address address, Status status, Date dateOfEntry, Date dateOfSale) {
+    public RealEstate(String userId, int price, double area, int numberOfPiece, String completeDescription, List<String> photosUrls, Long addressId, Status status, Date dateOfEntry, Date dateOfSale) {
 
         this.userId = userId;
         mPrice = price;
         mArea = area;
         mNumberOfPiece = numberOfPiece;
         mCompleteDescription = completeDescription;
-        mPhotoUrl = photoUrl;
-        mAddress = address;
+        this.photosUrls.addAll(photosUrls);
+
+        mAddressId=addressId;
         mStatus = status;
         mDateOfEntry = dateOfEntry;
         mDateOfSale = dateOfSale;
@@ -88,13 +96,7 @@ public class RealEstate {
         mCompleteDescription = completeDescription;
     }
 
-    public String getPhotoUrl() {
-        return mPhotoUrl;
-    }
 
-    public void setPhotoUrl(String photoUrl) {
-        mPhotoUrl = photoUrl;
-    }
 
     public String getUserId() {
         return userId;
@@ -104,14 +106,12 @@ public class RealEstate {
         this.userId = userId;
     }
 
-
-
-    public Address getAddress() {
-        return mAddress;
+    public long getAddressId() {
+        return mAddressId;
     }
 
-    public void setAddress(Address address) {
-        mAddress = address;
+    public void setAddressId(long addressId) {
+        mAddressId = addressId;
     }
 
     public Status getStatus() {
@@ -148,5 +148,7 @@ public class RealEstate {
         this.id = id;
     }
 
-
+    public ArrayList<String> getPhotosUrls() {
+        return photosUrls;
+    }
 }

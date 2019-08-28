@@ -16,9 +16,10 @@ import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.utils.DateConverter;
+import com.openclassrooms.realestatemanager.utils.StringListConverter;
 
 @Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
-@TypeConverters(DateConverter.class)
+@TypeConverters({DateConverter.class,StringListConverter.class})
 public abstract class RealEstateDataBase extends RoomDatabase {
     // --- SINGLETON ---
     private static volatile RealEstateDataBase INSTANCE;
