@@ -4,6 +4,10 @@
     <string name="error_happened">An error is happened</string>
     <string name="saved">Saved</string>
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_search">Search</string>
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -28,6 +32,52 @@
     <string name="logo">logo</string>
     <string name="email">Email</string>
     <string name="lastname">Last Name</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="take_picture">Take picture</string>
+    <string name="type">Type :</string>
+    <string name="price">Price</string>
+    <string name="surface">Surface</string>
+    <string name="country">Country</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="street">Street</string>
+    <string name="city_label">City</string>
+    <string name="label_state">Country</string>
+    <string name="label_zip">Zip</string>
+    <string name="label_save">Save</string>
+    <string name="number_of_pieces">Number of pieces</string>
+    <string name="description">Description</string>
+    <string name="registration">NEW REAL ESTATE REGISTRATION</string>
+    <string name="loft">LOFT</string>
+    <string name="manor">MANOR</string>
+    <string name="apart">APART.</string>
+    <string name="house">HOUSE</string>
+    <string name="hospital">HOSPITAL</string>
+    <string name="school">SCHOOL</string>
+    <string name="shopping_center">SHOPPING CENTER</string>
+    <string name="bus_station">BUS STATION</string>
+    <string name="sport_center">SPORT CENTER</string>
+    <string name="park">PARK</string>
+    <string name="street_number">Street Nbr</string>
+
+    <string name="error_string">Field must not be empty.</string>
+    <string name="fragment_real_estate_ad">Add  New Realestate</string>
+    <string name="fragment_real_estate_edit">Update Realestate</string>
+    <string name="fragment_real_estate_search_fragment">Search a Realestate</string>
+    <string name="fragment_real_estate_camera">Camera</string>
+    <string name="camera">Camera</string>
 
 
 </resources>

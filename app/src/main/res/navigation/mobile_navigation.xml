@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/estateListFragment">
+
+
+    <fragment
+        android:id="@+id/estateListFragment"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.EstateListFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_estate_list" >
+        <action
+            android:id="@+id/action_estateListFragment_to_estateDetailsFragment"
+            app:destination="@id/estateDetailsFragment" />
+
+        <action
+            android:id="@+id/action_estateListFragment_to_realEstateSerchFragmentt"
+            app:destination="@id/realEstateSearchFragment" />
+
+        <action
+            android:id="@+id/action_estateListFragment_to_realEstateAddFragment"
+            app:destination="@id/realEstateAddFragment" />
+
+        <action
+            android:id="@+id/action_estateListFragment_to_realEstateEditFragment"
+            app:destination="@id/realEstateEditFragment" />
+
+        <action
+            android:id="@+id/action_estateListFragment_to_realEstateCamera"
+            app:destination="@id/realEstateCamera" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/estateDetailsFragment"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.EstateDetailsFragment"
+        android:label="fragment_estate_details"
+        tools:layout="@layout/fragment_estate_details" />
+
+    <fragment
+        android:id="@+id/realEstateAddFragment"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateAddFragment"
+        android:label="@string/fragment_real_estate_ad"
+        tools:layout="@layout/fragment_real_estate_add" >
+        <action
+            android:id="@+id/action_realEstateAddFragment_to_realEstateCamera"
+            app:destination="@id/realEstateCamera" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/realEstateEditFragment"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateEditFragment"
+        android:label="@string/fragment_real_estate_edit"
+        tools:layout="@layout/fragment_real_estate_edit" />
+
+    <fragment
+        android:id="@+id/realEstateSearchFragment"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateSearchFragment"
+        android:label="@string/fragment_real_estate_search_fragment"
+        tools:layout="@layout/fragment_real_estate_search_fragmentt" />
+
+    <fragment
+        android:id="@+id/realEstateCamera"
+        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateCamera"
+        android:label="@string/fragment_real_estate_camera"
+        tools:layout="@layout/fragment_real_estate_camera" />
+</navigation>

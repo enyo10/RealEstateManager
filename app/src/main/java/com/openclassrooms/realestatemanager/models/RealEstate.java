@@ -1,15 +1,15 @@
 package com.openclassrooms.realestatemanager.models;
 
-import android.text.format.DateUtils;
 
+import androidx.annotation.NonNull;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -23,24 +23,33 @@ import static androidx.room.ForeignKey.CASCADE;
         @ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "userId",onDelete = CASCADE,
-        onUpdate = CASCADE ),
+        onUpdate = CASCADE )},indices={@Index(value="userId")})
+       /* ,
         @ForeignKey(entity = Address.class,
-        parentColumns = "id", childColumns = "mAddressId")},indices=@Index(value="userId"))
-
+        parentColumns = "id", childColumns = "mAddressId")},indices={@Index(value="userId"),@Index(value="mAddressId")})*/
 public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
-    private String userId;
+    private Long userId;
 
-    private int mPrice;
-    private double mArea;
-    private int mNumberOfPiece;
-    private String mCompleteDescription;
-    private long mAddressId;
-    private Status mStatus;
-    private Date mDateOfEntry;
-    private Date mDateOfSale;
+    private double price;
+    private double area;
+    private int numberOfPieces;
+    private String completeDescription;
+   // private long mAddressId;
+//    @Embedded(prefix = "a")
+//    @NonNull
+    @Embedded
+     private Address address;
+    @Type
+    private String type;
+    @Status
+    private String status;
+   // @NearbyPOI
+    private ArrayList<String>nearbyPointOfInterest=new ArrayList<>();
+    private Date dateOfEntry;
+    private Date dateOfSale;
     private ArrayList<String>photosUrls=new ArrayList<>();
 
 
@@ -49,94 +58,103 @@ public class RealEstate {
 
     }
 
-    public RealEstate(String userId, int price, double area, int numberOfPiece, String completeDescription, List<String> photosUrls, Long addressId, Status status, Date dateOfEntry, Date dateOfSale) {
+    public RealEstate(Long userId, @Type String type,double price, double area, int numberOfPieces, String completeDescription, List<String> photosUrls,Address address) {
 
         this.userId = userId;
-        mPrice = price;
-        mArea = area;
-        mNumberOfPiece = numberOfPiece;
-        mCompleteDescription = completeDescription;
+        this.address=address;
+        this.type=type;
+        this.price = price;
+        this.area = area;
+        this.numberOfPieces = numberOfPieces;
+        this.completeDescription = completeDescription;
         this.photosUrls.addAll(photosUrls);
-
-        mAddressId=addressId;
-        mStatus = status;
-        mDateOfEntry = dateOfEntry;
-        mDateOfSale = dateOfSale;
+        this.status = Status.UNSOLD;
+        this.dateOfEntry = new Date();
+        this.dateOfSale = null;
     }
 
-    public int getPrice() {
-        return mPrice;
+    public double getPrice() {
+        return this.price;
     }
 
-    public void setPrice(int price) {
-        mPrice = price;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getArea() {
-        return mArea;
+        return this.area;
     }
 
     public void setArea(double area) {
-        mArea = area;
-    }
-
-    public int getNumberOfPiece() {
-        return mNumberOfPiece;
-    }
-
-    public void setNumberOfPiece(int numberOfPiece) {
-        mNumberOfPiece = numberOfPiece;
+        this.area = area;
     }
 
     public String getCompleteDescription() {
-        return mCompleteDescription;
+        return this.completeDescription;
     }
 
     public void setCompleteDescription(String completeDescription) {
-        mCompleteDescription = completeDescription;
+        this.completeDescription = completeDescription;
+    }
+    @Type
+    public String getType() {
+        return this.type;
     }
 
-
-
-    public String getUserId() {
-        return userId;
+    public void setType(@Type String type) {
+        this.type = type;
     }
 
-    public void setUserId(String userId) {
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getAddressId() {
-        return mAddressId;
+    public int getNumberOfPieces() {
+        return this.numberOfPieces;
     }
 
-    public void setAddressId(long addressId) {
-        mAddressId = addressId;
+    public void setNumberOfPieces(int numberOfPieces) {
+        this.numberOfPieces = numberOfPieces;
     }
 
-    public Status getStatus() {
-        return mStatus;
+    @NonNull
+    public Address getAddress() {
+        return address;
     }
 
-    public void setStatus(Status status) {
-        mStatus = status;
+    public void setAddress(@NonNull Address address) {
+        this.address = address;
+    }
+
+
+    @Status
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(@Status String status) {
+        this.status = status;
     }
 
 
     public Date getDateOfEntry() {
-        return mDateOfEntry;
+        return this.dateOfEntry;
     }
 
     public void setDateOfEntry(Date dateOfEntry) {
-        mDateOfEntry = dateOfEntry;
+        this.dateOfEntry = dateOfEntry;
     }
 
     public Date getDateOfSale() {
-        return mDateOfSale;
+        return this.dateOfSale;
     }
 
     public void setDateOfSale(Date dateOfSale) {
-        mDateOfSale = dateOfSale;
+        this.dateOfSale = dateOfSale;
     }
 
 
@@ -151,4 +169,65 @@ public class RealEstate {
     public ArrayList<String> getPhotosUrls() {
         return photosUrls;
     }
+
+    public void addPhotoUrl(String url){
+        this.photosUrls.add(url);
+    }
+
+    public void setPhotosUrls(ArrayList<String> photosUrls) {
+        this.photosUrls = photosUrls;
+    }
+
+
+    public ArrayList<String> getNearbyPointOfInterest() {
+        return nearbyPointOfInterest;
+    }
+
+    public void setNearbyPointOfInterest(ArrayList<String> nearbyPointOfInterest) {
+        this.nearbyPointOfInterest = nearbyPointOfInterest;
+    }
+
+    public void addNearbyPointOfInterest( String nearbyPOI){
+        this.nearbyPointOfInterest.add(nearbyPOI);
+
+    }
+
+
+   // @NonNull
+
+
+   // public void setAddress(@NonNull Address address) {
+   //     address = address;
+//    }
+
+
+    public boolean isInteger(String value){
+
+            try
+            {
+                Integer.parseInt( value );
+                return true;
+            }
+            catch( Exception e)
+            {
+                return false;
+            }
+        }
+
+
+        public boolean isPriceValide(){
+
+
+        return false;
+
+        }
+
+
+
+
+
+
+
+
+
 }

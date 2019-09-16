@@ -1,13 +1,12 @@
 package com.openclassrooms.realestatemanager.management.fragments;
 
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 
-import com.bumptech.glide.Glide;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.base.BaseFragment;
 import com.openclassrooms.realestatemanager.management.views.RealEstateAdapter;
@@ -22,8 +21,10 @@ import butterknife.BindView;
  */
 public class EstateListFragment extends BaseFragment {
 
-   /* @BindView(R.id.real_estate_recycler_view)
-    RecyclerView mRecyclerView;*/
+    @BindView(R.id.real_estate_recycler_view)
+    RecyclerView mRecyclerView;
+    //@BindView(R.id.typeTextInputLayout)
+    TextInputLayout mTypeTextInputLayout;
 
     private RealEstateAdapter mAdapter;
     private List<RealEstate> mRealEstateList;
@@ -40,8 +41,10 @@ public class EstateListFragment extends BaseFragment {
     }
 
     @Override
-    protected int getFragmentLayout() {
-        return R.layout.activity_main;
+    protected int getFragmentLayout()
+    {
+       // return R.layout.activity_main;
+        return R.layout.fragment_estate_list;
     }
 
     @Override

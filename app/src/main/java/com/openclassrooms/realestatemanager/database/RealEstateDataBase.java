@@ -11,10 +11,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.openclassrooms.realestatemanager.database.dao.UserDao;
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
-import com.openclassrooms.realestatemanager.models.User;
+import com.openclassrooms.realestatemanager.database.dao.UserDao;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.utils.DateConverter;
 import com.openclassrooms.realestatemanager.utils.StringListConverter;
 
@@ -53,10 +53,9 @@ public abstract class RealEstateDataBase extends RoomDatabase {
                 super.onCreate(db);
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("id", "enyo10@yahoo.fr");
+                contentValues.put("id", 1);
                 contentValues.put("firstName", "Enyo");
                 contentValues.put("lastName","Tovissou");
-
 
                 db.insert("User", OnConflictStrategy.IGNORE, contentValues);
             }

@@ -10,13 +10,14 @@ public class UserDataRepository {
     private final UserDao userDao;
 
     public UserDataRepository(UserDao userDao) { this.userDao = userDao; }
+    // --- GET USER ---
+    public LiveData<User> getUser(Long userId) { return this.userDao.getUser(userId); }
 
     //-- Insert user to db.
-    public void createUser(User user){
+   /* public void createUser(User user){
         this.userDao.createUser(user);
-    }
+    }*/
 
-    // --- GET USER ---
-    public LiveData<User> getLoggedInUser(String userId) { return this.userDao.getLoggedInUser(userId); }
+
 
 }

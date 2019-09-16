@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.authentication;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.models.User;
@@ -35,9 +34,9 @@ public class SignUpViewModel extends ViewModel {
      *         the user to insert.
      */
     public void createUser(User user) {
-        mExecutor.execute(() -> {
+      /*  mExecutor.execute(() -> {
             mUserDataSource.createUser(user);
-        });
+        });*/
     }
 
 }

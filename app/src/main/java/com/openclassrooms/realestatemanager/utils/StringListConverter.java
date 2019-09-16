@@ -18,10 +18,12 @@ public class StringListConverter {
         }
 
         @TypeConverter
-        public static String fromArrayLisr(ArrayList<String> list) {
+        public static String fromArrayList(ArrayList<String> list) {
             Gson gson = new Gson();
             String json = gson.toJson(list);
             return json;
         }
+
+
 
 }

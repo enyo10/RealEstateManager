@@ -9,25 +9,25 @@ public class User {
 
     @PrimaryKey
     @NonNull
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String photoUrl;
 
     public User(){}
 
-    public User(String email, String first_name, String last_name, String photoUrl) {
-        this.id = email;
+    public User(Long id, String first_name, String last_name, String photoUrl) {
+        this.id = id;
         this.firstName= first_name;
         this.lastName = last_name;
         this.photoUrl = photoUrl;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

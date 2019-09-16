@@ -1,18 +1,20 @@
 package com.openclassrooms.realestatemanager.models;
 
+
 public class Address {
+
     private String Country;
-    private String zip;
+    private int zip;
     private String city;
     private String street;
-    private int number;
+    private String number;
 
 
     public Address(){
 
     }
 
-    public Address(String country, String zip, String city, String street, int number) {
+    public Address(String country, int zip, String city, String street, String number) {
         Country = country;
         this.zip = zip;
         this.city = city;
@@ -20,11 +22,11 @@ public class Address {
         this.number = number;
     }
 
-    public String getZip() {
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
@@ -52,11 +54,13 @@ public class Address {
         Country = country;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
+
+
 }

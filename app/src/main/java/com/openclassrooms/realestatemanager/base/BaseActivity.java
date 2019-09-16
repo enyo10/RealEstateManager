@@ -1,14 +1,11 @@
 package com.openclassrooms.realestatemanager.base;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.lifecycle.LiveData;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.openclassrooms.realestatemanager.models.User;
@@ -29,7 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getActivityLayout());
         ButterKnife.bind(this);
-        // configureView();
         Icepick.restoreInstanceState (this,savedInstanceState);
         configureView();
         configureViewModel();

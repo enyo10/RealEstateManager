@@ -4,7 +4,6 @@ package com.openclassrooms.realestatemanager.authentication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -96,13 +95,14 @@ public class SignUpActivity extends BaseActivity {
 
         String last_name = _nameText.getText().toString();
         String first_name = mFirstName.getText().toString();
-        String email = _emailText.getText().toString();
+       // String email = _emailText.getText().toString();
+        long userId=1;
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
 
         if(password.equals(reEnterPassword)){
-            User created= new User(email,first_name,last_name,"");
+            User created= new User(userId,first_name,last_name,"");
 
             mSignUpViewModel.createUser(created);
             data =new Intent();
@@ -110,7 +110,7 @@ public class SignUpActivity extends BaseActivity {
 
             data.putExtra("first_name",first_name);
             data.putExtra("last_name",last_name);
-            data.putExtra("email",email);
+            data.putExtra("userId",userId);
 
         }
 

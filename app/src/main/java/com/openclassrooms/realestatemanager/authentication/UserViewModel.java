@@ -24,11 +24,11 @@ public class UserViewModel extends ViewModel {
         this.mExecutor = executor;
     }
 
-    public void init(String userId) {
+    public void init(Long userId) {
         if (this.currentUser != null) {
             return;
         }
-        currentUser = mUserDataSource.getLoggedInUser(userId);
+        currentUser = mUserDataSource.getUser(userId);
     }
 
     // -------------
@@ -43,8 +43,8 @@ public class UserViewModel extends ViewModel {
      */
   //  public LiveData<User> getUser(long userId) { return this.currentUser;  }
 
-    public LiveData<User>getUser(String userId){
-        return mUserDataSource.getLoggedInUser(userId);
+    public LiveData<User>getUser(Long userId){
+        return mUserDataSource.getUser(userId);
     }
 
 
@@ -53,11 +53,11 @@ public class UserViewModel extends ViewModel {
      * @param user,
      *         the user to insert.
      */
-    public void createUser(User user) {
+    /*public void createUser(User user) {
         mExecutor.execute(() -> {
             mUserDataSource.createUser(user);
         });
-    }
+    }*/
 
 
 

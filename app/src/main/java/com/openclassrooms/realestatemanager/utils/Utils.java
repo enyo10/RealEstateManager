@@ -1,8 +1,7 @@
 package com.openclassrooms.realestatemanager.utils;
 
-import android.content.BroadcastReceiver;
+
 import android.content.Context;
-import android.content.Intent;
 import android.net.wifi.WifiManager;
 
 import java.text.DateFormat;
@@ -60,6 +59,34 @@ public class Utils {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }
+
+
+    public static  boolean isIntegerrValue(String value){
+        try
+        {
+            Integer.parseInt( value );
+            return true;
+        }
+        catch( Exception e)
+        {
+            return false;
+        }
+
+
+    }
+
+    public static boolean isDoubleValue(String value){
+        try
+        {
+            Double.parseDouble(  value);
+            return true;
+        }
+        catch( Exception e)
+        {
+            return false;
+        }
+    }
+
 
 
 }
