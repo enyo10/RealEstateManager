@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,8 +88,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void configureView() {
         initViews();
-        configureAndShowEstateListFragment();
-        configureAndShowEstateDetailsFragment();
+      //  configureAndShowEstateListFragment();
+       // configureAndShowEstateDetailsFragment();
 
 
 
@@ -102,7 +101,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
 
-    private void configureAndShowEstateListFragment(){
+   /* private void configureAndShowEstateListFragment(){
         Log.d(TAG, " in configure and show list fragment");
         // A - Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
         mEstateListFragment = (EstateListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
@@ -128,7 +127,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     .add(R.id.frame_layout_details, mEstateDetailsFragment)
                     .commit();
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

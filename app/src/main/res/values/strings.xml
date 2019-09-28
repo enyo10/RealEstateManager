@@ -9,7 +9,7 @@
     <string name="action_add">Add</string>
     <string name="action_edit">Edit</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -39,7 +39,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="take_picture">Take picture</string>
+    <string name="take_picture">Picture</string>
     <string name="type">Type :</string>
     <string name="price">Price</string>
     <string name="surface">Surface</string>
@@ -60,10 +60,14 @@
     <string name="number_of_pieces">Number of pieces</string>
     <string name="description">Description</string>
     <string name="registration">NEW REAL ESTATE REGISTRATION</string>
+
     <string name="loft">LOFT</string>
     <string name="manor">MANOR</string>
-    <string name="apart">APART.</string>
+    <string name="duplex">DUPLEX</string>
+    <string name="penthouse">PENTHOUSE</string>
     <string name="house">HOUSE</string>
+    <string name="flat">FLAT</string>
+
     <string name="hospital">HOSPITAL</string>
     <string name="school">SCHOOL</string>
     <string name="shopping_center">SHOPPING CENTER</string>
@@ -73,11 +77,28 @@
     <string name="street_number">Street Nbr</string>
 
     <string name="error_string">Field must not be empty.</string>
-    <string name="fragment_real_estate_ad">Add  New Realestate</string>
-    <string name="fragment_real_estate_edit">Update Realestate</string>
-    <string name="fragment_real_estate_search_fragment">Search a Realestate</string>
+    <string name="fragment_real_estate_ad">Add  New Real estate</string>
+    <string name="fragment_real_estate_edit">Update Real estate</string>
+    <string name="fragment_real_estate_search_fragment">Search a Real estate</string>
     <string name="fragment_real_estate_camera">Camera</string>
     <string name="camera">Camera</string>
+    <string name="label_load">Load image</string>
+    <string name="save">Save</string>
+    <string name="gallery_permission"> This app need storage permission</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="image_photo">Image photo</string>
+    <string name="add_real_estate_remove_item_button">Remove Button</string>
+    <string name="add_real_estate_image_added">Image added</string>
+    <string name="real_estate_add_picture_button">Add a picture to the real</string>
+    <string name="real_estate_add_save_button">Save the real now</string>
+    <string name="location">Location</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="zip_code">Zip code</string>
+    <string name="line2">Line</string>
+    <string name="image_description">Image Description</string>
+    <string name="map_view">Map view</string>
+    <string name="area">Surface</string>
 
 
 </resources>

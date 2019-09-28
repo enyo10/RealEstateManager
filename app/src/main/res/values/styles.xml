@@ -34,4 +34,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
+    <string name="real_prompt"> Choose the real type</string>
+
+    <string-array name="real_estate_type">
+        <item>DUPLEX</item>
+        <item>FLAT</item>
+        <item>HOUSE</item>
+        <item>LOFT</item>
+        <item>MANOR</item>
+        <item>PENTHOUSE</item>
+    </string-array>
+
 </resources>

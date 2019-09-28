@@ -4,12 +4,15 @@ package com.openclassrooms.realestatemanager.utils;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -133,4 +136,28 @@ public class StorageUtils {
         String state = Environment.getExternalStorageState();
         return (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
+
+
+    /**
+     * This method to load image from storage.
+     * @param image_name, the name of the image.
+     *
+     * @param imageDirectory, the directory of the image directory.
+     * @return a Bitmap
+     */
+    private Bitmap getBitmap(String image_name,String imageDirectory){
+        String fullPath = Environment.getExternalStorageDirectory()+imageDirectory;
+        Bitmap thumbnail =null;
+        try {
+            if (isExternalStorageReadable()) {
+                thumbnail = BitmapFactory.decodeFile(fullPath + "/" + image_name);
+            }
+        } catch (Exception e) {
+            Log.e("getThumbnail() storage ", e.getMessage());
+        }
+
+
+        return thumbnail;
+    }
+
 }

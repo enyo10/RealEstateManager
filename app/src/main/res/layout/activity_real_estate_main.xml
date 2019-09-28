@@ -6,37 +6,28 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     tools:context="com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity">
 
     <LinearLayout
+        android:id="@+id/welcome_activity_rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar"
+        <include
+            layout="@layout/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+            android:layout_height="wrap_content" />
 
-        <fragment
-            android:id="@+id/my_nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+
+        <include
+            layout="@layout/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/mobile_navigation" />
+            android:layout_height="match_parent" />
+
     </LinearLayout>
-
-    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
-   <!-- <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true" />
--->
 
 
     <com.google.android.material.navigation.NavigationView
@@ -45,4 +36,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/nav_drawer_menu" />
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

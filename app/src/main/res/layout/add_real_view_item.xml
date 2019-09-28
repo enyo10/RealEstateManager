@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="realImage"
+            type="com.openclassrooms.realestatemanager.models.RealEstateImage" />
+        <variable
+            name="itemClickListener"
+            type="com.openclassrooms.realestatemanager.management.addrealestate.CustomClickListener" />
+    </data>
+
+
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/add_real_estate_item_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        bind:imageUri="@{realImage.imageUri}"
+        android:layout_margin="@dimen/default_margin"
+        android:contentDescription="@string/add_real_estate_image_added" />
+
+    <TextView
+        android:id="@+id/add_real_estate_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@={realImage.imageDescription}"
+        android:layout_margin="@dimen/default_margin"/>
+
+    <ImageButton
+        android:id="@+id/add_real_estate_item_remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_action_delete"
+        android:onClick="@{() -> itemClickListener.cardClicked(realImage)}"
+        android:layout_margin="@dimen/default_margin"
+        android:contentDescription="@string/add_real_estate_remove_item_button" />
+
+</LinearLayout>
+
+</layout>

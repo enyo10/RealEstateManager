@@ -4,6 +4,7 @@ package com.openclassrooms.realestatemanager.management.fragments;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -19,7 +20,7 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EstateListFragment extends BaseFragment {
+public class EstateListFragment extends BaseFragment{
 
     @BindView(R.id.real_estate_recycler_view)
     RecyclerView mRecyclerView;
@@ -67,11 +68,12 @@ public class EstateListFragment extends BaseFragment {
     private void configureRecyclerView(){
 
 
-        /*this.mAdapter = new RealEstateAdapter(mRealEstateList, Glide.with(this),getContext());
+      //  this.mAdapter =
         this.mRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        this.mRecyclerView.setLayoutManager(layoutManager);*/
+        this.mRecyclerView.setLayoutManager(layoutManager);
     }
+
 
 
 }

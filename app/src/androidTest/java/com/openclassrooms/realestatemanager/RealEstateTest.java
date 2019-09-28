@@ -7,7 +7,6 @@ import androidx.test.core.app.ApplicationProvider;
 import com.openclassrooms.realestatemanager.database.RealEstateDataBase;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
-import com.openclassrooms.realestatemanager.models.Type;
 import com.openclassrooms.realestatemanager.models.User;
 
 import org.junit.After;
@@ -32,9 +31,9 @@ public class RealEstateTest {
     private  static Address address=new Address();
     private static ArrayList<String>photoUrl=new ArrayList<>();
 
-    private static RealEstate NEW_PENTHOUSE = new RealEstate(USER_ID, Type.PENTHOUSE, 270000,180, 6, "Nice Penthouse to sell",photoUrl,address);
+  //  private static RealEstate NEW_PENTHOUSE = new RealEstate(USER_ID, Type.PENTHOUSE, 270000,180, 6, "Nice Penthouse to sell",photoUrl,address);
 
-    private static RealEstate NEW_DUPLEX = new RealEstate(USER_ID, Type.DUPLEX, 410000,204, 7, "Nice DUPLEX to sell",photoUrl,address);
+  //  private static RealEstate NEW_DUPLEX = new RealEstate(USER_ID, Type.DUPLEX, 410000,204, 7, "Nice DUPLEX to sell",photoUrl,address);
 
 
 
@@ -74,8 +73,8 @@ public class RealEstateTest {
         // BEFORE : Adding demo user & demo RealEstate
 
         this.database.userDao().createUser(USER_DEMO);
-        this.database.realEstateDao().insertRealEstate(NEW_DUPLEX);
-        this.database.realEstateDao().insertRealEstate(NEW_PENTHOUSE);
+      //  this.database.realEstateDao().insertRealEstate(NEW_DUPLEX);
+      //  this.database.realEstateDao().insertRealEstate(NEW_PENTHOUSE);
 
 
         // TEST
@@ -87,7 +86,7 @@ public class RealEstateTest {
     public void insertAndUpdateItem() throws InterruptedException {
         // BEFORE : Adding demo user & demo RealEstate. Next, update RealEstate added & re-save it
         this.database.userDao().createUser(USER_DEMO);
-        this.database.realEstateDao().insertRealEstate(NEW_PENTHOUSE);
+      //  this.database.realEstateDao().insertRealEstate(NEW_PENTHOUSE);
         RealEstate realEstateAdded = LiveDataTestUtil.getValue(this.database.realEstateDao().getRealEstates(USER_ID)).get(0);
       //  realEstateAdded.setSelected(true);
 
@@ -102,7 +101,7 @@ public class RealEstateTest {
     public void insertAndDeleteItem() throws InterruptedException {
         // BEFORE : Adding demo user & demo RealEstate. Next, get the RealEstate added & delete it.
         this.database.userDao().createUser(USER_DEMO);
-        this.database.realEstateDao().insertRealEstate(NEW_DUPLEX);
+       // this.database.realEstateDao().insertRealEstate(NEW_DUPLEX);
          RealEstate realEstateAdded = LiveDataTestUtil.getValue(this.database.realEstateDao().getRealEstates(USER_ID)).get(0);
         this.database.realEstateDao().deleteRealEstate(realEstateAdded.getId());
 
