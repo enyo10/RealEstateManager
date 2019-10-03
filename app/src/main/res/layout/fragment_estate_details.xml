@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".management.fragments.EstateDetailsFragment">
--->
-
+<layout>
+    <data>
+        <variable
+            name="realEstate"
+            type="com.openclassrooms.realestatemanager.models.RealEstate" />
+        <variable
+            name="DataConverter"
+            type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+    </data>
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".management.fragments.EstateDetailsFragment">
+    tools:context=".management.realestatedetails.EstateDetailsFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,10 +39,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <!--CAROUSEL-->
-            <include
+
+           <!-- <include
                 android:id="@+id/recycler_view_fragment"
-                layout="@layout/recycler_view_layout" />
+                layout="@layout/recycler_view_layout" />-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_detail_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -69,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="7"
                     android:padding="8dp"
-                    android:text="Long description in here"
+                    android:text="@{realEstate.completeDescription}"
                     android:textAlignment="gravity"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp" />
@@ -80,8 +86,189 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
+<!--
+            <include layout="@layout/rooms_layout" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <include layout="@layout/rooms_layout" />
+                <!--Surface-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/surface_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/ic_surface" />
+
+                    <TextView
+                        android:id="@+id/surface_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/surface"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/surface_image_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_surface_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/area"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/surface_image_view"
+                        app:layout_constraintTop_toBottomOf="@+id/surface_text_view" />
+                </RelativeLayout>
+
+                <!--Rooms-->
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/room_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/ic_rooms" />
+
+                    <TextView
+                        android:id="@+id/room_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/number_of_rooms"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/room_image_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_rooms_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/room_image_view"
+                        app:layout_constraintTop_toBottomOf="@+id/room_text_view" />
+                </android.support.constraint.ConstraintLayout>
+
+                <!--Bathrooms-->
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/bathroom_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/baseline_bathtub_black_24" />
+
+                    <TextView
+                        android:id="@+id/bathroom_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/number_of_bathroom"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/bathroom_image_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_bathrooms_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/bathroom_quantity"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/bathroom_image_view"
+                        app:layout_constraintTop_toBottomOf="@+id/bathroom_text_view" />
+                </android.support.constraint.ConstraintLayout>
+
+                <!--Bedrooms-->
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/bedroom_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/baseline_hotel_24" />
+
+                    <TextView
+                        android:id="@+id/bedroom_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/number_of_bedrooms"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/bedroom_image_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_bedroom_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/bedroom_quantity"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/bedroom_image_view"
+                        app:layout_constraintTop_toBottomOf="@+id/bedroom_text_view" />
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -104,5 +291,6 @@
 
         </LinearLayout>
     </ScrollView>
-<!--
-</FrameLayout>-->
+
+</layout>
+

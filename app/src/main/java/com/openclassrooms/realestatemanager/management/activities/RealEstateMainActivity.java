@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -23,17 +24,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
-import com.openclassrooms.realestatemanager.management.fragments.EstateDetailsFragment;
+import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
 import com.openclassrooms.realestatemanager.management.views.RealEstateViewModel;
+import com.openclassrooms.realestatemanager.models.User;
 
 public class RealEstateMainActivity extends AppCompatActivity {
     private static final String TAG = RealEstateMainActivity.class.getName();
 
-    private static int USER_ID = 1;
+    public final int USER_ID = 1;
     public RealEstateViewModel mRealEstateViewModel;
     public View mRootView;
-
-
 
     //  @BindView(R.id.toolBar)
     MaterialToolbar mToolbar;
@@ -47,6 +47,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
         Log.d(TAG, " in on Create ");
 
         initViewModel();
+        getCurrentUser(USER_ID);
 
 
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
@@ -95,12 +96,25 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
-
     public void initViewModel(){
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mRealEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RealEstateViewModel.class);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+        this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
         this.mRealEstateViewModel.init(USER_ID);
+
+
     }
+
+    // 3 - Get Current User
+    private void getCurrentUser(int userId){
+        this.mRealEstateViewModel.getUser(userId).observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                Log.d(TAG, "user "+user);
+            }
+        });
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,6 +150,8 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 
 

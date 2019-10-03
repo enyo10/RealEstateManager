@@ -17,8 +17,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.base.BaseActivity;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
-import com.openclassrooms.realestatemanager.management.fragments.EstateDetailsFragment;
-import com.openclassrooms.realestatemanager.management.fragments.EstateListFragment;
+import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
+import com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment;
 
 import butterknife.BindView;
 

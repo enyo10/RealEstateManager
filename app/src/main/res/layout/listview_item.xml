@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+        <variable
+            name="realEstate"
+            type="com.openclassrooms.realestatemanager.models.RealEstate" />
+        <variable
+            name="DataConverter"
+            type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+        <variable
+            name="itemClickListener"
+            type="com.openclassrooms.realestatemanager.management.realestatelist.ListItemClickedListener" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,7 +20,6 @@
     android:id="@+id/item_real_estate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:padding="5dp">
 
         <!--REAL ESTATE PHOTO-->
@@ -31,6 +44,7 @@
         android:layout_marginStart="180dp"
         android:textSize="20sp"
         android:hint="@string/type"
+        android:text="@{realEstate.type}"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/real_estate_imageView"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +58,7 @@
         android:layout_marginStart="180dp"
         android:layout_marginTop="12dp"
         android:hint="@string/city_label"
+        android:text="@{realEstate.address.city}"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/real_estate_type" />
@@ -56,6 +71,7 @@
         android:layout_marginStart="180dp"
         android:layout_marginTop="12dp"
         android:hint="@string/price"
+        android:text="@{DataConverter.convertDoubleToString(realEstate.price)}"
         android:textColor="@color/colorPrimary"
         android:textSize="25sp"
         android:textStyle="italic"
@@ -73,3 +89,4 @@
         tools:layout_editor_absoluteX="5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

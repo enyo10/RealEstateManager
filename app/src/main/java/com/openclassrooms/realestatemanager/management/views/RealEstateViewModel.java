@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
-import com.openclassrooms.realestatemanager.models.RealEstateImage;
+import com.openclassrooms.realestatemanager.models.Type;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.RealEstateDataRepository;
 import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
@@ -22,44 +22,53 @@ import java.util.concurrent.Executor;
 
 public class RealEstateViewModel extends ViewModel {
     private static final String TAG = RealEstateViewModel.class.getName();
-    public MutableLiveData<String>type=new MutableLiveData<>();
-    public MutableLiveData<ArrayList<String>>nearbyValues=new MutableLiveData<>();
-    public MutableLiveData<ArrayList<String>>imagesList=new MutableLiveData<ArrayList<String>>();
 
-    public MutableLiveData<Double> price = new MutableLiveData<>();
-    public MutableLiveData<Integer> numberOfPieces = new MutableLiveData<>();
-    public MutableLiveData<Double> area = new MutableLiveData<>();
-    public MutableLiveData<String>description=new MutableLiveData<>();
-    public MutableLiveData<String> country = new MutableLiveData<>();
-    public MutableLiveData<String> city = new MutableLiveData<>();
-    public MutableLiveData<Integer> zip = new MutableLiveData<>();
-    public MutableLiveData<String> street = new MutableLiveData<>();
-    public MutableLiveData<String> streetNumber = new MutableLiveData<>();
-    public MutableLiveData<ArrayList<RealEstateImage>>realImages=new MutableLiveData<>();
+    public final MutableLiveData<String>type=new MutableLiveData<>();
+    public final MutableLiveData<ArrayList<String>>nearbyValues=new MutableLiveData<>();
+    public final MutableLiveData<ArrayList<String>>imagesList=new MutableLiveData<ArrayList<String>>();
+
+    public final MutableLiveData<Double> price = new MutableLiveData<>();
+    public final MutableLiveData<Integer> numberOfPieces = new MutableLiveData<>();
+    public final MutableLiveData<Double> area = new MutableLiveData<>();
+    public final MutableLiveData<String>description=new MutableLiveData<>();
+    public final MutableLiveData<String> country = new MutableLiveData<>();
+    public final MutableLiveData<String> city = new MutableLiveData<>();
+    public final MutableLiveData<Integer> zip = new MutableLiveData<>();
+    public final MutableLiveData<String> street = new MutableLiveData<>();
+    public final MutableLiveData<String> streetNumber = new MutableLiveData<>();
+   // public MutableLiveData<ArrayList<RealEstateImage>>realImages=new MutableLiveData<>();
+    public MutableLiveData<String>images=new MutableLiveData<>();
+
+
+
+    private final MutableLiveData<Boolean>schoolButtonChecked=new MutableLiveData<>();
+    private final MutableLiveData<Boolean>hospitalButtonChecked=new MutableLiveData<>();
+    private final MutableLiveData<Boolean>busStationButtonChecked=new MutableLiveData<>();
+    private final MutableLiveData<Boolean>shoppingCenterButtonChecked=new MutableLiveData<>();
+    private final MutableLiveData<Boolean>sportCenterButtonChecked=new MutableLiveData<>();
+    private final MutableLiveData<Boolean>parkButtonChecked=new MutableLiveData<>();
 
     private MutableLiveData<RealEstate> mEstateMutableLiveData ;
 
-    private MutableLiveData<Boolean>schoolButtonChecked=new MutableLiveData<>();
-    private MutableLiveData<Boolean>hospitalButtonChecked=new MutableLiveData<>();
-    private MutableLiveData<Boolean>busStationButtonChecked=new MutableLiveData<>();
-    private MutableLiveData<Boolean>shoppingCenterButtonChecked=new MutableLiveData<>();
-    private MutableLiveData<Boolean>sportCenterButtonChecked=new MutableLiveData<>();
-    private MutableLiveData<Boolean>parkButtonChecked=new MutableLiveData<>();
 
 
     // REPOSITORIES
     private final RealEstateDataRepository realEstateDataSource;
     private final UserDataRepository userDataSource;
     private final Executor executor;
+    private MutableLiveData<Long>insertResult=new MutableLiveData<>();
 
     // DATA
     @Nullable
     private LiveData<User> currentUser;
+    private final MutableLiveData<RealEstate>selectedRealEstate=new MutableLiveData<>();
+
 
     public RealEstateViewModel(RealEstateDataRepository realEstateDataSource, UserDataRepository userDataSource, Executor executor) {
         this.realEstateDataSource = realEstateDataSource;
         this.userDataSource = userDataSource;
         this.executor = executor;
+        this.insertResult=this.realEstateDataSource.getInsertResult();
     }
 
     public void init(long userId) {
@@ -67,13 +76,15 @@ public class RealEstateViewModel extends ViewModel {
             return;
         }
         currentUser = userDataSource.getUser(userId);
+        Log.i(TAG,"current user init "+ currentUser.getValue());
     }
 
     // -------------
     // FOR USER
     // -------------
 
-    public LiveData<User> getUser(long userId) { return this.currentUser;  }
+    public LiveData<User> getUser(long userId) {
+        return this.currentUser;  }
 
     // -------------
     // FOR ITEM
@@ -83,19 +94,22 @@ public class RealEstateViewModel extends ViewModel {
         return realEstateDataSource.getRealEstates(userId);
     }
 
-    public void createItem(RealEstate realEstate) {
+    public void createRealEstate(RealEstate realEstate) {
         executor.execute(() -> {
             realEstateDataSource.createRealEstate(realEstate);
+           // insertResult=realEstateDataSource.getInsertResult();
+
         });
+       // insertResult=realEstateDataSource.getInsertResult();
     }
 
-    public void deleteItem(long realEstateId) {
+    public void deleteRealEstate(long realEstateId) {
         executor.execute(() -> {
             realEstateDataSource.deleteRealEstate(realEstateId);
         });
     }
 
-    public void updateItem(RealEstate realEstate) {
+    public void updateRealEstate(RealEstate realEstate) {
         executor.execute(() -> {
             realEstateDataSource.updateRealEstate(realEstate);
         });
@@ -111,20 +125,17 @@ public class RealEstateViewModel extends ViewModel {
 
     }
 
+    public MutableLiveData<Long> getInsertResult() {
+        return insertResult;
+    }
 
-   /* *//**
-     * this method to keep track of selected view ( the type of Real estate  in our case)
-     * @param , the view selected
-     *//*
-    public void onRealEstateTypeChanged(View view){
-        Button b= (Button) view;
-       String tag= view.getTag().toString();
-       this.type.setValue(tag);
-       Log.i(TAG," view tag "+tag);
-       Log.i(TAG, "view by name " +b.getText());
+    public MutableLiveData<RealEstate> getSelectedRealEstate() {
+        return selectedRealEstate;
+    }
 
-    }*/
-
+    public void setSelectedRealEstate(RealEstate realEstate){
+        this.selectedRealEstate.setValue(realEstate);
+    }
 
 
     public MutableLiveData<Boolean> getSchoolButtonChecked() {
@@ -132,25 +143,25 @@ public class RealEstateViewModel extends ViewModel {
         return schoolButtonChecked;
     }
 
-    public void setSchoolButtonChecked(MutableLiveData<Boolean> value) {
+    public void setSchoolButtonChecked(Boolean value) {
         Log.i(TAG," on set " +value);
 
-        if (schoolButtonChecked != value) {
-            schoolButtonChecked = value;
+        if (schoolButtonChecked.getValue() != value) {
+            schoolButtonChecked.setValue(value);
 
         }
     }
 
+
     public MutableLiveData<Boolean> getHospitalButtonChecked() {
-        Log.i(TAG, " schoolButton  get-> "+hospitalButtonChecked.getValue());
+       Log.i(TAG, " hospital button  get-> "+hospitalButtonChecked.getValue());
         return hospitalButtonChecked;
     }
 
-    public void setHospitalButtonChecked(MutableLiveData<Boolean> value) {
-        if (hospitalButtonChecked != value) {
-            hospitalButtonChecked = value;
+    public void setHospitalButtonChecked(Boolean value) {
+        if(hospitalButtonChecked.getValue()!=value)
+            hospitalButtonChecked.setValue(value);
 
-        }
     }
 
     public MutableLiveData<Boolean> getBusStationButtonChecked() {
@@ -158,50 +169,48 @@ public class RealEstateViewModel extends ViewModel {
         return busStationButtonChecked;
     }
 
-    public void setBusStationButtonChecked(MutableLiveData<Boolean> value) {
-        if (busStationButtonChecked!= value) {
-            busStationButtonChecked= value;
-
+    public void setBusStationButtonChecked(Boolean value) {
+        if (busStationButtonChecked.getValue()!= value) {
+            busStationButtonChecked.setValue( value);
         }
     }
 
-
-
     public MutableLiveData<Boolean> getSportCenterButtonChecked() {
-        Log.i(TAG, " sport  get-> "+schoolButtonChecked.getValue());
+        Log.i(TAG, " sport  get: "+sportCenterButtonChecked.getValue());
         return sportCenterButtonChecked;
     }
 
-    public void setSportCenterButtonChecked(MutableLiveData<Boolean> value) {
-        if (schoolButtonChecked != value) {
-            schoolButtonChecked = value;
+    public void setSportCenterButtonChecked(Boolean value) {
+        if (sportCenterButtonChecked.getValue() != value) {
+            sportCenterButtonChecked.setValue( value);
 
         }
     }
 
     public MutableLiveData<Boolean> getParkButtonChecked() {
-        Log.i(TAG, " park  get-> "+schoolButtonChecked.getValue());
+        Log.i(TAG, " park  get : "+parkButtonChecked.getValue());
         return parkButtonChecked;
     }
 
-    public void setParkButtonChecked(MutableLiveData<Boolean> value) {
-        if (parkButtonChecked != value) {
-            parkButtonChecked = value;
+    public void setParkButtonChecked(Boolean value) {
+        if (parkButtonChecked.getValue() != value) {
+            parkButtonChecked.setValue(value);
 
         }
     }
 
     public MutableLiveData<Boolean> getShoppingCenterButtonChecked() {
-        Log.i(TAG, " shopping  get-> "+schoolButtonChecked.getValue());
+        Log.i(TAG, " shopping  get-> "+shoppingCenterButtonChecked.getValue());
         return shoppingCenterButtonChecked;
     }
 
-    public void setShoppingCenterButtonChecked(MutableLiveData<Boolean> value) {
-        if (shoppingCenterButtonChecked!= value) {
-            shoppingCenterButtonChecked = value;
+    public void setShoppingCenterButtonChecked(Boolean value) {
+        if (shoppingCenterButtonChecked.getValue()!= value) {
+            shoppingCenterButtonChecked.setValue( value);
 
         }
     }
+
 
     /**
          * this method to save the RealEstate object in the data base.
@@ -212,27 +221,34 @@ public class RealEstateViewModel extends ViewModel {
             Date dateOfSale = null;
             Log.i(TAG, " type -> " + type.getValue());
 
-            Log.d(TAG, "Number of pieces " + numberOfPieces.getValue());
-            Log.d(TAG, "Area  " + area.getValue());
-            Log.d(TAG, " Description " + description.getValue());
-            Log.d(TAG, " Country : " + country.getValue());
-            Log.d(TAG, " City " + city.getValue());
-            Log.d(TAG, " Zip :" + zip.getValue());
-            Log.d(TAG, " Street :" + street.getValue());
-            Log.d(TAG, " Street number :" + streetNumber.getValue());
-            Log.d(TAG, "Price " + price.getValue());
-           // if(imagesList.getValue()!=null)
-            Log.i(TAG," ArrayList : " +imagesList.getValue().toString() );
+            Integer nbrOfPieces= numberOfPieces.getValue();
+            Double surface= area.getValue();
+            String desc = description.getValue();
+            String countr= country.getValue();
+            String cty= city.getValue();
+            Integer zp= zip.getValue();
+            String str =street.getValue();
+            String st_nbr= streetNumber.getValue();
+            Double prce= price.getValue();
+            String imagedata =images.getValue();
 
 
-            Address address = new Address(country.getValue(), 1, city.getValue(), street.getValue(), streetNumber.getValue());
 
-       /* RealEstate realEstate = new  RealEstate("userId", Type.HOUSE,price.getValue(), area.getValue(),
+            Address address = new Address(countr, zp, cty, str, st_nbr);
+
+           // RealEstate realEstate=new RealEstate();
+
+
+        /*RealEstate realEstate = new  RealEstate("userId", Type.HOUSE,price.getValue(), area.getValue(),
                 numberOfPieces.getValue()  , "Description", new ArrayList<>(), address,
         Status.UNSOLD, dateOfEntry, dateOfSale);
-*/
+        */
 
-            //mEstateMutableLiveData.setValue(realEstate);
+
+    RealEstate realEstate= new RealEstate(1, Type.DUPLEX,prce,surface, nbrOfPieces,2,3, desc,images.getValue(),address);
+
+    mEstateMutableLiveData.setValue(realEstate);
+    createRealEstate(realEstate);
 
 
         }

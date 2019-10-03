@@ -99,6 +99,13 @@
     <string name="image_description">Image Description</string>
     <string name="map_view">Map view</string>
     <string name="area">Surface</string>
+    <string name="real_estate_image">Real\'s image</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="number_of_bathroom">Number of bathrooms</string>
+    <string name="bathroom_quantity">Number of bathrooms</string>
+    <string name="room_quantity"> Room quantity</string>
+    <string name="bedroom_quantity">Quantity of bedrooms</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
 
 
 </resources>

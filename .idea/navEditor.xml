@@ -13,8 +13,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-78" />
-                            <option name="y" value="-338" />
+                            <option name="x" value="-74" />
+                            <option name="y" value="-484" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -56,9 +56,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="226" />
-                            <option name="y" value="-260" />
+                            <option name="x" value="211" />
+                            <option name="y" value="-255" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_realEstateAddFragment_to_estateListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

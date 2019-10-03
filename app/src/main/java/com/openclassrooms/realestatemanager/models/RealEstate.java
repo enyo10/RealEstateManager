@@ -12,7 +12,6 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -32,8 +31,8 @@ import static androidx.room.ForeignKey.CASCADE;
 public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
-    private Long id;
-    private Long userId;
+    private long id;
+    private long userId;
     private int numberOfBedRooms;
     private int numberOfBathrooms;
     private double price;
@@ -50,7 +49,7 @@ public class RealEstate {
     private ArrayList<String>nearbyPointOfInterest=new ArrayList<>();
     private Date dateOfEntry;
     private Date dateOfSale;
-    private ArrayList<RealEstateImage>realEstateImages=new ArrayList<>();
+    private String images;
 
 
 
@@ -58,7 +57,7 @@ public class RealEstate {
 
     }
 
-    public RealEstate(Long userId, @Type String type,double price, double area, int numberOfPieces,int numberOfBathrooms,int numberOfBedRooms, String completeDescription,List<RealEstateImage>imageList,Address address) {
+    public RealEstate(long userId, @Type String type,double price, double area, int numberOfPieces,int numberOfBathrooms,int numberOfBedRooms, String completeDescription,String imageList,Address address) {
 
         this.userId = userId;
         this.address=address;
@@ -69,10 +68,11 @@ public class RealEstate {
         this.numberOfBathrooms=numberOfBathrooms;
         this.numberOfBedRooms=numberOfBedRooms;
         this.completeDescription = completeDescription;
-        this.realEstateImages.addAll(imageList);
+        this.setImages(images);
         this.status = Status.UNSOLD;
         this.dateOfEntry = new Date();
         this.dateOfSale = null;
+        this.images=imageList;
 
     }
 
@@ -108,11 +108,11 @@ public class RealEstate {
         this.type = type;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -200,6 +200,13 @@ public class RealEstate {
         this.numberOfBathrooms = numberOfBathrooms;
     }
 
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public boolean isInteger(String value){
 
@@ -221,13 +228,6 @@ public class RealEstate {
 
         }
 
-    public ArrayList<RealEstateImage> getRealEstateImages() {
-        return realEstateImages;
-    }
-
-    public void setRealEstateImages(ArrayList<RealEstateImage> realEstateImages) {
-        this.realEstateImages = realEstateImages;
-    }
 
     public static RealEstate fromContentValues(ContentValues contentValues){
         final RealEstate realEstate = new RealEstate();
@@ -245,8 +245,8 @@ public class RealEstate {
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsString("status"));
         if (contentValues.containsKey("entryDate")) realEstate.setDateOfEntry((Date) contentValues.get("entryDate"));//Risk
         if (contentValues.containsKey("soldDate")) realEstate.setDateOfSale((Date) contentValues.get("soldDate"));//Risk
-        if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsLong("userId"));
-        if(contentValues.containsKey("realEstateImages"))realEstate.setRealEstateImages((ArrayList<RealEstateImage>)contentValues.get("realEstateImages"));
+        if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsInteger("userId"));
+        if(contentValues.containsKey("images"))realEstate.setImages(contentValues.getAsString("images"));
         return realEstate;
 
     }

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="listener"
+            type="com.openclassrooms.realestatemanager.management.realestatelist.ListItemClickedListener" />
+
+
+    </data>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,13 +14,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".management.fragments.EstateListFragment">
+    tools:context=".management.realestatelist.EstateListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/real_estate_recycler_view"
+        android:id="@+id/real_estate_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
+</layout>

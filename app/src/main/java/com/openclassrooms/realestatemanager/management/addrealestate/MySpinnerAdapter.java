@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.management.views;
+package com.openclassrooms.realestatemanager.management.addrealestate;
 
 import android.util.Log;
 import android.view.View;

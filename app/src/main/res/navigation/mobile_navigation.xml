@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/estateListFragment"
-        android:name="com.openclassrooms.realestatemanager.management.fragments.EstateListFragment"
+        android:name="com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_estate_list" >
 
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/estateDetailsFragment"
-        android:name="com.openclassrooms.realestatemanager.management.fragments.EstateDetailsFragment"
+        android:name="com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment"
         android:label="fragment_estate_details"
         tools:layout="@layout/fragment_estate_details" />
 
@@ -36,17 +36,21 @@
         android:id="@+id/realEstateAddFragment"
         android:name="com.openclassrooms.realestatemanager.management.addrealestate.RealEstateAddFragment"
         android:label="@string/fragment_real_estate_ad"
-        tools:layout="@layout/fragment_real_estate_add" />
+        tools:layout="@layout/fragment_real_estate_add" >
+        <action
+            android:id="@+id/action_realEstateAddFragment_to_estateListFragment"
+            app:destination="@id/estateListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/realEstateEditFragment"
-        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateEditFragment"
+        android:name="com.openclassrooms.realestatemanager.management.realestateedit.RealEstateEditFragment"
         android:label="@string/fragment_real_estate_edit"
         tools:layout="@layout/fragment_real_estate_edit" />
 
     <fragment
         android:id="@+id/realEstateSearchFragment"
-        android:name="com.openclassrooms.realestatemanager.management.fragments.RealEstateSearchFragment"
+        android:name="com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment"
         android:label="@string/fragment_real_estate_search_fragment"
         tools:layout="@layout/fragment_real_estate_search_fragment" />
 

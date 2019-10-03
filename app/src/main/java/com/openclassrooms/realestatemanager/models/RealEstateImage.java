@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.models;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -12,14 +13,24 @@ public class RealEstateImage {
     private static final String TAG=RealEstateImage.class.getName();
 
     private String imageName;
-    private String imageUri;
+    private Bitmap bitmap;
     private String imageDescription;
+    private String uri;
 
-    public RealEstateImage(String imageName, String imageUri, String imageDescription) {
+
+    public RealEstateImage(String imageName, Bitmap bitmap, String imageDescription) {
         this.imageName = imageName;
-        this.imageUri = imageUri;
+        this.bitmap = bitmap;
         this.imageDescription = imageDescription;
     }
+
+    public RealEstateImage(String uri,String imageDescription){
+        this.imageDescription=imageDescription;
+        this.imageName=imageDescription;
+        this.uri=uri;
+
+    }
+
 
     public String getImageName() {
         return imageName;
@@ -29,13 +40,12 @@ public class RealEstateImage {
         this.imageName = imageName;
     }
 
-    public String getImageUri() {
-        return imageUri;
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
     public String getImageDescription() {
@@ -46,13 +56,30 @@ public class RealEstateImage {
         this.imageDescription = imageDescription;
     }
 
-    @BindingAdapter("imageUri")
-    public static void loadImage(ImageView view,String imageUri) {
-        Log.i(TAG, " the loadImage method is call");
-        Log.i(TAG," imageUri -> "+imageUri);
+    public String getUri() {
+        return uri;
+    }
 
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    @BindingAdapter("bitmap")
+    public static void loadImage(ImageView view, Bitmap bitmap) {
+        Log.i(TAG, " the loadImage method is call");
         Glide.with(view.getContext())
-                .load(imageUri).apply(new RequestOptions())
+                .load(bitmap)
+                .apply(new RequestOptions())
+                .into(view);
+
+    }
+
+    @BindingAdapter("uri")
+    public static void loadImageFromUri(ImageView view, String uri){
+        Log.i(TAG," the load image from uri method is call");
+        Glide.with(view.getContext())
+                .load(uri)
+                .apply(new RequestOptions())
                 .into(view);
     }
 }

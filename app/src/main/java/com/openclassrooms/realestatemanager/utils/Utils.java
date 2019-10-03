@@ -5,10 +5,16 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Philippe on 21/02/2018.
@@ -92,6 +98,43 @@ public class Utils {
             return false;
         }
     }
+
+
+
+    /**
+     * To convert a string map to string.
+     * @param stringMap,
+     *        the map of string to convert.
+     * @return string,
+     *        the string to return.
+     */
+    public static String mapToJsonString(Map<String,String> stringMap){
+
+        JSONObject jsonObject =new JSONObject(stringMap);
+        return jsonObject.toString();
+    }
+
+    /**
+     * Helper method to convert a json string to a Map<String,String> Object.
+     * @param jsonString,
+     *        The Json string to convert.
+     * @return Map<String,String> , the result of the conversion.
+     * @throws JSONException, an exception when the mapping fail.
+     */
+    public static Map<String, String>jsonToMap(String jsonString)throws JSONException {
+        HashMap<String, String> map = new HashMap<>();
+        JSONObject jObject = new JSONObject(jsonString);
+        Iterator<?> keys = jObject.keys();
+
+        while( keys.hasNext() ){
+            String key = (String)keys.next();
+            String value = jObject.getString(key);
+            map.put(key, value);
+
+        }
+        return map;
+    }
+
 
 
 

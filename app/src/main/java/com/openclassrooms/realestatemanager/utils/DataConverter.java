@@ -6,6 +6,7 @@ public class DataConverter {
 
     @InverseMethod("convertIntToString")
     public int convertStringToInt(String value) {
+
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {

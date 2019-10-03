@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.management.fragments;
+package com.openclassrooms.realestatemanager.management.realestateedit;
 
 
 import android.os.Bundle;

@@ -27,7 +27,7 @@
         android:id="@+id/add_real_estate_item_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        bind:imageUri="@{realImage.imageUri}"
+        bind:bitmap="@{realImage.bitmap}"
         android:layout_margin="@dimen/default_margin"
         android:contentDescription="@string/add_real_estate_image_added" />
 

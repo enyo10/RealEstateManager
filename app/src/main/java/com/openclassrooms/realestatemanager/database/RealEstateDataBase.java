@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -22,6 +23,7 @@ import com.openclassrooms.realestatemanager.utils.StringListConverter;
 @Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class,StringListConverter.class, RealImageLIstConverter.class})
 public abstract class RealEstateDataBase extends RoomDatabase {
+    private static final String TAG = RealEstateDataBase.class.getName();
     // --- SINGLETON ---
     private static volatile RealEstateDataBase INSTANCE;
 
@@ -29,8 +31,24 @@ public abstract class RealEstateDataBase extends RoomDatabase {
     public abstract RealEstateDao realEstateDao();
     public abstract UserDao userDao();
 
+    public static RealEstateDataBase getInstance(Context context){
+        if (INSTANCE == null) {
+            synchronized (RealEstateDataBase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            RealEstateDataBase.class, "MyRealEstateDataBase.db")
+                            .addCallback(prepopulateDatabase())
+                            .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+
+
     // --- INSTANCE ---
-    public static RealEstateDataBase getInstance(Context context) {
+   /* public static RealEstateDataBase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (RealEstateDataBase.class) {
                 if (INSTANCE == null) {
@@ -42,7 +60,7 @@ public abstract class RealEstateDataBase extends RoomDatabase {
             }
         }
         return INSTANCE;
-    }
+    }*/
 
     // ---
 
@@ -57,8 +75,10 @@ public abstract class RealEstateDataBase extends RoomDatabase {
                 contentValues.put("id", 1);
                 contentValues.put("firstName", "Enyo");
                 contentValues.put("lastName","Tovissou");
-
+                contentValues.put("photoUrl","");
                 db.insert("User", OnConflictStrategy.IGNORE, contentValues);
+
+                Log.d(TAG, " database if populate with the first user");
             }
         };
     }

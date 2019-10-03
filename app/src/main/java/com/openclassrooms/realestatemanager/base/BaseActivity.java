@@ -1,11 +1,11 @@
 package com.openclassrooms.realestatemanager.base;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.openclassrooms.realestatemanager.models.User;
@@ -64,8 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public User getCurrentUser(){ return mLoggedInUser ;}
 
     protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
-
-
 
 
     //     Some abstract methods.

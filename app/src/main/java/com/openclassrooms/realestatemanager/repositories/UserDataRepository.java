@@ -11,7 +11,7 @@ public class UserDataRepository {
 
     public UserDataRepository(UserDao userDao) { this.userDao = userDao; }
     // --- GET USER ---
-    public LiveData<User> getUser(Long userId) { return this.userDao.getUser(userId); }
+    public LiveData<User> getUser(long userId) { return this.userDao.getUser(userId); }
 
     //-- Insert user to db.
    /* public void createUser(User user){

@@ -1,5 +1,10 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.view.View;
+
 public interface MyListener {
-    public void onRealEstateTypeSelected(String type);
+    void onRealEstateTypeSelected(String type);
+    void onChoosePictureButtonClicked(View v);
+    void onRealEstateSaveButtonClicked(View v);
+
 }

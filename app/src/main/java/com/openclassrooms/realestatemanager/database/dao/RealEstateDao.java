@@ -18,7 +18,7 @@ public interface RealEstateDao {
   LiveData<List<RealEstate>> getRealEstates(long userId);
 
   @Insert
-  Long insertRealEstate(RealEstate realEstate);
+  long insertRealEstate(RealEstate realEstate);
 
   @Update
   int updateRealEstate(RealEstate realEstate);
