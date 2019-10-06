@@ -12,6 +12,7 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsRecyclerViewItemBinding;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecyclerViewAdapter.ImageViewHolder> {
@@ -40,6 +41,9 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecy
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+        RealEstateImage dataModel = mImagesList.get(position);
+        holder.itemRowBinding.setRealEstateImage(dataModel);
+        holder.bind(dataModel);
 
     }
 
@@ -62,5 +66,12 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<DetailsRecy
             itemRowBinding.setVariable(com.openclassrooms.realestatemanager.BR.RealEstateImage , obj);
             itemRowBinding.executePendingBindings();
         }
+    }
+
+    public void update(List<RealEstateImage>list){
+        if(list==null)
+            list=new ArrayList<>();
+        this.mImagesList=list;
+        this.notifyDataSetChanged();
     }
 }

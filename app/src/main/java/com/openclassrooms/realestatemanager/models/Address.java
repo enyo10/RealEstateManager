@@ -4,7 +4,7 @@ package com.openclassrooms.realestatemanager.models;
 public class Address {
 
     private String Country;
-    private int zip;
+    private String zip;
     private String city;
     private String street;
     private String number;
@@ -14,7 +14,7 @@ public class Address {
 
     }
 
-    public Address(String country, int zip, String city, String street, String number) {
+    public Address(String country, String zip, String city, String street, String number) {
         Country = country;
         this.zip = zip;
         this.city = city;
@@ -22,11 +22,11 @@ public class Address {
         this.number = number;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 

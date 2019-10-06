@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,21 +34,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateAddBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
-import com.openclassrooms.realestatemanager.management.views.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.utils.MyListener;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.utils.ViewUtils;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -90,20 +87,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_real_estate_add, container, false);
 
-       /* LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        binding.recyclerView.setLayoutManager(linearLayoutManager);
-
-
-        String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
-
-        binding.setSpinAdapter(new ArrayAdapter<String>( getContext(),
-               android.R.layout.simple_spinner_dropdown_item, real_estate_types));
-
-        binding.setMyListener(this);
-
-        initAndSetRecyclerViewAdapter();*/
         binding.setLifecycleOwner(this);
         return binding.getRoot();
 
@@ -115,7 +99,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
       //  BottomNavigationView bottomNavigationView=view.findViewById(R.id.bottom_nav_view);
       //  bottomNavigationView.setOnNavigationItemSelectedListener(this);
        // mType = Type.PENTHOUSE;
-
 
         setHasOptionsMenu(true);
 
@@ -143,16 +126,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         initAndSetRecyclerViewAdapter();
         }
 
-        mRealEstateViewModel.getInsertResult().observe(this, new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                if(aLong>0)
-                Toast.makeText(getContext(),"Insert success",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getContext(),"Insert fail",Toast.LENGTH_LONG).show();
-
-            }
-        });
     }
 
     public RealEstateAddFragment() {
@@ -188,17 +161,17 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (noErrors) {
 
-           Integer  numberOfPieces=  mRealEstateViewModel.numberOfPieces.getValue();
-           Double area =mRealEstateViewModel.area.getValue();
+           Integer  numberOfPieces=  mRealEstateViewModel.numberOfBathRooms.getValue();
+           Double area =mRealEstateViewModel.surface.getValue();
            String city = mRealEstateViewModel.city.getValue();
            String description=mRealEstateViewModel.description.getValue();
            String country=mRealEstateViewModel.country.getValue();
            String street =mRealEstateViewModel.street.getValue();
-           Integer zip =mRealEstateViewModel.zip.getValue();
+           String zip =mRealEstateViewModel.zip.getValue();
            Double price =mRealEstateViewModel.price.getValue();
 
             Log.d(TAG, " numberOfPieces: "+numberOfPieces);
-            Log.d(TAG, " area "+area);
+            Log.d(TAG, " surface "+area);
             Log.d(TAG, " description: "+description);
             Log.d(TAG, " city: "+city);
             Log.d(TAG, " country: "+country);
@@ -310,8 +283,8 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                 Log.i(TAG, " the image Uri object: " +contentURI.toString());
                 try {
                     this.mBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
+                    Toast.makeText(getContext(),"Picture choose from gallery",Toast.LENGTH_LONG).show();
 
-                   // Toast.makeText(getContext(), "Image Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -321,8 +294,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         } else if (requestCode == CAMERA && null!=data.getExtras()) {
             Log.i(TAG, " data type " +data.getExtras().get("data").getClass());
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            this.mBitmap = thumbnail;
+            mBitmap = (Bitmap) data.getExtras().get("data");
 
             Toast.makeText(getContext(), "Picture made properly ", Toast.LENGTH_SHORT).show();
         }
@@ -333,7 +305,8 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
     private String saveImage(RealEstateImage realEstateImage){
-        Bitmap myBitmap=realEstateImage.getBitmap();
+        // Here I have a real estate image with bitmap.
+        Bitmap myBitmap = realEstateImage.getBitmap();
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -348,7 +321,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         try {
                 /*File f = new File(wallpaperDirectory, Calendar.getInstance()
                         .getTimeInMillis() + ".jpg");*/
-                    File f = new File(wallpaperDirectory, realEstateImage.getImageName() + ".jpg");
+                    File f = new File(wallpaperDirectory, getRandomNumber(1,999999) + ".jpg");
                     f.createNewFile();
                     FileOutputStream fo = new FileOutputStream(f);
                     fo.write(bytes.toByteArray());
@@ -361,12 +334,22 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                     Log.d(TAG, " path " + f.getPath());
                     Log.d(TAG, " canonical file" + f.getCanonicalFile());
 
+                    realEstateImage.setUri(f.getAbsolutePath());
+
                     return f.getAbsolutePath();
 
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             return "";
+        }
+
+
+        private int getRandomNumber(int min,int max){
+
+            int myRandom= min + (int)(Math.random() * ((max - min) + 1));
+            return String.valueOf(myRandom).hashCode();
+
         }
 
 
@@ -445,14 +428,15 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
     @Override
     public void onRealEstateSaveButtonClicked(View v) {
+        // Check if all text field are filled.
         getTextValues();
 
+        for(RealEstateImage estateImage:mEstateImages){
+            saveImage(estateImage);
 
-        Map<String,String> map=new HashMap<>();
-        for(RealEstateImage r:this.mEstateImages){
-            map.put(r.getImageName(),saveImage(r));
+            Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
         }
-        mRealEstateViewModel.images.setValue(Utils.mapToJsonString(map));
+        mRealEstateViewModel.images.postValue(Utils.objectToJson(mEstateImages));
         mRealEstateViewModel.onRealEstateSave();
     }
 }

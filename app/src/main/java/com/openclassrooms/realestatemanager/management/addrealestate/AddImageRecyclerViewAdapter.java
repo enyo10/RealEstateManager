@@ -20,6 +20,7 @@ public class AddImageRecyclerViewAdapter extends RecyclerView.Adapter<AddImageRe
     private List<RealEstateImage> dataModelList;
     private Context context;
 
+
     public AddImageRecyclerViewAdapter(List<RealEstateImage> list, Context ctx) {
         this.dataModelList = list;
         this.context = ctx;

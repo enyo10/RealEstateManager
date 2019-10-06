@@ -13,7 +13,7 @@
 
         <variable
             name="RealEstateViewModel"
-            type="com.openclassrooms.realestatemanager.management.views.RealEstateViewModel" />
+            type="com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel" />
         <variable
             name="DataConverter"
             type="com.openclassrooms.realestatemanager.utils.DataConverter" />
@@ -39,6 +39,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -51,6 +55,8 @@
                 android:text="@string/registration">
 
             </TextView>
+
+            </LinearLayout>
 
 
 
@@ -106,7 +112,7 @@
                         android:baselineAligned="false">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/real_estate_pieces_number"
+                            android:id="@+id/real_estate_nbr_bed_room"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -115,11 +121,11 @@
                             app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/real_estate_pieces_number_text_edit"
+                                android:id="@+id/real_estate_nbr_of_room_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.numberOfPieces)}"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.numberOfRooms)}"
                                 android:hint="@string/number_of_pieces" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +137,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:layout_marginStart="5dp"
-
                             app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +145,51 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/surface"
                                 android:inputType="numberDecimal"
-                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.area)}" />
+                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.surface)}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_bath_room"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:layout_marginEnd="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_bath_text_edit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.numberOfBathRooms)}"
+                                android:hint="@string/number_of_bathroom" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_number_bath_room"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:layout_marginStart="5dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_number_bed_room_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/number_of_bathroom"
+                                android:inputType="number"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.numberOfBedRooms)}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -223,7 +272,7 @@
                                 android:id="@+id/real_estate_zip_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.zip)}"
+                                android:text="@={RealEstateViewModel.zip}"
                                 android:hint="@string/label_zip" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>

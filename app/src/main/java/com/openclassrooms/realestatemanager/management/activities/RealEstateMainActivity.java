@@ -24,8 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
-import com.openclassrooms.realestatemanager.management.views.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.models.User;
 
 public class RealEstateMainActivity extends AppCompatActivity {
@@ -152,7 +152,10 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
+    public void showDetailsFragment(){
+        Navigation.findNavController(this,R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_estateDetailsFragment);
 
+    }
 
 
 

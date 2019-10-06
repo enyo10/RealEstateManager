@@ -24,9 +24,9 @@ public class RealEstateImage {
         this.imageDescription = imageDescription;
     }
 
-    public RealEstateImage(String uri,String imageDescription){
+    public RealEstateImage(String imageName,String uri,String imageDescription){
         this.imageDescription=imageDescription;
-        this.imageName=imageDescription;
+        this.imageName=imageName;
         this.uri=uri;
 
     }

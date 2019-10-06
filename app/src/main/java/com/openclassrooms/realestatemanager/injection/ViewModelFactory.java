@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.injection;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.openclassrooms.realestatemanager.management.views.RealEstateViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.repositories.RealEstateDataRepository;
 import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 

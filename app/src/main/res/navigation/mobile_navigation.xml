@@ -24,12 +24,16 @@
             android:id="@+id/action_estateListFragment_to_realEstateEditFragment"
             app:destination="@id/realEstateEditFragment" />
 
+        <action
+            android:id="@+id/action_estateListFragment_to_estateDetailsFragment"
+            app:destination="@id/estateDetailsFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/estateDetailsFragment"
         android:name="com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment"
-        android:label="fragment_estate_details"
+        android:label="@string/fragment_estate_details"
         tools:layout="@layout/fragment_estate_details" />
 
     <fragment

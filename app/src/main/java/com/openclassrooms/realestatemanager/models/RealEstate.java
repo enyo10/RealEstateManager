@@ -25,25 +25,21 @@ import static androidx.room.ForeignKey.CASCADE;
         parentColumns = "id",
         childColumns = "userId",onDelete = CASCADE,
         onUpdate = CASCADE )},indices={@Index(value="userId")})
-       /* ,
-        @ForeignKey(entity = Address.class,
-        parentColumns = "id", childColumns = "mAddressId")},indices={@Index(value="userId"),@Index(value="mAddressId")})*/
+
 public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
     private long userId;
     private int numberOfBedRooms;
-    private int numberOfBathrooms;
+    private int numberOfBathRooms;
+    private int numberOfRooms;
     private double price;
-    private double area;
-    private int numberOfPieces;
+    private double surface;
     private String completeDescription;
     @Embedded
      private Address address;
-    @Type
     private String type;
-    @Status
     private String status;
    // @NearbyPOI
     private ArrayList<String>nearbyPointOfInterest=new ArrayList<>();
@@ -57,22 +53,23 @@ public class RealEstate {
 
     }
 
-    public RealEstate(long userId, @Type String type,double price, double area, int numberOfPieces,int numberOfBathrooms,int numberOfBedRooms, String completeDescription,String imageList,Address address) {
+    public RealEstate(long userId,  String type,double price, double area, int numberOfPieces,int numberOfBathrooms,int numberOfBedRooms, String completeDescription,String imageList,Address address,ArrayList<String>nearbyPointOfInterest) {
 
         this.userId = userId;
         this.address=address;
         this.type=type;
         this.price = price;
-        this.area = area;
-        this.numberOfPieces = numberOfPieces;
-        this.numberOfBathrooms=numberOfBathrooms;
+        this.surface = area;
+        this.numberOfRooms = numberOfPieces;
+        this.numberOfBathRooms=numberOfBathrooms;
         this.numberOfBedRooms=numberOfBedRooms;
         this.completeDescription = completeDescription;
-        this.setImages(images);
+        this.images=imageList;
         this.status = Status.UNSOLD;
         this.dateOfEntry = new Date();
         this.dateOfSale = null;
         this.images=imageList;
+        this.nearbyPointOfInterest=nearbyPointOfInterest;
 
     }
 
@@ -84,12 +81,12 @@ public class RealEstate {
         this.price = price;
     }
 
-    public double getArea() {
-        return this.area;
+    public double getSurface() {
+        return this.surface;
     }
 
-    public void setArea(double area) {
-        this.area = area;
+    public void setSurface(double surface) {
+        this.surface = surface;
     }
 
     public String getCompleteDescription() {
@@ -99,12 +96,12 @@ public class RealEstate {
     public void setCompleteDescription(String completeDescription) {
         this.completeDescription = completeDescription;
     }
-    @Type
+
     public String getType() {
         return this.type;
     }
 
-    public void setType(@Type String type) {
+    public void setType( String type) {
         this.type = type;
     }
 
@@ -116,13 +113,7 @@ public class RealEstate {
         this.userId = userId;
     }
 
-    public int getNumberOfPieces() {
-        return this.numberOfPieces;
-    }
 
-    public void setNumberOfPieces(int numberOfPieces) {
-        this.numberOfPieces = numberOfPieces;
-    }
 
     @NonNull
     public Address getAddress() {
@@ -169,7 +160,17 @@ public class RealEstate {
         this.id = id;
     }
 
+    public void setNumberOfBathRooms(int numberOfBathRooms) {
+        this.numberOfBathRooms = numberOfBathRooms;
+    }
 
+    public int getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
 
     public ArrayList<String> getNearbyPointOfInterest() {
         return nearbyPointOfInterest;
@@ -192,15 +193,16 @@ public class RealEstate {
         this.numberOfBedRooms = numberOfBedRooms;
     }
 
-    public int getNumberOfBathrooms() {
-        return numberOfBathrooms;
+    public int getNumberOfBathRooms() {
+        return numberOfBathRooms;
     }
 
     public void setNumberOfBathrooms(int numberOfBathrooms) {
-        this.numberOfBathrooms = numberOfBathrooms;
+        this.numberOfBathRooms = numberOfBathrooms;
     }
 
     public String getImages() {
+
         return images;
     }
 
@@ -233,15 +235,14 @@ public class RealEstate {
         final RealEstate realEstate = new RealEstate();
 
 
-        if (contentValues.containsKey("area")) realEstate.setArea(contentValues.getAsDouble("area"));
+        if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsDouble("surface"));
         if (contentValues.containsKey("description")) realEstate.setCompleteDescription(contentValues.getAsString("description"));
         if (contentValues.containsKey("price")) realEstate.setPrice(contentValues.getAsLong("price"));
-        if (contentValues.containsKey("surface")) realEstate.setArea(contentValues.getAsDouble("surface"));
-        if (contentValues.containsKey("room")) realEstate.setNumberOfPieces(contentValues.getAsInteger("room"));
-        if (contentValues.containsKey("bathroom")) realEstate.setNumberOfBathrooms(contentValues.getAsInteger("bathroom"));
-        if (contentValues.containsKey("bedroom")) realEstate.setNumberOfBedRooms(contentValues.getAsInteger("bedroom"));
+        if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsDouble("surface"));
+        if (contentValues.containsKey("numberOfRooms")) realEstate.setNumberOfRooms(contentValues.getAsInteger("room"));
+        if (contentValues.containsKey("numberOfBathRooms")) realEstate.setNumberOfBathrooms(contentValues.getAsInteger("bathroom"));
+        if (contentValues.containsKey("numberOfBedRooms")) realEstate.setNumberOfBedRooms(contentValues.getAsInteger("bedroom"));
       //  if (contentValues.containsKey("pictureUrl")) realEstate.setPhotosUrls((ArrayList<String>)contentValues.get("pictureUrl"));
-        if (contentValues.containsKey("detail_address_line1_num")) realEstate.setAddress((Address) contentValues.get("detail_address_line1_num")); //Risk
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsString("status"));
         if (contentValues.containsKey("entryDate")) realEstate.setDateOfEntry((Date) contentValues.get("entryDate"));//Risk
         if (contentValues.containsKey("soldDate")) realEstate.setDateOfSale((Date) contentValues.get("soldDate"));//Risk

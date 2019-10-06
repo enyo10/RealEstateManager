@@ -2,16 +2,17 @@ package com.openclassrooms.realestatemanager.utils;
 
 import androidx.databinding.InverseMethod;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public class DataConverter {
 
     @InverseMethod("convertIntToString")
     public int convertStringToInt(String value) {
 
-        try {
             return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+
     }
 
     public  String convertIntToString(int value) {
@@ -20,14 +21,17 @@ public class DataConverter {
 
     @InverseMethod("convertDoubleToString")
     public double convertStringToDouble(String value) {
-        try {
             return Double.parseDouble(value);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+
     }
 
     public  String convertDoubleToString(double value) {
         return String.valueOf(value);
+    }
+
+
+    public static String convertPriceToString(double price) {
+        DecimalFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
+        return formatter.format(price);
     }
 }

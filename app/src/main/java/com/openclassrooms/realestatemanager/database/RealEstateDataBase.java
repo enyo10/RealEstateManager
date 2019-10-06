@@ -20,7 +20,7 @@ import com.openclassrooms.realestatemanager.utils.DateConverter;
 import com.openclassrooms.realestatemanager.utils.RealImageLIstConverter;
 import com.openclassrooms.realestatemanager.utils.StringListConverter;
 
-@Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {RealEstate.class, User.class}, version = 2, exportSchema = false)
 @TypeConverters({DateConverter.class,StringListConverter.class, RealImageLIstConverter.class})
 public abstract class RealEstateDataBase extends RoomDatabase {
     private static final String TAG = RealEstateDataBase.class.getName();

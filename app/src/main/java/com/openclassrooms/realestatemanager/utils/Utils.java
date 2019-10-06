@@ -5,11 +5,17 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.openclassrooms.realestatemanager.models.RealEstateImage;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -134,6 +140,34 @@ public class Utils {
         }
         return map;
     }
+
+
+
+    /**
+     *
+     * @param object,
+     *       the object to transform.
+     * @return String,
+     *        the string value to return.
+     *
+     */
+    public static  String objectToJson(Object object){
+        Gson json =new Gson();
+        return json.toJson(object);
+    }
+
+    /**
+     * This static method to transform a json String to an Real Estate Image list.
+     * @param json, the string parameter.
+     * @return , the return ArrayList
+     */
+    public static ArrayList<RealEstateImage> jsonStringToRealEstateImageList(String json){
+        Gson gson=new Gson();
+        Type founderListType = new TypeToken<ArrayList<RealEstateImage>>(){}.getType();
+
+        return gson.fromJson(json, founderListType);
+    }
+
 
 
 

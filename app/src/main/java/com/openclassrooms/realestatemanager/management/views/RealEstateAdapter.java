@@ -34,7 +34,7 @@ public class RealEstateAdapter  extends RecyclerView.Adapter<RealEstateViewHolde
     public RealEstateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.listview_item, parent, false);
+        View view = inflater.inflate(R.layout.fragment_erstate_listview_item, parent, false);
 
         return new RealEstateViewHolder(view);
     }
