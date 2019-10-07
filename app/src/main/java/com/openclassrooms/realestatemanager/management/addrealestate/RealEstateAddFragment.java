@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -87,6 +88,8 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_real_estate_add, container, false);
 
+        // Observe the insertion.
+
 
         binding.setLifecycleOwner(this);
         return binding.getRoot();
@@ -125,6 +128,17 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         initAndSetRecyclerViewAdapter();
         }
+
+        mRealEstateViewModel.getInsertResult().observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                if(aLong>0)
+                    Toast.makeText(getContext()," Insertion to DB success",Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getContext(),"Insertion to db fail",Toast.LENGTH_LONG).show();
+            }
+        });
+
 
     }
 
@@ -436,7 +450,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
             Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
         }
-        mRealEstateViewModel.images.postValue(Utils.objectToJson(mEstateImages));
+        mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
         mRealEstateViewModel.onRealEstateSave();
     }
 }

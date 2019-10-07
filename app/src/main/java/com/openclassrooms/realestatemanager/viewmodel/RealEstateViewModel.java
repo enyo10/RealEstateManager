@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.RealEstateDataRepository;
 import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
@@ -52,6 +53,26 @@ public class RealEstateViewModel extends ViewModel {
     public MutableLiveData<String> images = new MutableLiveData<>();
     private MutableLiveData<RealEstate> mEstateMutableLiveData;
     private MutableLiveData<Long> insertResult = new MutableLiveData<>();
+
+    private ArrayList<RealEstateImage>estateImageList;
+
+    public ArrayList<RealEstateImage> getEstateImageList() {
+        return estateImageList;
+    }
+
+    public void setEstateImageList(ArrayList<RealEstateImage> estateImageList) {
+        this.estateImageList = estateImageList;
+    }
+    private String setRealEstateImagesString;
+
+    public String getSetRealEstateImagesString() {
+        return setRealEstateImagesString;
+    }
+
+    public void setSetRealEstateImagesString(String setRealEstateImagesString) {
+        this.setRealEstateImagesString = setRealEstateImagesString;
+    }
+
     // DATA
     @Nullable
     private LiveData<User> currentUser;
@@ -236,6 +257,9 @@ public class RealEstateViewModel extends ViewModel {
 
         RealEstate realEstate = new RealEstate(1, aType, aPrice, aSurface, nbrOfPieces, nbrOfBathRoom, nbrOfBedRoom, desc, jsonImages, address,nearByInterest);
         realEstate.setDateOfEntry(new Date());
+        realEstate.setImages(getSetRealEstateImagesString());
+
+        Log.i(TAG, "Real estate created");
 
         createRealEstate(realEstate);
 

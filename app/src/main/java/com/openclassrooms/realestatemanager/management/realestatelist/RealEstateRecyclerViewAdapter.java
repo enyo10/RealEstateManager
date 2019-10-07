@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentErstateListviewItemBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
-import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,7 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
         if(dataModel.getImages()!=null)
             if(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).size()!=0)
         holder.itemRowBinding.setRealImage(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));
+
         holder.bind(dataModel);
       //  holder.bind(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));
         holder.itemRowBinding.setEstateClickListener(this);
