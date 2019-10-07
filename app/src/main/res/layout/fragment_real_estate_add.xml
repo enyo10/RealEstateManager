@@ -328,21 +328,21 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/shopping_center"
+                            android:id="@+id/shopping_center_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:onClick="onCheckboxClicked"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.shoppingCenterButtonChecked}"
                             android:text="@string/shopping_center" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/bus_station"
+                            android:id="@+id/bus_station_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.busStationButtonChecked}"
                             android:text="@string/bus_station" />
                     </LinearLayout>
 
@@ -352,21 +352,21 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/hospital"
+                            android:id="@+id/hospital_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.hospitalButtonChecked}"
                             android:text="@string/hospital" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/school"
+                            android:id="@+id/school_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.schoolButtonChecked}"
                             android:text="@string/school" />
                     </LinearLayout>
 
@@ -376,21 +376,21 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/sport_center"
+                            android:id="@+id/sport_center_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.sportCenterButtonChecked}"
                             android:text="@string/sport_center" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/park"
+                            android:id="@+id/park_check_box"
                             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="@={RealEstateViewModel.parkButtonChecked}"
                             android:text="@string/park" />
                     </LinearLayout>
 

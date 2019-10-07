@@ -175,7 +175,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (noErrors) {
 
-           Integer  numberOfPieces=  mRealEstateViewModel.numberOfBathRooms.getValue();
+          /* Integer  numberOfPieces=  mRealEstateViewModel.numberOfBathRooms.getValue();
            Double area =mRealEstateViewModel.surface.getValue();
            String city = mRealEstateViewModel.city.getValue();
            String description=mRealEstateViewModel.description.getValue();
@@ -183,8 +183,8 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
            String street =mRealEstateViewModel.street.getValue();
            String zip =mRealEstateViewModel.zip.getValue();
            Double price =mRealEstateViewModel.price.getValue();
-
-            Log.d(TAG, " numberOfPieces: "+numberOfPieces);
+*/
+           /* Log.d(TAG, " numberOfPieces: "+numberOfPieces);
             Log.d(TAG, " surface "+area);
             Log.d(TAG, " description: "+description);
             Log.d(TAG, " city: "+city);
@@ -192,7 +192,9 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             Log.d(TAG, " street: "+street);
             Log.d(TAG, " zip: "+zip);
             Log.d(TAG, " price: "+price);
+*/
 
+           Log.d(TAG, " Success");
         }
 
     }

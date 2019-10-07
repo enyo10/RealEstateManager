@@ -21,6 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
@@ -157,6 +158,59 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
     }
 
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((MaterialCheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.park_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("PARK");
+
+                else
+                    mRealEstateViewModel.nearbyValues.remove("PARK");
+                break;
+
+            case R.id.bus_station_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("STATION");
+                else
+                    mRealEstateViewModel.nearbyValues.remove("STATION");
+                break;
+
+            case R.id.sport_center_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("SPORT CENTER");
+                else
+                    mRealEstateViewModel.nearbyValues.remove("SPORT CENTER");
+                break;
+
+            case R.id.shopping_center_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("SHOPPING CENTER");
+                else
+                    mRealEstateViewModel.nearbyValues.remove("SHOPPING CENTER");
+                break;
+            case R.id.hospital_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("HOSPITAL");
+                else
+                    mRealEstateViewModel.nearbyValues.remove("HOSPITAL");
+                break;
+
+            case R.id.school_check_box:
+                if (checked)
+                    mRealEstateViewModel.nearbyValues.add("SCHOOL");
+                else
+                    mRealEstateViewModel.nearbyValues.remove("SCHOOL");
+                break;
+
+
+        }
+        Log.d(TAG, " list value "+ mRealEstateViewModel.nearbyValues.toString());
+    }
 
 
 }

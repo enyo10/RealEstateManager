@@ -39,7 +39,7 @@ public class MySpinnerAdapter {
     }
     private static int getIndexOfItem(AppCompatSpinner spinner, String item){
         Adapter a = spinner.getAdapter();
-
+        if(a!=null)
         for(int i=0; i<a.getCount(); i++){
             if((a.getItem(i)).equals(item)){
                 return i;
