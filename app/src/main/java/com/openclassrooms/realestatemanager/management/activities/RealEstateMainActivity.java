@@ -1,5 +1,4 @@
 package com.openclassrooms.realestatemanager.management.activities;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -25,9 +25,10 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
-import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
+import com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment;
 import com.openclassrooms.realestatemanager.models.User;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 public class RealEstateMainActivity extends AppCompatActivity {
     private static final String TAG = RealEstateMainActivity.class.getName();
@@ -36,10 +37,12 @@ public class RealEstateMainActivity extends AppCompatActivity {
     public RealEstateViewModel mRealEstateViewModel;
     public View mRootView;
 
-    //  @BindView(R.id.toolBar)
+    private static final String SEARCH_DIALOG_TAG="SEARCH DIALOG";
+
     MaterialToolbar mToolbar;
     BottomNavigationView mBottomNavigationView;
     EstateDetailsFragment mEstateDetailsFragment;
+    RealEstateSearchFragment mRealEstateSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,13 +125,18 @@ public class RealEstateMainActivity extends AppCompatActivity {
      //  return super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_search)
+            createSearchDialogFragment();
+
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
+
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }
@@ -210,6 +218,28 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         }
         Log.d(TAG, " list value "+ mRealEstateViewModel.nearbyValues.toString());
+    }
+
+
+    public void dialogButtonClicked(View view){
+
+        if(view.getId()==R.id.search_button_cancel){
+            Log.d(TAG, "Cancel Button clicked");
+
+        }
+        if(view.getId()==R.id.search_button_search){
+            Log.d(TAG, "Search Button clicked");
+        }
+
+    }
+
+    private void createSearchDialogFragment(){
+        RealEstateSearchFragment searchDialogFragment = new RealEstateSearchFragment();
+      //  searchDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE,R.style.Dialog_FullScreen);
+        FragmentManager manager=getSupportFragmentManager();
+        searchDialogFragment.show(manager,SEARCH_DIALOG_TAG);
+
+        Log.i(TAG, " Dialog created");
     }
 
 

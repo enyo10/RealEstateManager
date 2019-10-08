@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="RealEstateViewModel"
+            type="com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel" />
+
+    </data>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -152,6 +160,7 @@
                 android:layout_margin="10dp"
                 android:background="@null"
                 android:padding="10dp"
+                android:onClick="dialogButtonClicked"
                 android:src="@drawable/baseline_clear_black_24" />
 
             <ImageButton
@@ -161,6 +170,7 @@
                 android:layout_margin="10dp"
                 android:background="@null"
                 android:padding="10dp"
+                android:onClick="dialogButtonClicked"
                 android:src="@drawable/baseline_search_24" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -168,3 +178,5 @@
     </LinearLayout>
 
 </FrameLayout>
+
+</layout>

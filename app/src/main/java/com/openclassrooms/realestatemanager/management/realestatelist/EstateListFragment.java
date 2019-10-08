@@ -29,7 +29,7 @@ public class EstateListFragment extends Fragment{
     private static int USER_ID=1;
 
     private FragmentEstateListBinding mBinding;
-    private RealEstateRecyclerViewAdapter mRealEstateRecyclerViewAdapter;
+    public static RealEstateRecyclerViewAdapter mRealEstateRecyclerViewAdapter;
     private RealEstateViewModel mRealEstateViewModel;
 
     @Nullable

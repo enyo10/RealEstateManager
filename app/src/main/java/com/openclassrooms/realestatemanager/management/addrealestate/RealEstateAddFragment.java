@@ -90,7 +90,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         // Observe the insertion.
 
-
         binding.setLifecycleOwner(this);
         return binding.getRoot();
 

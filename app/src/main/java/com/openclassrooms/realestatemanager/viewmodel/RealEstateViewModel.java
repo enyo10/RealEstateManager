@@ -25,8 +25,7 @@ public class RealEstateViewModel extends ViewModel {
     public String type;
     public ArrayList<String> nearbyValues=new ArrayList<>();
 
-    public  double  price;
-    /*public final MutableLiveData<Integer> numberOfRooms = new MutableLiveData<>();
+    public final MutableLiveData<Integer> numberOfRooms = new MutableLiveData<>();
     public final MutableLiveData<Integer> numberOfBedRooms = new MutableLiveData<>();
     public final MutableLiveData<Integer> numberOfBathRooms = new MutableLiveData<>();
     public final MutableLiveData<Double> surface = new MutableLiveData<>();
@@ -35,26 +34,21 @@ public class RealEstateViewModel extends ViewModel {
     public final MutableLiveData<String> city = new MutableLiveData<>();
     public final MutableLiveData<String> zip = new MutableLiveData<>();
     public final MutableLiveData<String> street = new MutableLiveData<>();
-    public final MutableLiveData<String> streetNumber = new MutableLiveData<>();*/
-
-    public int numberOfRooms;
-    public int numberOfBedRooms;
-    public int numberOfBathRooms;
-    public int surface;
-    public String description;
-    public String country;
-    public String city;
-    public String zip;
-    public String street;
-    public String streetNumber;
+    public final MutableLiveData<String> streetNumber = new MutableLiveData<>();
+    public final MutableLiveData<Double>price =new MutableLiveData<>();
 
 
-   /* private final MutableLiveData<Boolean> schoolButtonChecked = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> hospitalButtonChecked = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> busStationButtonChecked = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> shoppingCenterButtonChecked = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> sportCenterButtonChecked = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> parkButtonChecked = new MutableLiveData<>();*/
+
+    //  FOR SEARCH DATA.
+    public MutableLiveData<Integer>minRoom=new MutableLiveData<>();
+    public MutableLiveData<Integer>maxRoom=new MutableLiveData<>();
+    public MutableLiveData<Integer>minSurface=new MutableLiveData<>();
+    public MutableLiveData<Integer>maxSurface=new MutableLiveData<>();
+    public MutableLiveData<Double>minPrice=new MutableLiveData<>();
+    public MutableLiveData<Double>maxPrice=new MutableLiveData<>();
+    public MutableLiveData<String>area=new MutableLiveData<>();
+    public MutableLiveData<String>typeOfReal=new MutableLiveData<>();
+
     // REPOSITORIES
     private final RealEstateDataRepository realEstateDataSource;
     private final UserDataRepository userDataSource;
@@ -167,8 +161,8 @@ public class RealEstateViewModel extends ViewModel {
      */
     public void onRealEstateSave() {
 
-       /* String aType=type.getValue();
-        Integer nbrOfPieces = numberOfRooms.getValue();
+       // String aType=type.getValue();
+        Integer nbrOfRooms = numberOfRooms.getValue();
         Integer nbrOfBathRoom = numberOfBathRooms.getValue();
         Integer nbrOfBedRoom = numberOfBedRooms.getValue();
         Double aSurface = surface.getValue();
@@ -179,19 +173,23 @@ public class RealEstateViewModel extends ViewModel {
         String str = street.getValue();
         String st_nbr = streetNumber.getValue();
         Double aPrice = price.getValue();
-        String jsonImages = images.getValue();
-        ArrayList<String>nearByInterest=nearbyValues.getValue();*/
 
-                Address address = new Address(country, zip, city, street, streetNumber);
 
-        RealEstate realEstate = new RealEstate(1, type, price, surface, numberOfBedRooms, numberOfBathRooms, numberOfBedRooms, description,getSetRealEstateImagesString(), address,nearbyValues);
+
+        Address address = new Address(myCountry, zp, cty, str, st_nbr);
+
+        RealEstate realEstate = new RealEstate(1, type, aPrice, aSurface,nbrOfRooms,nbrOfBedRoom, nbrOfBathRoom, desc,getSetRealEstateImagesString(), address,nearbyValues);
         realEstate.setDateOfEntry(new Date());
         realEstate.setImages(getSetRealEstateImagesString());
 
         Log.i(TAG, "Real estate created");
+        Log.i(TAG, " price   ----- "+price);
 
         createRealEstate(realEstate);
 
+    }
+
+    public void onSearch(){
 
     }
 
