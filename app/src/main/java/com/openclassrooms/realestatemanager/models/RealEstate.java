@@ -40,12 +40,13 @@ public class RealEstate {
     @Embedded
      private Address address;
     private String type;
-    private String status;
+    private String status=Status.UNSOLD;
    // @NearbyPOI
     private ArrayList<String>nearbyPointOfInterest=new ArrayList<>();
     private Date dateOfEntry;
     private Date dateOfSale;
     private String images;
+
 
 
 
@@ -74,7 +75,7 @@ public class RealEstate {
     }
 
     public double getPrice() {
-        return this.price;
+        return price;
     }
 
     public void setPrice(double price) {
@@ -236,22 +237,38 @@ public class RealEstate {
 
 
         if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsDouble("surface"));
-        if (contentValues.containsKey("description")) realEstate.setCompleteDescription(contentValues.getAsString("description"));
-        if (contentValues.containsKey("price")) realEstate.setPrice(contentValues.getAsLong("price"));
-        if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsDouble("surface"));
+        if (contentValues.containsKey("completeDescription")) realEstate.setCompleteDescription(contentValues.getAsString("completeDescription"));
+        if (contentValues.containsKey("price")) realEstate.setPrice(contentValues.getAsDouble("price"));
         if (contentValues.containsKey("numberOfRooms")) realEstate.setNumberOfRooms(contentValues.getAsInteger("room"));
         if (contentValues.containsKey("numberOfBathRooms")) realEstate.setNumberOfBathrooms(contentValues.getAsInteger("bathroom"));
         if (contentValues.containsKey("numberOfBedRooms")) realEstate.setNumberOfBedRooms(contentValues.getAsInteger("bedroom"));
-      //  if (contentValues.containsKey("pictureUrl")) realEstate.setPhotosUrls((ArrayList<String>)contentValues.get("pictureUrl"));
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsString("status"));
-        if (contentValues.containsKey("entryDate")) realEstate.setDateOfEntry((Date) contentValues.get("entryDate"));//Risk
-        if (contentValues.containsKey("soldDate")) realEstate.setDateOfSale((Date) contentValues.get("soldDate"));//Risk
+        if (contentValues.containsKey("entryDate")) realEstate.setDateOfEntry((Date) contentValues.get("entryDate"));
+        if (contentValues.containsKey("soldDate")) realEstate.setDateOfSale((Date) contentValues.get("soldDate"));
         if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsInteger("userId"));
         if(contentValues.containsKey("images"))realEstate.setImages(contentValues.getAsString("images"));
         return realEstate;
 
     }
 
-
-
+    @Override
+    public String toString() {
+        return "RealEstate{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", numberOfBedRooms=" + numberOfBedRooms +
+                ", numberOfBathRooms=" + numberOfBathRooms +
+                ", numberOfRooms=" + numberOfRooms +
+                ", price=" + price +
+                ", surface=" + surface +
+                ", completeDescription='" + completeDescription + '\'' +
+                ", address=" + address +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", nearbyPointOfInterest=" + nearbyPointOfInterest +
+                ", dateOfEntry=" + dateOfEntry +
+                ", dateOfSale=" + dateOfSale +
+                ", images='" + images + '\'' +
+                '}';
+    }
 }

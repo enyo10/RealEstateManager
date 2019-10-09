@@ -1,17 +1,22 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.text.TextUtils;
+
 import androidx.databinding.InverseMethod;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class DataConverter {
 
     @InverseMethod("convertIntToString")
     public int convertStringToInt(String value) {
-
-            return Integer.parseInt(value);
+        int a=0;
+        if(!TextUtils.isEmpty(value))
+             a=Integer.parseInt(value);
+            return a;
 
     }
 
@@ -21,7 +26,10 @@ public class DataConverter {
 
     @InverseMethod("convertDoubleToString")
     public double convertStringToDouble(String value) {
-            return Double.parseDouble(value);
+        double d=0;
+        if(!TextUtils.isEmpty(value))
+            d= Double.parseDouble(value);
+        return d;
 
     }
     public  String convertDoubleToString(double value) {
@@ -44,4 +52,20 @@ public class DataConverter {
         DecimalFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
         return formatter.format(price);
     }
+
+    public static String formatPriceToDollarFormat(double value){
+        Locale loc =Locale.US;
+        String pattern="$###,###.###";
+        NumberFormat nf = NumberFormat.getNumberInstance(loc);
+        DecimalFormat df = (DecimalFormat)nf;
+        df.applyPattern(pattern);
+        return df.format(value);
+    }
+
+    public static double dollarFormatToDouble(String value){
+        String newValue=value.replace("$","").replaceAll(",","");
+
+        return Double.parseDouble(newValue);
+    }
 }
+

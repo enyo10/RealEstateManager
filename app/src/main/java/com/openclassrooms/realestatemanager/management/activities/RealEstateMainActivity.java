@@ -84,7 +84,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
                 if(destination.getId() != R.id.estateListFragment) {
 
                       frameLayout.setVisibility(View.GONE);
-                  //  toolbar.setVisibility(View.GONE);
+                     //  toolbar.setVisibility(View.GONE);
                    // bottomNavigationView.setVisibility(View.GONE);
 
 

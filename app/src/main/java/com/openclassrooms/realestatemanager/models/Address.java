@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.models;
 
 
+import androidx.annotation.NonNull;
+
 public class Address {
 
     private String Country;
@@ -63,4 +65,15 @@ public class Address {
     }
 
 
+    @Override
+    @NonNull
+    public String toString() {
+        return "Address{" +
+                "Country='" + Country + '\'' +
+                ", zip='" + zip + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
 }

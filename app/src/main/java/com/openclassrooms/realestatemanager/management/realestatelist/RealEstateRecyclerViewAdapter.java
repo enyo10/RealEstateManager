@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.management.realestatelist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentErstateListviewItemBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEstateRecyclerViewAdapter.MyViewHolder>implements EstateListItemClickedListener {
-
+    private static final String TAG = RealEstateRecyclerViewAdapter.class.getName();
     private List<RealEstate> dataModelList;
     private Context context;
     private RealEstateViewModel mViewModel;
@@ -52,7 +54,9 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         RealEstate dataModel = dataModelList.get(position);
+        Log.d(TAG, " real:  "+dataModel.toString());
         holder.itemRowBinding.setRealEstate(dataModel);
+        holder.itemRowBinding.setDataConverter(new DataConverter());
         if(dataModel.getImages()!=null)
             if(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).size()!=0)
         holder.itemRowBinding.setRealImage(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));
@@ -75,6 +79,7 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
         this.mRealEstateMainActivity.showDetailsFragment();
         Toast.makeText(context, "You clicked " + realEstate.getType(),
                 Toast.LENGTH_LONG).show();
+        Log.d(TAG, " You have selected : "+realEstate.toString());
 
 
     }

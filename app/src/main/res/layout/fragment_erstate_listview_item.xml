@@ -13,12 +13,11 @@
         <variable
             name="realImage"
             type="com.openclassrooms.realestatemanager.models.RealEstateImage" />
-        <variable
-            name="Utils"
-            type="com.openclassrooms.realestatemanager.utils.Utils" />
+
         <variable
             name="DataConverter"
             type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+
         <variable
             name="estateClickListener"
             type="com.openclassrooms.realestatemanager.management.realestatelist.EstateListItemClickedListener" />
@@ -85,20 +84,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/real_estate_type" />
 
-            <!--REAL ESTATE PRICE-->
             <TextView
                 android:id="@+id/real_estate_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="12dp"
-                android:hint="@string/price"
-                android:text="@={DataConverter.convertDoubleToString(realEstate.price)}"
-                android:textColor="@color/design_default_color_error"
+                android:hint="@string/park"
                 android:textSize="25sp"
-                android:textStyle="italic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/real_estate_place" />
+                android:text="@{DataConverter.convertDoubleToString(realEstate.price)}"
+                android:layout_marginStart="180dp"
+                android:textColor="@color/primary_darker"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_place"/>
+
 
 
             <!--SEPARATION-->

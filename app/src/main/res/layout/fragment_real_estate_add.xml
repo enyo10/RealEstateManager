@@ -10,6 +10,9 @@
         <variable
             name="spinAdapter"
             type="android.widget.ArrayAdapter"/>
+        <variable
+            name="realEstate"
+            type="com.openclassrooms.realestatemanager.models.RealEstate" />
 
         <variable
             name="RealEstateViewModel"
@@ -30,6 +33,482 @@
     </data>
 
     <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        tools:context=".management.addrealestate.RealEstateAddFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/registration_text_form_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/registration_text_form_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="25sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="italic"
+                    android:text="@string/registration">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                    android:id="@+id/spinner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                    android:layout_below="@+id/registration_text_form_layout"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="10sp"
+                        android:layout_weight="0.4"
+                        android:textSize="20sp"
+                        android:text="@string/type"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="10dp">
+
+                    </TextView>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/realTypeSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        app:pmtOpt="@={RealEstateViewModel.realEstate.type}"
+                        app:adapter="@{spinAdapter}"
+                        android:prompt="@string/real_prompt"
+                        android:layout_marginStart="5dp"/>
+
+                </LinearLayout>
+
+
+
+                 <LinearLayout
+                        android:id="@+id/room_and_surface"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/spinner_layout"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_nbr_of_room"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:layout_marginEnd="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_nbr_of_room_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfRooms)}"
+                                android:hint="@string/number_of_pieces" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_surface"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:layout_marginStart="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_surface_text_edit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/surface"
+                                android:inputType="numberDecimal"
+                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realEstate.surface)}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/bath_and_bed_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/room_and_surface"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_bath_room"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:layout_marginEnd="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_bath_text_edit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfBathRooms)}"
+                                android:hint="@string/number_of_bedrooms" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_number_bath_room"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:layout_marginStart="5dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_number_bed_room_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/number_of_bathroom"
+                                android:inputType="number"
+                                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfBedRooms)}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/description_and_country_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bath_and_bed_room"
+                        android:orientation="vertical">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_description"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_description_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={RealEstateViewModel.realEstate.completeDescription}"
+                                android:inputType="textMultiLine"
+                                android:hint="@string/description" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_country"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_country_text_edit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:text="@={RealEstateViewModel.realEstate.address.country}"
+                                android:hint="@string/country" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/city_and_zip_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/description_and_country_layout"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_city_label"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:layout_marginEnd="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_city_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={RealEstateViewModel.realEstate.address.city}"
+                                android:hint="@string/city_label" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_zip"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:layout_marginStart="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_zip_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={RealEstateViewModel.realEstate.address.zip}"
+                                android:hint="@string/label_zip" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/street_and_nbr_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/city_and_zip_layout"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_street"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".70"
+                            android:layout_marginEnd="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_street_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={RealEstateViewModel.realEstate.address.street}"
+                                android:hint="@string/street" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_street_number"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".30"
+                            android:layout_marginStart="5dp"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_street_number_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:text="@={RealEstateViewModel.realEstate.address.number}"
+                                android:hint="@string/street_number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/shopping_and_bus_station_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/street_and_nbr_layout">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/shopping_center_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_weight="1"
+                            android:text="@string/shopping_center" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/bus_station_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/bus_station" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hospital_and_school_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/shopping_and_bus_station_layout"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/hospital_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/hospital" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/school_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/school" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sport_and_park_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/hospital_and_school_layout"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/sport_center_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sport_center" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/park_check_box"
+                            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+                            android:onClick="onCheckboxClicked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/park" />
+                    </LinearLayout>
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/real_estate_price_input_layout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sport_and_park_layout"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/real_estate_price_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realEstate.price)}"
+                                android:hint="@string/price" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <!-- RECYCLER VIEW -->
+            <RelativeLayout
+                android:id="@+id/recycler_view_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/real_estate_price_input_layout">
+
+                <androidx.recyclerview.widget.RecyclerView
+
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+            </RelativeLayout>
+
+
+            <!-- BUTTONS CONTAINER -->
+            <LinearLayout
+                android:id="@+id/action_button_button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/recycler_view_relative_layout"
+                android:layout_margin="@dimen/default_large_margin">
+
+                <!-- BUTTON TRIP BOOK -->
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/real_estate_add_picture_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_add_picture_button"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/default_text_size"
+                    android:onClick="@{MyListener::onChoosePictureButtonClicked}"
+                    android:background="@drawable/button_radius_primary_color"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="@dimen/default_margin"
+                    android:padding="@dimen/default_large_margin"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/real_estate_add_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_add_save_button"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/button_radius_accent_color"
+                    android:visibility="@{RealEstateViewModel.hasCamera? View.GONE : View.VISIBLE}"
+                    android:onClick="@{MyListener::onStartRecording}"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="@dimen/default_margin"
+                    android:padding="@dimen/default_large_margin"/>
+
+
+                <!-- BUTTON save -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/real_estate_add_save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_add_save_button"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/default_text_size"
+                    android:onClick="@{MyListener::onRealEstateSaveButtonClicked}"
+                    android:background="@drawable/button_radius_accent_color"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="@dimen/default_margin"
+                    android:padding="@dimen/default_large_margin"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
@@ -424,7 +903,7 @@
 
 
             </LinearLayout>
-            <!-- RECYCLER VIEW -->
+            &lt;!&ndash; RECYCLER VIEW &ndash;&gt;
             <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/recyclerView"
@@ -434,14 +913,14 @@
 
 
 
-            <!-- BUTTONS CONTAINER -->
+            &lt;!&ndash; BUTTONS CONTAINER &ndash;&gt;
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="@dimen/default_large_margin">
 
-                <!-- BUTTON TRIP BOOK -->
+                &lt;!&ndash; BUTTON TRIP BOOK &ndash;&gt;
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/real_estate_add_picture_button"
@@ -471,7 +950,7 @@
                     android:padding="@dimen/default_large_margin"/>
 
 
-                <!-- BUTTON save -->
+                &lt;!&ndash; BUTTON save &ndash;&gt;
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/real_estate_add_save_button"
                     android:layout_width="match_parent"
@@ -489,7 +968,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
 
 </layout>

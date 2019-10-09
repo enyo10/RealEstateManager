@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.RealEstateDataRepository;
@@ -59,7 +58,7 @@ public class RealEstateViewModel extends ViewModel {
     private final Executor executor;
     private final MutableLiveData<RealEstate> selectedRealEstate = new MutableLiveData<>();
 
-    private MutableLiveData<RealEstate> mEstateMutableLiveData;
+    public MutableLiveData<RealEstate> realEstate=new MutableLiveData<>();
     private MutableLiveData<Long> insertResult;
 
 
@@ -76,6 +75,7 @@ public class RealEstateViewModel extends ViewModel {
     // DATA
     @Nullable
     private LiveData<User> currentUser;
+
 
 
     public RealEstateViewModel(RealEstateDataRepository realEstateDataSource, UserDataRepository userDataSource, Executor executor) {
@@ -138,12 +138,14 @@ public class RealEstateViewModel extends ViewModel {
 
     public MutableLiveData<RealEstate> getRealEstate() {
 
-        if (mEstateMutableLiveData == null) {
-            mEstateMutableLiveData = new MutableLiveData<>();
+        if (realEstate== null) {
+            realEstate = new MutableLiveData<>();
         }
-        return mEstateMutableLiveData;
+        return realEstate;
 
     }
+
+
 
     public MutableLiveData<Long> getInsertResult() {
         return insertResult;
@@ -163,7 +165,7 @@ public class RealEstateViewModel extends ViewModel {
      * this method to save the RealEstate object in the data base.
      * , the view clicked to fire the action save.
      */
-    public void onRealEstateSave() {
+    public void onRealEstateSave(long userId) {
 
        // String aType=type.getValue();
         Integer nbrOfRooms = numberOfRooms.getValue()!=null?numberOfRooms.getValue():0;
@@ -180,16 +182,23 @@ public class RealEstateViewModel extends ViewModel {
 
 
 
-        Address address = new Address(myCountry, zp, cty, str, st_nbr);
+       // Address address = new Address(myCountry, zp, cty, str, st_nbr);
 
-        RealEstate realEstate = new RealEstate(1, type, aPrice, aSurface,nbrOfRooms,nbrOfBedRoom, nbrOfBathRoom, desc,getSetRealEstateImagesString(), address,nearbyValues);
-        realEstate.setDateOfEntry(new Date());
-        realEstate.setImages(getSetRealEstateImagesString());
+       // RealEstate myRealEstate = new RealEstate(1, type, aPrice, aSurface,nbrOfRooms,nbrOfBedRoom, nbrOfBathRoom, desc,getSetRealEstateImagesString(), address,nearbyValues);
+        RealEstate myRealEstate =realEstate.getValue();
 
-        Log.i(TAG, "Real estate created");
-        Log.i(TAG, " price   ----- "+aPrice);
 
-        createRealEstate(realEstate);
+        if(myRealEstate!=null) {
+            Log.i(TAG, " Real Estate not null");
+            myRealEstate.setDateOfEntry(new Date());
+            myRealEstate.setImages(getSetRealEstateImagesString());
+            myRealEstate.setNearbyPointOfInterest(nearbyValues);
+
+            myRealEstate.setUserId(userId);
+            Log.i(TAG, "Real : "+myRealEstate.toString());
+
+            createRealEstate(myRealEstate);}
+
 
     }
 

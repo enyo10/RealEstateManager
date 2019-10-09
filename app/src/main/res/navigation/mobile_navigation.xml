@@ -21,10 +21,6 @@
             app:destination="@id/realEstateAddFragment" />
 
         <action
-            android:id="@+id/action_estateListFragment_to_realEstateEditFragment"
-            app:destination="@id/realEstateEditFragment" />
-
-        <action
             android:id="@+id/action_estateListFragment_to_estateDetailsFragment"
             app:destination="@id/estateDetailsFragment" />
         <action
@@ -37,7 +33,11 @@
         android:id="@+id/estateDetailsFragment"
         android:name="com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment"
         android:label="@string/fragment_estate_details"
-        tools:layout="@layout/fragment_estate_details" />
+        tools:layout="@layout/fragment_estate_details" >
+        <action
+            android:id="@+id/action_estateDetailsFragment_to_realEstateEditFragment"
+            app:destination="@id/realEstateEditFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/realEstateAddFragment"

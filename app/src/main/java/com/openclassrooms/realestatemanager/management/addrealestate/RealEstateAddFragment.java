@@ -37,6 +37,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateAddBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
+import com.openclassrooms.realestatemanager.models.Address;
+import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.utils.MyListener;
@@ -81,6 +83,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     private RealEstateViewModel mRealEstateViewModel;
     private FragmentRealEstateAddBinding binding;
     private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
+    private static  int USER_ID;
 
     private Uri fileUri;
 
@@ -119,10 +122,14 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         if (this.getActivity() != null) {
             rootView = ((RealEstateMainActivity) this.getActivity()).mRootView;
             mRealEstateViewModel = ((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
+            USER_ID=((RealEstateMainActivity) this.getActivity()).USER_ID;
             //Check if the device hat camera.
             mRealEstateViewModel.hasCamera.setValue(hasCamera());
 
             binding.setDataConverter(new DataConverter());
+            RealEstate realEstate=new RealEstate();
+            realEstate.setAddress(new Address());
+            mRealEstateViewModel.realEstate.setValue(realEstate);
             binding.setRealEstateViewModel(mRealEstateViewModel);
 
             String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
@@ -181,24 +188,13 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (noErrors) {
 
-          /* Integer  numberOfPieces=  mRealEstateViewModel.numberOfBathRooms.getValue();
-           Double area =mRealEstateViewModel.surface.getValue();
-           String city = mRealEstateViewModel.city.getValue();
-           String description=mRealEstateViewModel.description.getValue();
-           String country=mRealEstateViewModel.country.getValue();
-           String street =mRealEstateViewModel.street.getValue();
-           String zip =mRealEstateViewModel.zip.getValue();
-           Double price =mRealEstateViewModel.price.getValue();
-*/
-           /* Log.d(TAG, " numberOfPieces: "+numberOfPieces);
-            Log.d(TAG, " surface "+area);
-            Log.d(TAG, " description: "+description);
-            Log.d(TAG, " city: "+city);
-            Log.d(TAG, " country: "+country);
-            Log.d(TAG, " street: "+street);
-            Log.d(TAG, " zip: "+zip);
-            Log.d(TAG, " price: "+price);
-*/
+            for(RealEstateImage estateImage:mEstateImages){
+                saveImage(estateImage);
+
+                Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
+            }
+            mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
+            mRealEstateViewModel.onRealEstateSave(USER_ID);
 
             Log.d(TAG, " Success");
         }
@@ -463,13 +459,13 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         // Check if all text field are filled.
         getTextValues();
 
-        for(RealEstateImage estateImage:mEstateImages){
+        /*for(RealEstateImage estateImage:mEstateImages){
             saveImage(estateImage);
 
             Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
         }
         mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
-        mRealEstateViewModel.onRealEstateSave();
+        mRealEstateViewModel.onRealEstateSave();*/
     }
 
 

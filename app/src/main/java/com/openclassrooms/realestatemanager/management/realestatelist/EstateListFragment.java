@@ -57,6 +57,7 @@ public class EstateListFragment extends Fragment{
 
         }
 
+
         initAndConfigureRecyclerView();
 
         getRealEstateItems(USER_ID);
