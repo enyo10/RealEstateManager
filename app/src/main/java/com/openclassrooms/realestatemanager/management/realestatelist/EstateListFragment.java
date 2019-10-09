@@ -28,9 +28,11 @@ public class EstateListFragment extends Fragment{
     private static final String TAG =EstateListFragment.class.getName();
     private static int USER_ID=1;
 
-    private FragmentEstateListBinding mBinding;
-    public static RealEstateRecyclerViewAdapter mRealEstateRecyclerViewAdapter;
-    private RealEstateViewModel mRealEstateViewModel;
+    protected FragmentEstateListBinding mBinding;
+    public  RealEstateRecyclerViewAdapter mRealEstateRecyclerViewAdapter;
+    protected RealEstateViewModel mRealEstateViewModel;
+
+
 
     @Nullable
     @Override
@@ -60,7 +62,7 @@ public class EstateListFragment extends Fragment{
         getRealEstateItems(USER_ID);
     }
 
-    private void initAndConfigureRecyclerView(){
+    public void initAndConfigureRecyclerView(){
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -72,12 +74,12 @@ public class EstateListFragment extends Fragment{
     }
 
 
-    private void updateRealEstateList(List<RealEstate>list){
+    protected void updateRealEstateList(List<RealEstate>list){
        mRealEstateRecyclerViewAdapter.updateWithData(list);
     }
 
     // Get all RealEstate for a given  user id.
-    private void getRealEstateItems(long userId) {
+    protected void getRealEstateItems(long userId) {
         this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateList);
     }
 

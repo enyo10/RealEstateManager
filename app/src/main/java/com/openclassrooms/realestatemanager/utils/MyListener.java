@@ -6,5 +6,6 @@ public interface MyListener {
     void onRealEstateTypeSelected(String type);
     void onChoosePictureButtonClicked(View v);
     void onRealEstateSaveButtonClicked(View v);
+    void onStartRecording(View v);
 
 }

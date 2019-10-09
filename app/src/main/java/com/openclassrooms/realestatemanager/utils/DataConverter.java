@@ -24,10 +24,20 @@ public class DataConverter {
             return Double.parseDouble(value);
 
     }
-
     public  String convertDoubleToString(double value) {
         return String.valueOf(value);
     }
+
+
+    public String convertLongToString(Long value){
+        return Long.toString(value);
+    }
+
+    @InverseMethod("convertLongToString")
+    public Long convertStringToLong(String value){
+        return Long.valueOf(value);
+    }
+
 
 
     public static String convertPriceToString(double price) {

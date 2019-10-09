@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_estateListFragment_to_estateDetailsFragment"
             app:destination="@id/estateDetailsFragment" />
+        <action
+            android:id="@+id/action_estateListFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
 
     </fragment>
 
@@ -57,5 +60,10 @@
         android:name="com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment"
         android:label="@string/fragment_real_estate_search_fragment"
         tools:layout="@layout/real_estate_search_dialog" />
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.openclassrooms.realestatemanager.management.search.SearchResultFragment"
+        android:label="@string/fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
 
 </navigation>

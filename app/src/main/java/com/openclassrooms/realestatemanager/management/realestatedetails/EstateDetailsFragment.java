@@ -111,8 +111,4 @@ public class EstateDetailsFragment extends Fragment {
 
 
 
-
-    
-
-
 }

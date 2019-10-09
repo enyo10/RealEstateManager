@@ -35,19 +35,23 @@ public class RealEstateViewModel extends ViewModel {
     public final MutableLiveData<String> zip = new MutableLiveData<>();
     public final MutableLiveData<String> street = new MutableLiveData<>();
     public final MutableLiveData<String> streetNumber = new MutableLiveData<>();
-    public final MutableLiveData<Double>price =new MutableLiveData<>();
+    public final MutableLiveData<Double>realPrice=new MutableLiveData<>();
+
 
 
 
     //  FOR SEARCH DATA.
-    public MutableLiveData<Integer>minRoom=new MutableLiveData<>();
-    public MutableLiveData<Integer>maxRoom=new MutableLiveData<>();
-    public MutableLiveData<Integer>minSurface=new MutableLiveData<>();
-    public MutableLiveData<Integer>maxSurface=new MutableLiveData<>();
-    public MutableLiveData<Double>minPrice=new MutableLiveData<>();
-    public MutableLiveData<Double>maxPrice=new MutableLiveData<>();
-    public MutableLiveData<String>area=new MutableLiveData<>();
-    public MutableLiveData<String>typeOfReal=new MutableLiveData<>();
+    public MutableLiveData<String>searchArea = new MutableLiveData<>();
+    public MutableLiveData<Integer>minRoom = new MutableLiveData<>();
+    public MutableLiveData<Integer>maxRoom = new MutableLiveData<>();
+    public MutableLiveData<Integer>minSurface = new MutableLiveData<>();
+    public MutableLiveData<Integer>maxSurface = new MutableLiveData<>();
+    public MutableLiveData<Long>minPrice = new MutableLiveData<>();
+    public MutableLiveData<Long>maxPrice = new MutableLiveData<>();
+    public MutableLiveData<String>searchType = new MutableLiveData<>();
+
+    // FOR CAMERA.
+    public MutableLiveData<Boolean>hasCamera=new MutableLiveData<>();
 
     // REPOSITORIES
     private final RealEstateDataRepository realEstateDataSource;
@@ -162,17 +166,17 @@ public class RealEstateViewModel extends ViewModel {
     public void onRealEstateSave() {
 
        // String aType=type.getValue();
-        Integer nbrOfRooms = numberOfRooms.getValue();
-        Integer nbrOfBathRoom = numberOfBathRooms.getValue();
-        Integer nbrOfBedRoom = numberOfBedRooms.getValue();
-        Double aSurface = surface.getValue();
+        Integer nbrOfRooms = numberOfRooms.getValue()!=null?numberOfRooms.getValue():0;
+        Integer nbrOfBathRoom = numberOfBathRooms.getValue()!=null?numberOfBathRooms.getValue():0;
+        Integer nbrOfBedRoom = numberOfBedRooms.getValue()!=null?numberOfBedRooms.getValue():0;
+        Double aSurface = surface.getValue()!=null?surface.getValue():0.0;
         String desc = description.getValue();
         String myCountry = country.getValue();
         String cty = city.getValue();
         String zp = zip.getValue();
         String str = street.getValue();
         String st_nbr = streetNumber.getValue();
-        Double aPrice = price.getValue();
+        Double aPrice = realPrice.getValue()!=null?realPrice.getValue():0.0;
 
 
 
@@ -183,13 +187,26 @@ public class RealEstateViewModel extends ViewModel {
         realEstate.setImages(getSetRealEstateImagesString());
 
         Log.i(TAG, "Real estate created");
-        Log.i(TAG, " price   ----- "+price);
+        Log.i(TAG, " price   ----- "+aPrice);
 
         createRealEstate(realEstate);
 
     }
 
-    public void onSearch(){
+    public LiveData<List<RealEstate>> getSearchResult(long userId){
+
+        String type = searchType.getValue()!=null ? searchType.getValue() : "%";
+        String area = searchArea.getValue()!=null? searchArea.getValue() : "%";
+        String surfaceMin = minSurface.getValue()!=null ? minSurface.getValue().toString() : "0";
+        String surfaceMax = maxSurface.getValue()!=null ? maxSurface.getValue().toString() : "100000";
+        String priceMin = minPrice.getValue()!=null ? minPrice.getValue().toString() : "0";
+        String priceMax = maxPrice.getValue()!=null ? maxPrice.getValue().toString() : "999999999";
+        String roomMin = minRoom.getValue()!=null? minRoom.getValue().toString() : "0";
+        String roomMax = maxRoom.getValue()!=null ? maxRoom.getValue().toString() : "100";
+
+      return   this.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin),Long.valueOf(priceMax),
+                Integer.valueOf(roomMin), Integer.valueOf(roomMax), userId);
+
 
     }
 

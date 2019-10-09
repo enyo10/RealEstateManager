@@ -225,19 +225,26 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         if(view.getId()==R.id.search_button_cancel){
             Log.d(TAG, "Cancel Button clicked");
+            mRealEstateSearchFragment.dismiss();
 
         }
-        if(view.getId()==R.id.search_button_search){
+        if(view.getId()==R.id.action_search){
+            mRealEstateSearchFragment.startQuery();
+            Navigation.findNavController(this,R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_searchResultFragment);
+
             Log.d(TAG, "Search Button clicked");
+
+
         }
 
     }
 
     private void createSearchDialogFragment(){
-        RealEstateSearchFragment searchDialogFragment = new RealEstateSearchFragment();
-      //  searchDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE,R.style.Dialog_FullScreen);
+        mRealEstateSearchFragment= new RealEstateSearchFragment();
+       // searchDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE,R.style.Dialog_FullScreen);
         FragmentManager manager=getSupportFragmentManager();
-        searchDialogFragment.show(manager,SEARCH_DIALOG_TAG);
+        mRealEstateSearchFragment.show(manager,SEARCH_DIALOG_TAG);
+
 
         Log.i(TAG, " Dialog created");
     }

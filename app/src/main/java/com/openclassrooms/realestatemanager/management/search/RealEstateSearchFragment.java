@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.RealEstateSearchDialogBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
-import com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
@@ -96,7 +95,8 @@ public class RealEstateSearchFragment extends DialogFragment {
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         mRealEstateList.clear();
-        EstateListFragment.mRealEstateRecyclerViewAdapter.updateWithData(realEstates);
+        if(SearchResultFragment.getINSTANCE().mRealEstateRecyclerViewAdapter!=null)
+        SearchResultFragment.getINSTANCE().mRealEstateRecyclerViewAdapter.updateWithData(realEstates);
         mRealEstateList.addAll(realEstates);
        Log.d(TAG, "updateRealEstateItemsList: data size = "+ mRealEstateList.size());
 
@@ -106,25 +106,12 @@ public class RealEstateSearchFragment extends DialogFragment {
     /**
      * This method to make search.
      */
-    private void startQuery() {
-       /* String type = !mType.getText().toString().equals("") ? mType.getText().toString() : "%";
-        String area = !mArea.getText().toString().equals("") ? mArea.getText().toString() : "%";
-        String surfaceMin = !mSurfaceMin.getText().toString().equals("") ? mSurfaceMin.getText().toString() : "0";
-        String surfaceMax = !mSurfaceMax.getText().toString().equals("") ? mSurfaceMax.getText().toString() : "100000";
-        String priceMin = !mPriceMin.getText().toString().equals("") ? mPriceMin.getText().toString() : "0";
-        String priceMax = !mPriceMax.getText().toString().equals("") ? mPriceMax.getText().toString() : "999999999999";
-        String roomMin = !mRoomMin.getText().toString().equals("") ? mRoomMin.getText().toString() : "0";
-        String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "100";
+    public void startQuery() {
 
-        this.mViewModel.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
-                Integer.valueOf(roomMin), Integer.valueOf(roomMax), USER_ID)
-                .observe(this, this::updateRealEstateItemsList);*/
-
+       mRealEstateViewModel.getSearchResult(USER_ID).observe(this, this::updateRealEstateItemsList);
+        if(getDialog()!=null)
         getDialog().dismiss();
     }
-
-
-
 
 
 }

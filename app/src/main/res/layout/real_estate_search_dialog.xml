@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="RealEstateViewModel"
             type="com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel" />
 
+        <variable
+            name="DataConverter"
+            type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+
     </data>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".management.search.RealEstateSearchFragment">
 
     <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".management.search.RealEstateSearchFragment"
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:padding="15dp"
-            android:text="Enter your criteria"
+            android:text="@string/enter_your_criteria"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Type"
+                android:hint="@string/type"
+                android:text="@={RealEstateViewModel.searchType}"
                 android:padding="10dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -53,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Area"
+                android:hint="@string/area"
+                android:text="@={RealEstateViewModel.searchArea}"
                 android:padding="10dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -70,8 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Surface min"
+                android:hint="@string/surface_min"
                 android:inputType="number"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minSurface)}"
                 android:padding="10dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -80,8 +84,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Surface max"
+                android:hint="@string/surface_max"
                 android:inputType="number"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxSurface)}"
                 android:padding="10dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -100,8 +105,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Price min"
+                android:hint="@string/price_min"
                 android:inputType="number"
+                android:text="@={DataConverter.convertLongToString(RealEstateViewModel.minPrice)}"
                 android:padding="10dp" />
 
 
@@ -111,8 +117,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Price max"
+                android:hint="@string/price_max"
                 android:inputType="number"
+                android:text="@={DataConverter.convertLongToString(RealEstateViewModel.maxPrice)}"
                 android:padding="10dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -130,8 +137,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Room min"
+                android:hint="@string/room_min"
                 android:inputType="number"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minRoom)}"
                 android:padding="10dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -140,8 +148,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="Room max"
+                android:hint="@string/room_max"
                 android:inputType="number"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxRoom)}"
                 android:padding="10dp" />
 
 
@@ -161,22 +170,23 @@
                 android:background="@null"
                 android:padding="10dp"
                 android:onClick="dialogButtonClicked"
-                android:src="@drawable/baseline_clear_black_24" />
+                android:src="@drawable/baseline_clear_black_24"
+                android:contentDescription="@string/search_dialog_cancel" />
 
             <ImageButton
-                android:id="@+id/search_button_search"
+                android:id="@+id/action_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@null"
                 android:padding="10dp"
                 android:onClick="dialogButtonClicked"
-                android:src="@drawable/baseline_search_24" />
+                android:src="@drawable/baseline_search_24"
+                android:contentDescription="@string/search_dialog_search" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     </LinearLayout>
 
-</FrameLayout>
 
 </layout>

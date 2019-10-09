@@ -107,6 +107,17 @@
     <string name="bedroom_quantity">Quantity of bedrooms</string>
     <string name="number_of_bedrooms">Number of bedrooms</string>
     <string name="media">Media</string>
+    <string name="enter_your_criteria">Enter your search criteria</string>
+    <string name="area">Area</string>
+    <string name="surface_min">Surface min</string>
+    <string name="surface_max">Surface max</string>
+    <string name="price_min">Price min</string>
+    <string name="price_max">Price max</string>
+    <string name="room_min">Room min</string>
+    <string name="room_max">Room max</string>
+    <string name="search_dialog_search">Search dialog search</string>
+    <string name="search_dialog_cancel">Search dialog cancel</string>
+    <string name="fragment_search_result">Search result </string>
 
 
 </resources>

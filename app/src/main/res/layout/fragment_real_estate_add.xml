@@ -17,6 +17,7 @@
         <variable
             name="DataConverter"
             type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+
         <variable
             name="Type"
             type="com.openclassrooms.realestatemanager.models.Type" />
@@ -411,7 +412,7 @@
                                 android:id="@+id/real_estate_price_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.price)}"
+                                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realPrice)}"
                                 android:inputType="number"
                                 android:hint="@string/price" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -451,6 +452,20 @@
                     android:textSize="@dimen/default_text_size"
                     android:onClick="@{MyListener::onChoosePictureButtonClicked}"
                     android:background="@drawable/button_radius_primary_color"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="@dimen/default_margin"
+                    android:padding="@dimen/default_large_margin"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/real_estate_add_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_add_save_button"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/button_radius_accent_color"
+                    android:visibility="@{RealEstateViewModel.hasCamera? View.GONE : View.VISIBLE}"
+                    android:onClick="@{MyListener::onStartRecording}"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_margin="@dimen/default_margin"
                     android:padding="@dimen/default_large_margin"/>
