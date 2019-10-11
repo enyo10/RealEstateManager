@@ -54,14 +54,16 @@ public class DataConverter {
     }
 
     public static String formatPriceToDollarFormat(double value){
-        Locale loc =Locale.US;
-        String pattern="$###,###.###";
-        NumberFormat nf = NumberFormat.getNumberInstance(loc);
+        String pattern ="$###,###.###";
+
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
         DecimalFormat df = (DecimalFormat)nf;
         df.applyPattern(pattern);
+
         return df.format(value);
     }
 
+    @InverseMethod("formatPriceToDollarFormat")
     public static double dollarFormatToDouble(String value){
         String newValue=value.replace("$","").replaceAll(",","");
 

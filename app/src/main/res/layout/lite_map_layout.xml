@@ -7,12 +7,40 @@
     android:layout_gravity="center"
     app:cardCornerRadius="4dp"
     app:cardElevation="1dp">
+    <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:cameraZoom="13"
+        map:mapType="normal"
+        map:liteMode="true"
+        />
 
-    <ImageView
+    <!--<com.google.android.gms.maps.MapView
+        android:id="@+id/detail_map_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+
+        android:contentDescription="@string/map_view"
+         />-->
+<!--    app:location="@{latLong}"-->
+    <!--<ImageView
         android:id="@+id/detail_map_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:contentDescription="@string/map_view"
-        android:src="@drawable/ic_map_view" />
+        android:src="@drawable/ic_map_view" />-->
+   <!-- <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        map:cameraZoom="13"
+        map:mapType="normal"
+        map:liteMode="true"/>-->
 </androidx.cardview.widget.CardView>

@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
@@ -84,14 +83,5 @@ public class RealEstateImage {
                 .into(view);
     }
 
-    @Override
-    @NonNull
-    public String toString() {
-        return "RealEstateImage{" +
-                "imageName='" + imageName + '\'' +
-                ", bitmap=" + bitmap +
-                ", imageDescription='" + imageDescription + '\'' +
-                ", uri='" + uri + '\'' +
-                '}';
-    }
+
 }

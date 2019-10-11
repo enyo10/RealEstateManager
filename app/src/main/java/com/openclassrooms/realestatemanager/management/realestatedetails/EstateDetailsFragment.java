@@ -16,13 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentEstateDetailsBinding;
-import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +36,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EstateDetailsFragment extends Fragment {
+public class EstateDetailsFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG= EstateDetailsFragment.class.getName();
 
     private FragmentEstateDetailsBinding mFragmentEstateDetailsBinding;
@@ -38,6 +44,12 @@ public class EstateDetailsFragment extends Fragment {
     private RealEstateViewModel mRealEstateViewModel;
     private List<RealEstateImage> mRealEstateImageList;
     private RealEstate mRealEstate;
+
+    // For map.
+    private MapView mapView;
+    private GoogleMap gmap;
+    private SupportMapFragment mapFragment;
+
 
 
     public EstateDetailsFragment() {
@@ -51,6 +63,10 @@ public class EstateDetailsFragment extends Fragment {
         mRealEstateImageList=new ArrayList<>();
         if(this.getActivity()!=null)
         mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
+
+        initMapsViews();
+
+
 
 
         return mFragmentEstateDetailsBinding.getRoot();
@@ -96,6 +112,13 @@ public class EstateDetailsFragment extends Fragment {
 
     }
 
+    private void initMapsViews(){
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null)
+            mapFragment.getMapAsync(this);
+
+    }
+
     private void updateUI(RealEstate realEstate){
         mRealEstateImageList= Utils.jsonStringToRealEstateImageList(realEstate.getImages());
         Log.i(TAG, " in update method");
@@ -114,4 +137,16 @@ public class EstateDetailsFragment extends Fragment {
 
 
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        gmap = googleMap;
+        gmap.setMinZoomPreference(12);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+    }
 }

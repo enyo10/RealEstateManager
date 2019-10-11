@@ -2,10 +2,11 @@ package com.openclassrooms.realestatemanager.models;
 
 
 import androidx.annotation.NonNull;
+import androidx.room.Ignore;
 
 public class Address {
 
-    private String Country;
+    private String country;
     private String zip;
     private String city;
     private String street;
@@ -15,9 +16,9 @@ public class Address {
     public Address(){
 
     }
-
+@Ignore
     public Address(String country, String zip, String city, String street, String number) {
-        Country = country;
+        this.country = country;
         this.zip = zip;
         this.city = city;
         this.street = street;
@@ -49,11 +50,11 @@ public class Address {
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        country = country;
     }
 
     public String getNumber() {
@@ -69,11 +70,19 @@ public class Address {
     @NonNull
     public String toString() {
         return "Address{" +
-                "Country='" + Country + '\'' +
+                "Country='" + country + '\'' +
                 ", zip='" + zip + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", number='" + number + '\'' +
                 '}';
+    }
+
+    public String format(){
+        String address = (street +" " +number+" " +city + " " + country
+                + " " + zip).toLowerCase();
+        return address.replace(" ", "+");
+
+
     }
 }

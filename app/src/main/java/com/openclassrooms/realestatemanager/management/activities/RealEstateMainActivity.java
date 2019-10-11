@@ -1,4 +1,5 @@
 package com.openclassrooms.realestatemanager.management.activities;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,8 @@ import com.openclassrooms.realestatemanager.management.realestatedetails.EstateD
 import com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
+
+import java.util.ArrayList;
 
 public class RealEstateMainActivity extends AppCompatActivity {
     private static final String TAG = RealEstateMainActivity.class.getName();
@@ -174,50 +177,62 @@ public class RealEstateMainActivity extends AppCompatActivity {
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.park_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("PARK");
+                if (checked){
 
-                else
-                    mRealEstateViewModel.nearbyValues.remove("PARK");
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.park));
+                }
+
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.park));
+                }
                 break;
 
             case R.id.bus_station_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("STATION");
-                else
-                    mRealEstateViewModel.nearbyValues.remove("STATION");
+                if (checked){
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.bus_station));}
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.bus_station));}
                 break;
 
             case R.id.sport_center_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("SPORT CENTER");
-                else
-                    mRealEstateViewModel.nearbyValues.remove("SPORT CENTER");
+                if (checked){
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.sport_center));}
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.sport_center));}
                 break;
 
             case R.id.shopping_center_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("SHOPPING CENTER");
-                else
-                    mRealEstateViewModel.nearbyValues.remove("SHOPPING CENTER");
+                if (checked){
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.shopping_center));}
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.shopping_center));}
                 break;
             case R.id.hospital_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("HOSPITAL");
-                else
-                    mRealEstateViewModel.nearbyValues.remove("HOSPITAL");
+                if (checked){
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.hospital));}
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.hospital));
+                }
                 break;
 
             case R.id.school_check_box:
-                if (checked)
-                    mRealEstateViewModel.nearbyValues.add("SCHOOL");
-                else
-                    mRealEstateViewModel.nearbyValues.remove("SCHOOL");
+                if (checked){
+                    mRealEstateViewModel.nearbyValues.add(getResources().getString(R.string.school));
+                }
+                else{
+                    mRealEstateViewModel.nearbyValues.remove(getResources().getString(R.string.school));
+                }
                 break;
 
 
         }
         Log.d(TAG, " list value "+ mRealEstateViewModel.nearbyValues.toString());
+    }
+
+
+    public void updateCheckBox(ArrayList<MaterialCheckBox>materialCheckBoxes){
+
+
     }
 
 
@@ -249,5 +264,13 @@ public class RealEstateMainActivity extends AppCompatActivity {
         Log.i(TAG, " Dialog created");
     }
 
+
+   /* @BindingAdapter("app:latLong")
+    public static void bindLocationToMap(MapView mapView, LatLng latLong) {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLong, 10);
+       // mapView.animateCamera(cameraUpdate);
+        mapView.animate();
+    }
+*/
 
 }

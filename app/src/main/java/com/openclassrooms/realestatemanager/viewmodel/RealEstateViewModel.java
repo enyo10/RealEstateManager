@@ -21,20 +21,8 @@ import java.util.concurrent.Executor;
 public class RealEstateViewModel extends ViewModel {
     private static final String TAG = RealEstateViewModel.class.getName();
 
-    public String type;
+  //  public String type;
     public ArrayList<String> nearbyValues=new ArrayList<>();
-
-    public final MutableLiveData<Integer> numberOfRooms = new MutableLiveData<>();
-    public final MutableLiveData<Integer> numberOfBedRooms = new MutableLiveData<>();
-    public final MutableLiveData<Integer> numberOfBathRooms = new MutableLiveData<>();
-    public final MutableLiveData<Double> surface = new MutableLiveData<>();
-    public final MutableLiveData<String> description = new MutableLiveData<>();
-    public final MutableLiveData<String> country = new MutableLiveData<>();
-    public final MutableLiveData<String> city = new MutableLiveData<>();
-    public final MutableLiveData<String> zip = new MutableLiveData<>();
-    public final MutableLiveData<String> street = new MutableLiveData<>();
-    public final MutableLiveData<String> streetNumber = new MutableLiveData<>();
-    public final MutableLiveData<Double>realPrice=new MutableLiveData<>();
 
 
 
@@ -62,14 +50,14 @@ public class RealEstateViewModel extends ViewModel {
     private MutableLiveData<Long> insertResult;
 
 
-    private String setRealEstateImagesString;
+    private String realEstateImagesString;
 
-    public String getSetRealEstateImagesString() {
-        return setRealEstateImagesString;
+    public String getRealEstateImagesString() {
+        return realEstateImagesString;
     }
 
-    public void setSetRealEstateImagesString(String setRealEstateImagesString) {
-        this.setRealEstateImagesString = setRealEstateImagesString;
+    public void setRealEstateImagesString(String realEstateImagesString) {
+        this.realEstateImagesString = realEstateImagesString;
     }
 
     // DATA
@@ -159,39 +147,20 @@ public class RealEstateViewModel extends ViewModel {
         this.selectedRealEstate.setValue(realEstate);
     }
 
-
-
     /**
      * this method to save the RealEstate object in the data base.
      * , the view clicked to fire the action save.
      */
     public void onRealEstateSave(long userId) {
 
-       // String aType=type.getValue();
-        Integer nbrOfRooms = numberOfRooms.getValue()!=null?numberOfRooms.getValue():0;
-        Integer nbrOfBathRoom = numberOfBathRooms.getValue()!=null?numberOfBathRooms.getValue():0;
-        Integer nbrOfBedRoom = numberOfBedRooms.getValue()!=null?numberOfBedRooms.getValue():0;
-        Double aSurface = surface.getValue()!=null?surface.getValue():0.0;
-        String desc = description.getValue();
-        String myCountry = country.getValue();
-        String cty = city.getValue();
-        String zp = zip.getValue();
-        String str = street.getValue();
-        String st_nbr = streetNumber.getValue();
-        Double aPrice = realPrice.getValue()!=null?realPrice.getValue():0.0;
-
-
-
-       // Address address = new Address(myCountry, zp, cty, str, st_nbr);
-
-       // RealEstate myRealEstate = new RealEstate(1, type, aPrice, aSurface,nbrOfRooms,nbrOfBedRoom, nbrOfBathRoom, desc,getSetRealEstateImagesString(), address,nearbyValues);
         RealEstate myRealEstate =realEstate.getValue();
+        Log.d(TAG, " In View model save.");
 
 
         if(myRealEstate!=null) {
             Log.i(TAG, " Real Estate not null");
             myRealEstate.setDateOfEntry(new Date());
-            myRealEstate.setImages(getSetRealEstateImagesString());
+            myRealEstate.setImages(getRealEstateImagesString());
             myRealEstate.setNearbyPointOfInterest(nearbyValues);
 
             myRealEstate.setUserId(userId);

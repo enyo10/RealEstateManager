@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/park"
                 android:textSize="25sp"
-                android:text="@{DataConverter.convertDoubleToString(realEstate.price)}"
+                android:text="@{realEstate.getFormattedPrice()}"
                 android:layout_marginStart="180dp"
                 android:textColor="@color/primary_darker"
                 app:layout_constraintTop_toBottomOf="@+id/real_estate_place"/>

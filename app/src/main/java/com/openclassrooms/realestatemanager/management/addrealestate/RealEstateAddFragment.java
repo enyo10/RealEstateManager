@@ -73,22 +73,21 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
     VideoView videoView;
     Uri videoFileUri;
-    public static int VIDEO_CAPTURE = 3;
-    private static final int GALLERY = 1;
-    private static final int CAMERA = 2;
+    protected static int VIDEO_CAPTURE = 3;
+    protected static final int GALLERY = 1;
+    protected static final int CAMERA = 2;
 
-    private String mType;
-    private ArrayList<RealEstateImage> mEstateImages = new ArrayList<>();
-    private View rootView;
-    private RealEstateViewModel mRealEstateViewModel;
-    private FragmentRealEstateAddBinding binding;
-    private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
-    private static  int USER_ID;
+    protected ArrayList<RealEstateImage> mEstateImages = new ArrayList<>();
+    protected View rootView;
+    protected RealEstateViewModel mRealEstateViewModel;
+    protected FragmentRealEstateAddBinding binding;
+    protected AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
+    protected static  int USER_ID;
 
-    private Uri fileUri;
+    protected Uri fileUri;
 
-    private Bitmap mBitmap;
-    private String mString = "";
+    protected Bitmap mBitmap;
+    protected String mString = "";
 
 
     @Override
@@ -168,7 +167,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    private void getTextValues() {
+    protected void getTextValues() {
         Log.d(TAG, " on save button clicked");
 
         final List<TextInputLayout> textInputLayouts = ViewUtils.findViewsWithType(
@@ -188,7 +187,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (noErrors) {
 
-            for(RealEstateImage estateImage:mEstateImages){
+           /* for(RealEstateImage estateImage:mEstateImages){
                 saveImage(estateImage);
 
                 Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
@@ -196,7 +195,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
             mRealEstateViewModel.onRealEstateSave(USER_ID);
 
-            Log.d(TAG, " Success");
+            Log.d(TAG, " Success");*/
         }
 
     }
@@ -220,7 +219,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    private void showPictureChoiceDialog() {
+    protected void showPictureChoiceDialog() {
 
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
         pictureDialog.setTitle("Select Action");
@@ -248,7 +247,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
      * This method to take picture from user gallery.
      */
     @AfterPermissionGranted(RC_IMAGE_PERM)
-    private void chooseImageFromGallery() {
+    protected void chooseImageFromGallery() {
         if(getActivity()!=null)
         if (!EasyPermissions.hasPermissions(getActivity(), WRITE_EXTERNAL_STORAGE)) {
             EasyPermissions.requestPermissions(this, getString(R.string.gallery_permission), RC_IMAGE_PERM, WRITE_EXTERNAL_STORAGE);
@@ -265,7 +264,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
      * This to make a new picture with camera.
      */
     @AfterPermissionGranted(RC_CAMERA_PERM)
-    private void makeNewPictureWithCamera() {
+    protected void makeNewPictureWithCamera() {
         if(getActivity()!=null)
         if (!EasyPermissions.hasPermissions(getActivity(), Manifest.permission.CAMERA)) {
             EasyPermissions.requestPermissions(this, getString(R.string.gallery_permission), RC_CAMERA_PERM, Manifest.permission.CAMERA);
@@ -286,7 +285,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    private void handleResponse(int requestCode, int resultCode, Intent data) {
+    protected void handleResponse(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_CANCELED) {
             // Request again permission or return.
@@ -333,7 +332,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
 
-    private String saveImage(RealEstateImage realEstateImage){
+    protected String saveImage(RealEstateImage realEstateImage){
         // Here I have a real estate image with bitmap.
         Bitmap myBitmap = realEstateImage.getBitmap();
 
@@ -374,7 +373,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         }
 
 
-        private int getRandomNumber(int min,int max){
+        protected int getRandomNumber(int min,int max){
 
             int myRandom= min + (int)(Math.random() * ((max - min) + 1));
             return String.valueOf(myRandom).hashCode();
@@ -383,7 +382,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
 
-    private void initAndSetRecyclerViewAdapter(){
+    protected void initAndSetRecyclerViewAdapter(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -393,7 +392,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    private void updateImageList(RealEstateImage image){
+    protected void updateImageList(RealEstateImage image){
             this.mEstateImages.add(image);
             mAddImageRecyclerViewAdapter.notifyDataSetChanged();
 
@@ -410,7 +409,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
 
-    private void createDialog(){
+    protected void createDialog(){
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         builder.setTitle("Add name");
@@ -459,17 +458,17 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         // Check if all text field are filled.
         getTextValues();
 
-        /*for(RealEstateImage estateImage:mEstateImages){
+        for(RealEstateImage estateImage:mEstateImages){
             saveImage(estateImage);
 
             Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
         }
-        mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
-        mRealEstateViewModel.onRealEstateSave();*/
+        mRealEstateViewModel.setRealEstateImagesString(Utils.objectToJson(mEstateImages));
+        mRealEstateViewModel.onRealEstateSave(USER_ID);
     }
 
 
-    private boolean hasCamera() {
+    protected boolean hasCamera() {
 
         return (getActivity()!=null && getActivity().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA_ANY));

@@ -2,13 +2,21 @@ package com.openclassrooms.realestatemanager.models;
 
 
 import android.content.ContentValues;
+import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.openclassrooms.realestatemanager.utils.DataConverter;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +35,7 @@ import static androidx.room.ForeignKey.CASCADE;
         onUpdate = CASCADE )},indices={@Index(value="userId")})
 
 public class RealEstate {
+    private static final String TAG =RealEstate.class.getName();
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -37,6 +46,7 @@ public class RealEstate {
     private double price;
     private double surface;
     private String completeDescription;
+    private String location;
     @Embedded
      private Address address;
     private String type;
@@ -211,6 +221,14 @@ public class RealEstate {
         this.images = images;
     }
 
+    public String getLocation() {
+        return getAddress().format();
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public boolean isInteger(String value){
 
             try
@@ -229,6 +247,10 @@ public class RealEstate {
 
         return false;
 
+        }
+
+        public String getFormattedPrice(){
+        return DataConverter.formatPriceToDollarFormat(getPrice());
         }
 
 
@@ -251,24 +273,17 @@ public class RealEstate {
 
     }
 
-    @Override
-    public String toString() {
-        return "RealEstate{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", numberOfBedRooms=" + numberOfBedRooms +
-                ", numberOfBathRooms=" + numberOfBathRooms +
-                ", numberOfRooms=" + numberOfRooms +
-                ", price=" + price +
-                ", surface=" + surface +
-                ", completeDescription='" + completeDescription + '\'' +
-                ", address=" + address +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", nearbyPointOfInterest=" + nearbyPointOfInterest +
-                ", dateOfEntry=" + dateOfEntry +
-                ", dateOfSale=" + dateOfSale +
-                ", images='" + images + '\'' +
-                '}';
+
+
+    @BindingAdapter("location")
+    public static void loadMapFromUri(ImageView view, String location){
+        Log.i(TAG," the load image from uri method is call");
+        String uri=Utils.apiUri+location+Utils.apiKey+ "";
+        Log.d(TAG, uri);
+        Glide.with(view.getContext())
+                .load(uri)
+                .apply(new RequestOptions())
+                .into(view);
     }
+
 }

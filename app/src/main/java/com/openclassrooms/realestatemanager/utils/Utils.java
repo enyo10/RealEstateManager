@@ -4,6 +4,8 @@ package com.openclassrooms.realestatemanager.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +29,18 @@ import java.util.Map;
  */
 
 public class Utils {
+    private static final String TAG=Utils.class.getName();
+    public static final String apiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=16&markers=size:mid%7Ccolor:blue%7C";
+    public static final String apiKey = "&key=";
+    //public static final String keyValue = Resources.getSystem().getString(R.string.google_maps_key);
 
+    
     /**
      * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param dollars
-     * @return
+     * @param dollars,
+     * the dollars value.
+     * @return the dollars value to return.
      */
     public static int convertDollarToEuro(int dollars){
         return (int) Math.round(dollars * 0.812);
@@ -53,7 +61,7 @@ public class Utils {
      * @return
      */
     public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd",Locale.FRENCH);
         return dateFormat.format(new Date());
     }
 
@@ -65,18 +73,42 @@ public class Utils {
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param context
-     * @return
+     * @param context, the context
+     * @return true or false.
      */
     public static Boolean isInternetAvailable(Context context){
         /*WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();*/
-        ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Instead of WifiManager only we check both wifi and mobile connectivity with connectivity manager
+        ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeInfo = null;
+        boolean wifiConnected = false;
+        boolean mobileConnected = false;
+        boolean isNetworkAvailable = false;
+        if (connMgr != null) {
+            activeInfo = connMgr.getActiveNetworkInfo();
+        }
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return (activeNetwork != null && activeNetwork.isConnectedOrConnecting());
+        if (activeInfo != null && activeInfo.isConnected()) {
+            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+            if (wifiConnected) {
+                Log.i(TAG, "Wifi connection");
+                Toast.makeText(context, "Wifi connection is available", Toast.LENGTH_SHORT).show();
+            } else if (mobileConnected) {
+                Log.i(TAG, "Mobile connection");
+                Toast.makeText(context, "Mobile connection is available", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.i(TAG, "No wifi or mobile connection");
+        }
+        isNetworkAvailable = (wifiConnected || mobileConnected);
+
+        return isNetworkAvailable;
     }
+
+
 
 
     public static  boolean isIntegerrValue(String value){
@@ -156,17 +188,25 @@ public class Utils {
         return json.toJson(object);
     }
 
+    public static String arrayListToJson(ArrayList<RealEstateImage>list){
+      //  Object o= (Object)list;
+        Gson json= new Gson();
+        return json.toJson(list);
+    }
+
     /**
      * This static method to transform a json String to an Real Estate Image list.
      * @param json, the string parameter.
      * @return , the return ArrayList
      */
     public static ArrayList<RealEstateImage> jsonStringToRealEstateImageList(String json){
-        Gson gson=new Gson();
+        Gson gson = new Gson();
         Type founderListType = new TypeToken<ArrayList<RealEstateImage>>(){}.getType();
 
         return gson.fromJson(json, founderListType);
     }
+
+
 
 
 
