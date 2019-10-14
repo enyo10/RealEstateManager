@@ -32,6 +32,7 @@ import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RealEstateMainActivity extends AppCompatActivity {
     private static final String TAG = RealEstateMainActivity.class.getName();
@@ -46,6 +47,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
     BottomNavigationView mBottomNavigationView;
     EstateDetailsFragment mEstateDetailsFragment;
     RealEstateSearchFragment mRealEstateSearchFragment;
+    public List<String>nearBy=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +148,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
 
     private void configureAndShowDetailFragment(){
-        Log.d(TAG, " Configure and show Fragment ");
+        /*Log.d(TAG, " Configure and show Fragment ");
         mEstateDetailsFragment = (EstateDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.frame_estate_details_Fragment);
 
         Log.d(TAG, " details fragment " +mEstateDetailsFragment);
@@ -160,7 +162,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
                     .commit();
             Log.i(TAG, "Fragment created");
 
-        }
+        }*/
     }
 
 
@@ -230,7 +232,14 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
-    public void updateCheckBox(ArrayList<MaterialCheckBox>materialCheckBoxes){
+
+    public boolean ischecked(View view){
+        MaterialCheckBox box=(MaterialCheckBox) view;
+        List<String> list=new ArrayList<>();
+        if(nearBy.contains("Park"))
+            if(view.getId()==R.id.park_check_box)
+                box.setChecked(true);
+            return true;
 
 
     }
@@ -272,5 +281,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
         mapView.animate();
     }
 */
+
+
 
 }

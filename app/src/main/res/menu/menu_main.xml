@@ -16,15 +16,15 @@
         app:showAsAction="ifRoom"
 
        />
-    <!--<item
+   <!-- <item
         android:id="@+id/action_estateListFragment_to_realEstateEditFragment"
         android:title="@string/action_edit"
         android:icon="@drawable/ic_edit"
         app:showAsAction="ifRoom"
 
-        />
+        />-->
 
--->
+
 
     <!-- <item
          android:id="@+id/action_logout"

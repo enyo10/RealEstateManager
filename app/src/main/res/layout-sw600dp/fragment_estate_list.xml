@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="Utils"
+            type="com.openclassrooms.realestatemanager.utils.Utils" />
+        <variable
+            name="listener"
+            type="com.openclassrooms.realestatemanager.management.realestatelist.EstateListItemClickedListener" />
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+
+    <FrameLayout
+
+    android:id="@+id/fragment_estate_list"
+        android:layout_weight="30"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+    android:background="@color/design_default_color_background"
+    tools:context=".management.realestatelist.EstateListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/real_estate_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</FrameLayout>
+
+        <fragment
+            android:id="@+id/real_estate_list_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            app:navGraph="@navigation/tablet_navigation">
+
+        </fragment>
+
+    </LinearLayout>
+</layout>

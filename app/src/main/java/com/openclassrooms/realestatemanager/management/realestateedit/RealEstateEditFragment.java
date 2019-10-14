@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.management.addrealestate.RealEstateAddFragment;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
@@ -55,7 +56,8 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
 
     private void updateWithSelectedRealEstate(RealEstate realEstate){
         mRealEstateViewModel.realEstate.setValue(realEstate);
-        mRealEstateViewModel.nearbyValues=realEstate.getNearbyPointOfInterest();
+        updateNearbyCheckButton(realEstate);
+
 
         Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
        // mEstateImages
@@ -65,5 +67,24 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
                     updateImageList(realEstateImage);
                 }
         Log.d(TAG, " images size "+mEstateImages.size());
+    }
+
+
+    private void updateNearbyCheckButton(RealEstate realEstate){
+        List<String>nearbyList=realEstate.getNearbyPointOfInterest();
+
+        if(nearbyList.contains(getResources().getString(R.string.park)))
+            binding.parkCheckBox.setChecked(true);
+         if(nearbyList.contains(getResources().getString(R.string.school)))
+             binding.schoolCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.hospital)))
+            binding.hospitalCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.bus_station)))
+            binding.busStationCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.shopping_center)))
+            binding.shoppingCenterCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.sport_center)))
+            binding.sportCenterCheckBox.setChecked(true);
+
     }
 }

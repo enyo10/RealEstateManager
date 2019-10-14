@@ -4,6 +4,8 @@ package com.openclassrooms.realestatemanager.management.realestatelist;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -38,10 +40,18 @@ public class EstateListFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
+
          mBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_estate_list,container,false);
 
 
          return mBinding.getRoot();
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
 
     }
 

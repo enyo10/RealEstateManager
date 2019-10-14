@@ -461,7 +461,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         for(RealEstateImage estateImage:mEstateImages){
             saveImage(estateImage);
 
-            Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
+            Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName()+"  "+estateImage.getBitmap());
         }
         mRealEstateViewModel.setRealEstateImagesString(Utils.objectToJson(mEstateImages));
         mRealEstateViewModel.onRealEstateSave(USER_ID);

@@ -54,7 +54,7 @@ public class Address {
     }
 
     public void setCountry(String country) {
-        country = country;
+        this.country = country;
     }
 
     public String getNumber() {

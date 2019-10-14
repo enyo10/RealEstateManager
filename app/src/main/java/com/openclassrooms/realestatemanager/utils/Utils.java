@@ -4,8 +4,6 @@ package com.openclassrooms.realestatemanager.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -80,33 +78,15 @@ public class Utils {
         /*WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();*/
         // Instead of WifiManager only we check both wifi and mobile connectivity with connectivity manager
-        ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeInfo = null;
-        boolean wifiConnected = false;
-        boolean mobileConnected = false;
-        boolean isNetworkAvailable = false;
-        if (connMgr != null) {
-            activeInfo = connMgr.getActiveNetworkInfo();
-        }
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        if (activeInfo != null && activeInfo.isConnected()) {
-            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
-            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
-            if (wifiConnected) {
-                Log.i(TAG, "Wifi connection");
-                Toast.makeText(context, "Wifi connection is available", Toast.LENGTH_SHORT).show();
-            } else if (mobileConnected) {
-                Log.i(TAG, "Mobile connection");
-                Toast.makeText(context, "Mobile connection is available", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Log.i(TAG, "No wifi or mobile connection");
-        }
-        isNetworkAvailable = (wifiConnected || mobileConnected);
+        return activeNetwork!=null;
 
-        return isNetworkAvailable;
     }
+
+
+
 
 
 
@@ -204,12 +184,39 @@ public class Utils {
         Type founderListType = new TypeToken<ArrayList<RealEstateImage>>(){}.getType();
 
         return gson.fromJson(json, founderListType);
+
+
+
     }
 
 
 
+public static boolean connectivtiy(Context context){
+    boolean connected ;
+    ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    //we are connected to a network
 
 
-
+    connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+            connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+    return connected;
 
 }
+
+    public static int getActiveNetworkType(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            return activeNetwork.getType();
+        } else {
+            return -1;
+        }
+    }
+}
+
+
+
+
+
+
+
