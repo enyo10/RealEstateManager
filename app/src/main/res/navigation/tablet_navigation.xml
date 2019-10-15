@@ -3,11 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tablet_navigation"
-    app:startDestination="@id/estateDetailsFragment">
+    app:startDestination="@id/estateListFragment">
 
     <fragment
-        android:id="@+id/estateDetailsFragment"
+        android:id="@+id/estateListFragment"
+        android:name="com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_estate_list" >
+        <action
+            android:id="@+id/action_estateListFragment_to_estateDetailsFragment2"
+            app:destination="@id/estateDetailsFragment2" />
+        <action
+            android:id="@+id/action_estateListFragment_to_realEstateAddFragment2"
+            app:destination="@id/realEstateAddFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/estateDetailsFragment2"
         android:name="com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment"
         android:label="fragment_estate_details"
         tools:layout="@layout/fragment_estate_details" />
+    <fragment
+        android:id="@+id/realEstateAddFragment2"
+        android:name="com.openclassrooms.realestatemanager.management.addrealestate.RealEstateAddFragment"
+        android:label="fragment_real_estate_add"
+        tools:layout="@layout/fragment_real_estate_add" />
 </navigation>

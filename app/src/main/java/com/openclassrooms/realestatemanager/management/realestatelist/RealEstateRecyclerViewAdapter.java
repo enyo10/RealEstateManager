@@ -22,11 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEstateRecyclerViewAdapter.MyViewHolder>implements EstateListItemClickedListener {
+
     private static final String TAG = RealEstateRecyclerViewAdapter.class.getName();
+
+
     private List<RealEstate> dataModelList;
     private Context context;
     private RealEstateViewModel mViewModel;
     private RealEstateMainActivity mRealEstateMainActivity;
+
 
     public RealEstateRecyclerViewAdapter( Context context,RealEstateViewModel viewModel){
         this.dataModelList = new ArrayList<>();

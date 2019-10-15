@@ -118,6 +118,10 @@
     <string name="search_dialog_search">Search dialog search</string>
     <string name="search_dialog_cancel">Search dialog cancel</string>
     <string name="fragment_search_result">Search result </string>
+    <string name="location_map">location map</string>
+    <string name="bathroom_image">bathroom image</string>
+    <string name="location_image_view">Location image view</string>
+    <string name="bedroom_image">bedroom image</string>
 
 
 </resources>

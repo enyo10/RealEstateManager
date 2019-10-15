@@ -49,6 +49,8 @@ public class RealEstateMainActivity extends AppCompatActivity {
     RealEstateSearchFragment mRealEstateSearchFragment;
     public List<String>nearBy=new ArrayList<>();
 
+  //  private boolean isTablet=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,6 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         initViewModel();
         getCurrentUser(USER_ID);
-
 
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
         DrawerLayout drawerLayout =findViewById(R.id.drawer_layout);
@@ -101,7 +102,9 @@ public class RealEstateMainActivity extends AppCompatActivity {
             }
         });
          mRootView=findViewById(android.R.id.content);
-        configureAndShowDetailFragment();
+
+      //  configureAndShowDetailFragment();
+
     }
 
 
@@ -129,7 +132,10 @@ public class RealEstateMainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
      //  return super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(getApplicationContext().getResources().getBoolean(R.bool.isTablet))
+            getMenuInflater().inflate(R.menu.menu_tablet, menu);
+         else
+            getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
 
@@ -148,13 +154,13 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
 
     private void configureAndShowDetailFragment(){
-        /*Log.d(TAG, " Configure and show Fragment ");
+        Log.d(TAG, " Configure and show Fragment ");
         mEstateDetailsFragment = (EstateDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.frame_estate_details_Fragment);
 
         Log.d(TAG, " details fragment " +mEstateDetailsFragment);
 
         //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
-        if (mEstateDetailsFragment == null && findViewById(R.id.frame_estate_details_Fragment) != null) {
+        if (mEstateDetailsFragment == null) {
             Log.i(TAG, " nous sommes bien sur une tablette ");
             mEstateDetailsFragment = new EstateDetailsFragment();
             getSupportFragmentManager().beginTransaction()
@@ -162,13 +168,28 @@ public class RealEstateMainActivity extends AppCompatActivity {
                     .commit();
             Log.i(TAG, "Fragment created");
 
-        }*/
+        }
     }
 
 
     public void showDetailsFragment(){
+        Log.d(TAG, "show details method call");
+        Log.d(TAG, " Device type "+isTablet());
+        if(isTablet())
+            configureAndShowDetailFragment();
+        else
+            Navigation.findNavController(this,R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_estateDetailsFragment);
+
+
+    }
+
+    public void navigateToDetailsFragment(){
         Navigation.findNavController(this,R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_estateDetailsFragment);
 
+    }
+
+    private boolean isTablet(){
+        return getApplicationContext().getResources().getBoolean(R.bool.isTablet);
     }
 
 
@@ -274,13 +295,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
-   /* @BindingAdapter("app:latLong")
-    public static void bindLocationToMap(MapView mapView, LatLng latLong) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLong, 10);
-       // mapView.animateCamera(cameraUpdate);
-        mapView.animate();
-    }
-*/
+
 
 
 

@@ -17,36 +17,65 @@
         android:orientation="horizontal"
         android:baselineAligned="false">
 
-
-    <FrameLayout
-
-    android:id="@+id/fragment_estate_list"
-        android:layout_weight="30"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-    android:background="@color/design_default_color_background"
-    tools:context=".management.realestatelist.EstateListFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/real_estate_list_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</FrameLayout>
-
-        <fragment
-            android:id="@+id/real_estate_list_container"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <FrameLayout
+            android:id="@+id/fragment_estate_list"
+            android:layout_weight="30"
             android:layout_width="0px"
             android:layout_height="match_parent"
+            android:background="@color/design_default_color_background"
+            tools:context=".management.realestatelist.EstateListFragment">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/real_estate_list_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_estate_details_Fragment"
             android:layout_weight="70"
-            app:navGraph="@navigation/tablet_navigation">
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:background="@color/productGridBackgroundColor"
+            >
+        </FrameLayout>
 
-        </fragment>
 
+
+
+        <!-- <FrameLayout
+             android:id="@+id/fragment_estate_list"
+             android:layout_weight="30"
+             android:layout_width="0px"
+             android:layout_height="match_parent"
+             android:background="@color/productGridBackgroundColor"
+             tools:context=".management.realestatelist.EstateListFragment">
+
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/real_estate_list_recycler_view"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_margin="5dp"
+             >
+
+         </androidx.recyclerview.widget.RecyclerView>
+
+          </FrameLayout>
+
+             <fragment
+                 android:id="@+id/real_estate_list_nav_container"
+                 android:name="androidx.navigation.fragment.NavHostFragment"
+                 android:layout_width="0px"
+                 android:layout_height="match_parent"
+                 android:layout_weight="70"
+                 app:defaultNavHost="false"
+                 app:navGraph="@navigation/tablet_navigation">
+
+             </fragment>
+     -->
     </LinearLayout>
 </layout>

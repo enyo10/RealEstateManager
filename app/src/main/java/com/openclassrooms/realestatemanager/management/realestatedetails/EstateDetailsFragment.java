@@ -16,12 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentEstateDetailsBinding;
 import com.openclassrooms.realestatemanager.models.RealEstate;
@@ -36,8 +30,8 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EstateDetailsFragment extends Fragment implements OnMapReadyCallback {
-    private static final String TAG= EstateDetailsFragment.class.getName();
+public class EstateDetailsFragment extends Fragment {
+    private static final String TAG = EstateDetailsFragment.class.getName();
 
     private FragmentEstateDetailsBinding mFragmentEstateDetailsBinding;
     private DetailsRecyclerViewAdapter mDetailsRecyclerViewAdapter;
@@ -45,15 +39,16 @@ public class EstateDetailsFragment extends Fragment implements OnMapReadyCallbac
     private List<RealEstateImage> mRealEstateImageList;
     private RealEstate mRealEstate;
 
-    // For map.
-    private MapView mapView;
-    private GoogleMap gmap;
-    private SupportMapFragment mapFragment;
-
-
 
     public EstateDetailsFragment() {
         // Required empty public constructor
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -63,10 +58,6 @@ public class EstateDetailsFragment extends Fragment implements OnMapReadyCallbac
         mRealEstateImageList=new ArrayList<>();
         if(this.getActivity()!=null)
         mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
-
-        initMapsViews();
-
-
 
 
         return mFragmentEstateDetailsBinding.getRoot();
@@ -92,11 +83,13 @@ public class EstateDetailsFragment extends Fragment implements OnMapReadyCallbac
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initAndSetRecyclerViewAdapter();
         mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
 
         mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateUI);
+
+
+
 
     }
 
@@ -112,12 +105,6 @@ public class EstateDetailsFragment extends Fragment implements OnMapReadyCallbac
 
     }
 
-    private void initMapsViews(){
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null)
-            mapFragment.getMapAsync(this);
-
-    }
 
     private void updateUI(RealEstate realEstate){
         mRealEstateImageList= Utils.jsonStringToRealEstateImageList(realEstate.getImages());
@@ -137,16 +124,4 @@ public class EstateDetailsFragment extends Fragment implements OnMapReadyCallbac
 
 
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        gmap = googleMap;
-        gmap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
-    }
 }

@@ -18,8 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentEstateListBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
-import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
+import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.util.List;
 
@@ -33,19 +34,22 @@ public class EstateListFragment extends Fragment{
     protected FragmentEstateListBinding mBinding;
     public  RealEstateRecyclerViewAdapter mRealEstateRecyclerViewAdapter;
     protected RealEstateViewModel mRealEstateViewModel;
-
+    private EstateDetailsFragment mEstateDetailsFragment;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-
          mBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_estate_list,container,false);
+         boolean value= getContext().getResources().getBoolean(R.bool.isTablet);
+         if(value)
+          //   configureAndShowDetailFragment();
+
+         Log.i(TAG, " is tablet.. "+value);
 
 
-         return mBinding.getRoot();
+        return mBinding.getRoot();
 
     }
 
@@ -94,6 +98,36 @@ public class EstateListFragment extends Fragment{
         this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateList);
     }
 
+
+
+
+    private void configureAndShowDetailFragment(){
+        Log.d(TAG, " Configure and show Fragment ");
+        mEstateDetailsFragment = (EstateDetailsFragment) getChildFragmentManager().findFragmentById(R.id.frame_estate_details_Fragment);
+
+        Log.d(TAG, " details fragment " +mEstateDetailsFragment);
+
+        //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+        if (mEstateDetailsFragment == null) {
+            Log.i(TAG, " nous sommes bien sur une tablette ");
+            mEstateDetailsFragment = new EstateDetailsFragment();
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.frame_estate_details_Fragment, mEstateDetailsFragment)
+                    .commit();
+            Log.i(TAG, "Fragment created");
+
+        }
+    }
+
+/*public void displayDetailsFragment(View view){
+
+    boolean isTablet =getResources().getBoolean(R.bool.isTablet);
+    if(isTablet){
+        NavHostFragment navHostFragment= (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.real_estate_list_nav_container);
+
+    }
+
+}*/
 
 
 }
