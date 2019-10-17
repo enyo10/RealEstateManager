@@ -159,14 +159,23 @@ public class RealEstateViewModel extends ViewModel {
 
         if(myRealEstate!=null) {
             Log.i(TAG, " Real Estate not null");
-            myRealEstate.setDateOfEntry(new Date());
+
             myRealEstate.setImages(getRealEstateImagesString());
             myRealEstate.setNearbyPointOfInterest(nearbyValues);
 
-            myRealEstate.setUserId(userId);
             Log.i(TAG, "Real : "+myRealEstate.toString());
+           // if id==0, we create the new real estate, else we update.
+            if(myRealEstate.getId()==0) {
+                myRealEstate.setDateOfEntry(new Date());
 
-            createRealEstate(myRealEstate);}
+                createRealEstate(myRealEstate);
+            }else {
+                updateRealEstate(myRealEstate);
+            }
+
+
+        }
+
 
 
     }

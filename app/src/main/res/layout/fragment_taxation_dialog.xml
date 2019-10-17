@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="RealEstateViewModel"
+            type="com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel" />
+
+        <variable
+            name="realEstate"
+            type="com.openclassrooms.realestatemanager.models.RealEstate" />
+
+        <variable
+            name="DataConverter"
+            type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+
+    </data>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".management.taxation.TaxationDialogFragment">
+
+
+
+        <TextView
+            android:id="@+id/taxation_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/taxation"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp"
+            android:textStyle="italic"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            />
+
+
+        <TextView
+            android:id="@+id/rate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/taxation_text"/>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/taxation_duration"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rate_text"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/taxation_duration_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="@string/duration" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/taxation_result_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/taxation_duration"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/taxation_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:hint="@string/calculation_result"
+            android:gravity="center"
+            android:textColor="@color/green"
+            android:layout_marginBottom="40dp"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/button_linear_compat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxation_result_linear_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taxation_stop_calc_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_radius_accent_color"
+            android:hint="@string/stop_calc"
+            android:onClick="dialogButtonClicked"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/loginPageBackgroundColor">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taxation_calc_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/calculate"
+            android:onClick="dialogButtonClicked"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/loginPageBackgroundColor"
+
+            >
+
+        </com.google.android.material.button.MaterialButton>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>
+
+</layout>

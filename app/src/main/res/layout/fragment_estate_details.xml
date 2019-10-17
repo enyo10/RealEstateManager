@@ -18,14 +18,14 @@
         android:layout_height="match_parent"
         >
 
-<!--
+
 <ScrollView
     android:id="@+id/detail_main_scrollview_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
     tools:context=".management.realestatedetails.EstateDetailsFragment">
--->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -413,7 +413,7 @@
 
 
         </LinearLayout>
-   <!-- </ScrollView>-->
+    </ScrollView>
     </FrameLayout>
 
 </layout>

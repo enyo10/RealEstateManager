@@ -26,11 +26,11 @@ import java.util.List;
 public class RealEstateEditFragment extends RealEstateAddFragment {
     private static final String TAG = RealEstateEditFragment.class.getName();
 
-    private List<RealEstateImage> realEstateImageListRetrieved;
 
 
     public RealEstateEditFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -49,6 +49,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
         mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
 
 
@@ -59,17 +60,24 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
         updateNearbyCheckButton(realEstate);
 
 
+
         Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
        // mEstateImages
           ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
 
                 for(RealEstateImage realEstateImage:images){
-                    updateImageList(realEstateImage);
+                    Log.d(TAG," realEstateImage:-> "+realEstateImage.toString());
+
+                    this.updateImageList(realEstateImage);
                 }
-        Log.d(TAG, " images size "+mEstateImages.size());
+        Log.d(TAG, " images size "+images.size());
     }
 
 
+    /**
+     * this method update the state of the check button,
+     * @param realEstate, the real estate to be edited.
+     */
     private void updateNearbyCheckButton(RealEstate realEstate){
         List<String>nearbyList=realEstate.getNearbyPointOfInterest();
 

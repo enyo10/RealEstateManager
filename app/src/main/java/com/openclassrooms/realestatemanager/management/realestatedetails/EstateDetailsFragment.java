@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentEstateDetailsBinding;
+import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
@@ -38,6 +39,7 @@ public class EstateDetailsFragment extends Fragment {
     private RealEstateViewModel mRealEstateViewModel;
     private List<RealEstateImage> mRealEstateImageList;
     private RealEstate mRealEstate;
+    private double price;
 
 
     public EstateDetailsFragment() {
@@ -73,8 +75,10 @@ public class EstateDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        if(!getContext().getResources().getBoolean(R.bool.isTablet)){
         menu.clear();
         inflater.inflate(R.menu.menu_detail,menu);
+        }
     }
 
 
@@ -115,12 +119,18 @@ public class EstateDetailsFragment extends Fragment {
         mFragmentEstateDetailsBinding.setRealEstate(realEstate);
         mDetailsRecyclerViewAdapter.update(mRealEstateImageList);
 
+        RealEstateMainActivity activity =(RealEstateMainActivity)  getActivity();
+        if(activity!=null)
+        activity.selectedRealEstatePrice=realEstate.getPrice();
+
         mDetailsRecyclerViewAdapter.notifyDataSetChanged();
 
         Log.d(TAG," real estate "+realEstate.getType());
 
 
     }
+
+
 
 
 

@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginEnd="5dp"
-
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -136,6 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:textSize="20sp"
                     android:layout_marginStart="5dp"
                     app:errorEnabled="true">
 
@@ -166,6 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginEnd="5dp"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -185,6 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:textSize="20sp"
                     android:layout_marginStart="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -210,6 +213,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -228,6 +232,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -258,8 +263,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
+                    android:textSize="20sp"
                     android:layout_marginEnd="5dp"
-
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -279,6 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginStart="5dp"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -306,6 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".70"
                     android:layout_marginEnd="5dp"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -324,6 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
                     android:layout_marginStart="5dp"
+                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText

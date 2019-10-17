@@ -119,15 +119,7 @@ public class EstateListFragment extends Fragment{
         }
     }
 
-/*public void displayDetailsFragment(View view){
 
-    boolean isTablet =getResources().getBoolean(R.bool.isTablet);
-    if(isTablet){
-        NavHostFragment navHostFragment= (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.real_estate_list_nav_container);
-
-    }
-
-}*/
 
 
 }

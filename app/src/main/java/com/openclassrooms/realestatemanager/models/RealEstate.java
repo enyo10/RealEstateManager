@@ -16,9 +16,7 @@ import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
-import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -285,7 +283,8 @@ public class RealEstate {
     @BindingAdapter("location")
     public static void loadMapFromUri(ImageView view, String location){
         Log.i(TAG," the load image from uri method is call");
-        String uri=Utils.apiUri+location+Utils.apiKey+ BuildConfig.map_api_key;
+        String uri="";
+       // String uri=Utils.apiUri+location+Utils.apiKey+ BuildConfig.map_api_key;
         Log.d(TAG, uri);
         Glide.with(view.getContext())
                 .load(uri)

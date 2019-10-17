@@ -32,12 +32,13 @@
             type="com.openclassrooms.realestatemanager.management.addrealestate.CustomClickListener" />
     </data>
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         tools:context=".management.addrealestate.RealEstateAddFragment">
 
         <RelativeLayout
@@ -509,7 +510,6 @@
         </RelativeLayout>
 
     </ScrollView>
-
    <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

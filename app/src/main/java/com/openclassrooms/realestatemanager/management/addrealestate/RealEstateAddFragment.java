@@ -67,9 +67,9 @@ import static android.app.Activity.RESULT_OK;
 public class RealEstateAddFragment extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener, MyListener {
     private static final String TAG = RealEstateAddFragment.class.getName();
 
-    private static final String IMAGE_DIRECTORY = "/estate";
-    private static final int RC_IMAGE_PERM = 200;
-    private static final int RC_CAMERA_PERM = 300;
+    protected static final String IMAGE_DIRECTORY = "/estate";
+    protected static final int RC_IMAGE_PERM = 200;
+    protected static final int RC_CAMERA_PERM = 300;
 
     VideoView videoView;
     Uri videoFileUri;
@@ -127,6 +127,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
             binding.setDataConverter(new DataConverter());
             RealEstate realEstate=new RealEstate();
+            realEstate.setUserId(USER_ID);
             realEstate.setAddress(new Address());
             mRealEstateViewModel.realEstate.setValue(realEstate);
             binding.setRealEstateViewModel(mRealEstateViewModel);
@@ -331,7 +332,11 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-
+    /**
+     * This method to save the Real Estate data in the external directory.
+     * @param realEstateImage, an real estate data (Bit map and description.)
+     * @return, the path of the Bitmap.
+     */
     protected String saveImage(RealEstateImage realEstateImage){
         // Here I have a real estate image with bitmap.
         Bitmap myBitmap = realEstateImage.getBitmap();
@@ -349,7 +354,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         try {
                 /*File f = new File(wallpaperDirectory, Calendar.getInstance()
                         .getTimeInMillis() + ".jpg");*/
-                    File f = new File(wallpaperDirectory, getRandomNumber(1,999999) + ".jpg");
+                    File f = new File(wallpaperDirectory, Utils.getRandomNumber(1,999999) + ".jpg");
                     f.createNewFile();
                     FileOutputStream fo = new FileOutputStream(f);
                     fo.write(bytes.toByteArray());
@@ -370,14 +375,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                 e1.printStackTrace();
             }
             return "";
-        }
-
-
-        protected int getRandomNumber(int min,int max){
-
-            int myRandom= min + (int)(Math.random() * ((max - min) + 1));
-            return String.valueOf(myRandom).hashCode();
-
         }
 
 

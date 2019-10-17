@@ -83,5 +83,13 @@ public class RealEstateImage {
                 .into(view);
     }
 
-
+    @Override
+    public String toString() {
+        return "RealEstateImage{" +
+                "imageName='" + imageName + '\'' +
+                ", bitmap=" + bitmap +
+                ", imageDescription='" + imageDescription + '\'' +
+                ", uri='" + uri + '\'' +
+                '}';
+    }
 }

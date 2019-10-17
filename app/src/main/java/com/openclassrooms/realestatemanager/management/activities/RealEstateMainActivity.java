@@ -28,6 +28,7 @@ import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
 import com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment;
+import com.openclassrooms.realestatemanager.management.taxation.TaxationDialogFragment;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
@@ -41,13 +42,17 @@ public class RealEstateMainActivity extends AppCompatActivity {
     public RealEstateViewModel mRealEstateViewModel;
     public View mRootView;
 
-    private static final String SEARCH_DIALOG_TAG="SEARCH DIALOG";
+    private static final String SEARCH_DIALOG_TAG="SEARCH_DIALOG";
+    private static final String TAXATION_DIALOG_TAG ="TAXATION_DIALOG";
 
     MaterialToolbar mToolbar;
     BottomNavigationView mBottomNavigationView;
     EstateDetailsFragment mEstateDetailsFragment;
     RealEstateSearchFragment mRealEstateSearchFragment;
+    TaxationDialogFragment mTaxationDialogFragment;
     public List<String>nearBy=new ArrayList<>();
+
+    public double selectedRealEstatePrice;
 
   //  private boolean isTablet=false;
 
@@ -145,6 +150,8 @@ public class RealEstateMainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_search)
             createSearchDialogFragment();
+        if(item.getItemId()==R.id.action_taxation)
+            createTaxationDialogFragment();
 
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
 
@@ -279,10 +286,20 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
             Log.d(TAG, "Search Button clicked");
 
+        }
 
+        if(view.getId()==R.id.taxation_stop_calc_button){
+            Log.d(TAG, "Cancel button");
+            mTaxationDialogFragment.dismiss();
+        }
+        if(view.getId()==R.id.taxation_calc_button){
+            if(selectedRealEstatePrice!=0)
+            mTaxationDialogFragment.calculateRealEstateRate(selectedRealEstatePrice);
         }
 
     }
+
+
 
     private void createSearchDialogFragment(){
         mRealEstateSearchFragment= new RealEstateSearchFragment();
@@ -290,8 +307,18 @@ public class RealEstateMainActivity extends AppCompatActivity {
         FragmentManager manager=getSupportFragmentManager();
         mRealEstateSearchFragment.show(manager,SEARCH_DIALOG_TAG);
 
-
         Log.i(TAG, " Dialog created");
+    }
+
+
+    private void createTaxationDialogFragment(){
+        mTaxationDialogFragment =new TaxationDialogFragment();
+        FragmentManager manager =getSupportFragmentManager();
+        mTaxationDialogFragment.show(manager,TAXATION_DIALOG_TAG);
+
+        Log.i(TAG," Taxation dialog created");
+
+
     }
 
 

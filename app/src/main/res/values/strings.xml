@@ -61,6 +61,7 @@
     <string name="number_of_pieces">Number of pieces</string>
     <string name="description">Description</string>
     <string name="registration">NEW REAL ESTATE REGISTRATION</string>
+    <string name="update">Save modification</string>
 
     <string name="loft">LOFT</string>
     <string name="manor">MANOR</string>
@@ -122,6 +123,12 @@
     <string name="bathroom_image">bathroom image</string>
     <string name="location_image_view">Location image view</string>
     <string name="bedroom_image">bedroom image</string>
+    <string name="mortgage_simulator">Mortgage simulator</string>
+    <string name="taxation">Calculation of the monthly payment</string>
+    <string name="duration">Duration</string>
+    <string name="calculation_result">calculation result</string>
+    <string name="stop_calc">Cancel</string>
+    <string name="calculate">Send  </string>
 
 
 </resources>

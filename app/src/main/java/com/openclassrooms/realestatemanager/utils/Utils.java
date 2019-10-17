@@ -185,8 +185,23 @@ public class Utils {
 
         return gson.fromJson(json, founderListType);
 
+    }
+
+    public static int getRandomNumber(int min,int max){
+
+        int myRandom= min + (int)(Math.random() * ((max - min) + 1));
+        return String.valueOf(myRandom).hashCode();
+
+    }
 
 
+    public static double calculateInterestRate(double amount,double t, int numberOfMount){
+        return (amount*(t/12))/(1-Math.pow((1+t/12),-numberOfMount));
+
+    }
+
+    public static void main (String []args){
+        System.out.println(calculateInterestRate(70000,0.06,12));
     }
 
 

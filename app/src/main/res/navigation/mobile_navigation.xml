@@ -66,4 +66,10 @@
         android:label="@string/fragment_search_result"
         tools:layout="@layout/fragment_search_result" />
 
+    <dialog
+        android:id="@+id/taxationDialogFragment"
+        android:name="com.openclassrooms.realestatemanager.management.taxation.TaxationDialogFragment"
+        android:label="fragment_taxation_dialog"
+        tools:layout="@layout/fragment_taxation_dialog" />
+
 </navigation>
