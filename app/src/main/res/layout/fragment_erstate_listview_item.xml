@@ -6,6 +6,7 @@
     xmlns:bind="http://schemas.android.com/tools"
     >
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="realEstate"
@@ -56,6 +57,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/logo" />
+
+            <ImageView
+                android:id="@+id/real_estate_sold_banner"
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="324dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/image_photo"
+                bind:uri="@{realImage.uri}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:visibility="@{realEstate.sold? View.GONE : View.VISIBLE}"
+                app:srcCompat="@drawable/sold_banner" />
+
 
             <!--REAL ESTATE TYPE-->
             <TextView

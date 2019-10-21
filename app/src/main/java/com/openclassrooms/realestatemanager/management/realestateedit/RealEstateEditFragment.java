@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +24,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RealEstateEditFragment extends RealEstateAddFragment {
+public class RealEstateEditFragment extends RealEstateAddFragment  {
     private static final String TAG = RealEstateEditFragment.class.getName();
+
+    private RealEstate mRealEstate;
 
 
 
@@ -49,7 +52,20 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+       // binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
         binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
+        binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
+        binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(mRealEstateViewModel.realEstate!=null)
+                    if(checkedId==R.id.sold_radio_button)
+                        mRealEstateViewModel.realEstate.getValue().setSold(true);
+                    else if(checkedId==R.id.unsold_radio_button)
+                        mRealEstateViewModel.realEstate.getValue().setSold(false);
+
+            }
+        });
         mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
 
 
@@ -57,9 +73,9 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
 
     private void updateWithSelectedRealEstate(RealEstate realEstate){
         mRealEstateViewModel.realEstate.setValue(realEstate);
+
+
         updateNearbyCheckButton(realEstate);
-
-
 
         Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
        // mEstateImages
@@ -93,6 +109,10 @@ public class RealEstateEditFragment extends RealEstateAddFragment {
             binding.shoppingCenterCheckBox.setChecked(true);
         if(nearbyList.contains(getResources().getString(R.string.sport_center)))
             binding.sportCenterCheckBox.setChecked(true);
+
+        if(realEstate.isSold())
+            binding.soldRadioButton.setChecked(true);
+        else binding.soldRadioButton.setChecked(false);
 
     }
 }

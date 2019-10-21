@@ -131,6 +131,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             realEstate.setAddress(new Address());
             mRealEstateViewModel.realEstate.setValue(realEstate);
             binding.setRealEstateViewModel(mRealEstateViewModel);
+            binding.realEstateUpdateStatus.setVisibility(View.GONE);
 
             String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
 

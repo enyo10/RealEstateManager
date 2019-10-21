@@ -318,8 +318,10 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         Log.i(TAG," Taxation dialog created");
 
-
     }
+
+
+
 
 
 

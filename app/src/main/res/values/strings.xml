@@ -130,6 +130,9 @@
     <string name="stop_calc">Cancel</string>
     <string name="calculate">Send  </string>
     <string name="Share">share</string>
+    <string name="real_estate_update_status_button">Update Status</string>
+    <string name="sold_label">Sold</string>
+    <string name="unsold_label">Unsold</string>
 
 
 </resources>

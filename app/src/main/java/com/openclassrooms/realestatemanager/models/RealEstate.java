@@ -16,9 +16,7 @@ import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
-import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,8 +56,7 @@ public class RealEstate {
     private Date dateOfEntry;
     private Date dateOfSale;
     private String images;
-
-
+    private boolean sold;
 
 
     public RealEstate(){
@@ -79,11 +76,20 @@ public class RealEstate {
         this.completeDescription = completeDescription;
         this.images=imageList;
         this.status = Status.UNSOLD;
+        this.sold =false;
         this.dateOfEntry = new Date();
         this.dateOfSale = null;
         this.images=imageList;
         this.nearbyPointOfInterest=nearbyPointOfInterest;
 
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 
     public double getPrice() {
@@ -280,7 +286,8 @@ public class RealEstate {
         if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsInteger("userId"));
         if(contentValues.containsKey("images"))realEstate.setImages(contentValues.getAsString("images"));
         if(contentValues.containsKey("address"))realEstate.setAddress((Address)contentValues.get("address"));
-       // if(contentValues.containsKey("location"))realEstate.setLocation(contentValues.getAsString("location"));
+        if(contentValues.containsKey("sold"))realEstate.setSold(contentValues.getAsBoolean("sold"));
+
         if(contentValues.containsKey("nearbyPointOfInterest"))realEstate.setNearbyPointOfInterest((ArrayList<String>) contentValues.get("nearbyPointOfInterest"));
         return realEstate;
 
@@ -291,8 +298,8 @@ public class RealEstate {
     @BindingAdapter("address")
     public static void loadMapFromUri(ImageView view, Address location){
         Log.i(TAG," the load image from uri method is call");
-      // String uri="";
-       String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
+       String uri="";
+      // String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
         Log.d(TAG, uri);
         Glide.with(view.getContext())
                 .load(uri)

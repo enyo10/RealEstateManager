@@ -71,7 +71,6 @@ public class EstateListFragment extends Fragment{
 
         }
 
-
         initAndConfigureRecyclerView();
 
         getRealEstateItems(USER_ID);
@@ -91,6 +90,8 @@ public class EstateListFragment extends Fragment{
 
     protected void updateRealEstateList(List<RealEstate>list){
        mRealEstateRecyclerViewAdapter.updateWithData(list);
+       for(RealEstate estate:list)
+           Log.d(TAG, " status -- "+estate.isSold());
     }
 
     // Get all RealEstate for a given  user id.

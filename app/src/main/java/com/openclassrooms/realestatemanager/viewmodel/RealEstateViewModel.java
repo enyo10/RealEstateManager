@@ -171,6 +171,7 @@ public class RealEstateViewModel extends ViewModel {
                 createRealEstate(myRealEstate);
             }else {
                 updateRealEstate(myRealEstate);
+                Log.d(TAG, " update success  " +myRealEstate.isSold());
             }
 
 
