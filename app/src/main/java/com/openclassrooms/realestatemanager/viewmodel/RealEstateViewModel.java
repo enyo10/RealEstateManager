@@ -1,12 +1,14 @@
 package com.openclassrooms.realestatemanager.viewmodel;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.User;
@@ -25,16 +27,14 @@ public class RealEstateViewModel extends ViewModel {
     public ArrayList<String> nearbyValues=new ArrayList<>();
 
 
-
-
     //  FOR SEARCH DATA.
     public MutableLiveData<String>searchArea = new MutableLiveData<>();
     public MutableLiveData<Integer>minRoom = new MutableLiveData<>();
     public MutableLiveData<Integer>maxRoom = new MutableLiveData<>();
-    public MutableLiveData<Integer>minSurface = new MutableLiveData<>();
-    public MutableLiveData<Integer>maxSurface = new MutableLiveData<>();
-    public MutableLiveData<Long>minPrice = new MutableLiveData<>();
-    public MutableLiveData<Long>maxPrice = new MutableLiveData<>();
+    public MutableLiveData<Double>minSurface = new MutableLiveData<>();
+    public MutableLiveData<Double>maxSurface = new MutableLiveData<>();
+    public MutableLiveData<Double>minPrice = new MutableLiveData<>();
+    public MutableLiveData<Double>maxPrice = new MutableLiveData<>();
     public MutableLiveData<String>searchType = new MutableLiveData<>();
 
     // FOR CAMERA.
@@ -117,11 +117,11 @@ public class RealEstateViewModel extends ViewModel {
     }
 
     // Search
-    public LiveData<List<RealEstate>> searchRealEstate(String type, String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
+   /* public LiveData<List<RealEstate>> searchRealEstate(String type, String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
                                                        Integer minRoom, Integer maxRoom, long userId) {
         return realEstateDataSource.searchRealEstate(type, area, minSurface, maxSurface, minPrice, maxPrice,
                 minRoom, maxRoom, userId);
-    }
+    }*/
 
 
     public MutableLiveData<RealEstate> getRealEstate() {
@@ -182,6 +182,78 @@ public class RealEstateViewModel extends ViewModel {
 
     public LiveData<List<RealEstate>> getSearchResult(long userId){
 
+        Double surfaceMax = maxSurface.getValue()!=null ? maxSurface.getValue():0.0;
+        Double surfaceMin =minSurface.getValue()!=null?minSurface.getValue():0.0;
+        Double priceMin = minPrice.getValue()!=null ? minPrice.getValue() :0.0;
+        Double priceMax = maxPrice.getValue()!=null ? maxPrice.getValue() :0.0;
+        String type = searchType.getValue()!=null ? searchType.getValue():"";
+        String area = searchArea.getValue()!=null? searchArea.getValue() :"";
+        Integer roomMin = minRoom.getValue()!=null? minRoom.getValue() :0;
+        Integer roomMax = maxRoom.getValue()!=null ? maxRoom.getValue() :0;
+
+        Log.d(TAG, " minRoom " +minRoom.getValue());
+        Log.d(TAG, " maxRoom " +maxRoom.getValue());
+        Log.d(TAG, " minSurface " +minSurface.getValue());
+        Log.d(TAG, " maxSurface " +maxSurface.getValue());
+        Log.d(TAG, " minPrice " +minPrice.getValue());
+        Log.d(TAG, " maxPrice " +maxPrice.getValue());
+
+        Log.d(TAG, " SearchArea " +searchArea.getValue());
+
+        // Query string
+       // String queryString =new String();
+       String  queryString = "SELECT *FROM RealEstate WHERE userId =?";
+        // List of bind parameters
+        List<Object>args=new ArrayList<>();
+        args.add(userId);
+
+        if(!TextUtils.isEmpty(type)){
+            queryString +=" AND type LIKE ?";
+            args.add(type.toUpperCase());
+            Log.d(TAG, " search type " +type.toUpperCase());
+
+        }
+        if(roomMin!=0){
+            queryString+=" AND numberOfRooms > ? ";
+            args.add(roomMin);
+        }
+        if(roomMax!=0){
+            queryString+="AND numberOfRooms < ?";
+            args.add(roomMax);
+        }
+
+        if(surfaceMin!=0){
+            queryString+=" AND surface > ? ";
+            args.add(surfaceMin);
+        }
+        if(surfaceMax!=0){
+            queryString+="AND surface < ?";
+            args.add(surfaceMax);
+        }
+
+        if(priceMin!=0){
+            queryString+=" AND price > ? ";
+            args.add(priceMin);
+        }
+        if(priceMax!=0){
+            queryString+="AND price < ?";
+            args.add(priceMax);
+        }
+
+
+
+       // String area = searchArea.getValue();
+       /* double surfaceMin = minSurface.getValue();
+        double surfaceMax = maxSurface.getValue();
+        double priceMin = minPrice.getValue();
+        double priceMax = maxPrice.getValue();
+        int roomMin = minRoom.getValue();
+        int roomMax = maxRoom.getValue();
+
+*/
+
+/*
+
         String type = searchType.getValue()!=null ? searchType.getValue() : "%";
         String area = searchArea.getValue()!=null? searchArea.getValue() : "%";
         String surfaceMin = minSurface.getValue()!=null ? minSurface.getValue().toString() : "0";
@@ -190,11 +262,23 @@ public class RealEstateViewModel extends ViewModel {
         String priceMax = maxPrice.getValue()!=null ? maxPrice.getValue().toString() : "999999999";
         String roomMin = minRoom.getValue()!=null? minRoom.getValue().toString() : "0";
         String roomMax = maxRoom.getValue()!=null ? maxRoom.getValue().toString() : "100";
+*/
 
-      return   this.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin),Long.valueOf(priceMax),
+      /*return   this.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin),Long.valueOf(priceMax),
                 Integer.valueOf(roomMin), Integer.valueOf(roomMax), userId);
+*//*
+        return   this.realEstateDataSource.rawQuerySearch(type, area, surfaceMin, surfaceMax, priceMin,priceMax,
+                roomMin, roomMax, userId);
+
+*/
 
 
+        Log.d(TAG, " query : " + queryString);
+        SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, args.toArray());
+        Log.d(TAG, " final query "+query.getSql());
+        Log.d(TAG, " to array : " +args.toString());
+
+         return this.realEstateDataSource.rawQuerySearch(query);
     }
 
 

@@ -29,13 +29,6 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/mobile_navigation" />
 
-
-
-        <!--<include
-            layout="@layout/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
-
     </LinearLayout>
 
 
@@ -45,8 +38,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/nav_drawer_menu"
-        app:headerLayout="@layout/nav_header_welcome"/>
-
+        app:headerLayout="@layout/drawer_nav_header"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

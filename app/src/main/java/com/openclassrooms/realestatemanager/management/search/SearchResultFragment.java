@@ -1,10 +1,13 @@
 package com.openclassrooms.realestatemanager.management.search;
 
 
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment;
@@ -13,8 +16,8 @@ import com.openclassrooms.realestatemanager.management.realestatelist.EstateList
  * A simple {@link Fragment} subclass.
  */
 public class SearchResultFragment extends EstateListFragment {
+    private static final String TAG=SearchResultFragment.class.getName();
     private static SearchResultFragment INSTANCE;
-
 
 
     public SearchResultFragment() {
@@ -30,17 +33,34 @@ public class SearchResultFragment extends EstateListFragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
     }
 
 
+    protected void getRealEstateItems(long userId) {
+        this.mRealEstateViewModel.getSearchResult(userId).observe(this, this::updateRealEstateList);
+
+    }
+
+
+
 
 // Get all RealEstate for a given  user id.
-/*protected void getRealEstateItems(long userId) {
+/*
+protected void getRealEstateItems(long userId) {
     this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateList);
-}*/
+}
+*/
 
 
 

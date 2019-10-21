@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.openclassrooms.realestatemanager.database.RealEstateDataBase;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 
-public class RealEstateProvider extends ContentProvider {
+public class RealEstateContentProvider extends ContentProvider {
 
     // FOR DATA
     public static final String AUTHORITY = "com.openclassrooms.realestatemanager.provider";

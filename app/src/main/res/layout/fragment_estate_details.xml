@@ -397,7 +397,7 @@
                         android:contentDescription="@string/map_view"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:location="@{realEstate.location}"
+                        bind:address="@{realEstate.address}"
                         android:src="@drawable/ic_map_view" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

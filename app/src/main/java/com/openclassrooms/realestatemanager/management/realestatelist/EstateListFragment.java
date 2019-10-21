@@ -77,7 +77,7 @@ public class EstateListFragment extends Fragment{
         getRealEstateItems(USER_ID);
     }
 
-    public void initAndConfigureRecyclerView(){
+    protected void initAndConfigureRecyclerView(){
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

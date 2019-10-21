@@ -16,7 +16,9 @@ import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +48,7 @@ public class RealEstate {
     private double price;
     private double surface;
     private String completeDescription;
-    private String location;
+   // private String location;
     @Embedded
      private Address address;
     private String type;
@@ -221,14 +223,14 @@ public class RealEstate {
         this.images = images;
     }
 
-    public String getLocation() {
-        return getAddress().format();
+  /*  public String getLocation() {
+        return this.address.format();
     }
 
     public void setLocation(String location) {
         this.location = location;
     }
-
+*/
     public void addNearBy(View view){
         Log.i(TAG, " view : " +view.getId());
 
@@ -259,11 +261,14 @@ public class RealEstate {
         }
 
 
+
+
     public static RealEstate fromContentValues(ContentValues contentValues){
         final RealEstate realEstate = new RealEstate();
 
 
         if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsDouble("surface"));
+        if(contentValues.containsKey("type"))realEstate.setType(contentValues.getAsString("type"));
         if (contentValues.containsKey("completeDescription")) realEstate.setCompleteDescription(contentValues.getAsString("completeDescription"));
         if (contentValues.containsKey("price")) realEstate.setPrice(contentValues.getAsDouble("price"));
         if (contentValues.containsKey("numberOfRooms")) realEstate.setNumberOfRooms(contentValues.getAsInteger("room"));
@@ -274,17 +279,20 @@ public class RealEstate {
         if (contentValues.containsKey("soldDate")) realEstate.setDateOfSale((Date) contentValues.get("soldDate"));
         if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsInteger("userId"));
         if(contentValues.containsKey("images"))realEstate.setImages(contentValues.getAsString("images"));
+        if(contentValues.containsKey("address"))realEstate.setAddress((Address)contentValues.get("address"));
+       // if(contentValues.containsKey("location"))realEstate.setLocation(contentValues.getAsString("location"));
+        if(contentValues.containsKey("nearbyPointOfInterest"))realEstate.setNearbyPointOfInterest((ArrayList<String>) contentValues.get("nearbyPointOfInterest"));
         return realEstate;
 
     }
 
 
 
-    @BindingAdapter("location")
-    public static void loadMapFromUri(ImageView view, String location){
+    @BindingAdapter("address")
+    public static void loadMapFromUri(ImageView view, Address location){
         Log.i(TAG," the load image from uri method is call");
-        String uri="";
-       // String uri=Utils.apiUri+location+Utils.apiKey+ BuildConfig.map_api_key;
+      // String uri="";
+       String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
         Log.d(TAG, uri);
         Glide.with(view.getContext())
                 .load(uri)

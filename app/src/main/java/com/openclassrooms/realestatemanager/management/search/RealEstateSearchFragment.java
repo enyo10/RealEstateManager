@@ -19,6 +19,7 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.RealEstateSearchDialogBinding;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class RealEstateSearchFragment extends DialogFragment {
 
     private RealEstateViewModel mRealEstateViewModel;
     private RealEstateSearchDialogBinding mRealEstateSearchDialogBinding;
-    private List<RealEstate>mRealEstateList=new ArrayList<RealEstate>();
+    private List<RealEstate>mRealEstateList=new ArrayList<>();
 
 
     public RealEstateSearchFragment() {
@@ -72,7 +73,7 @@ public class RealEstateSearchFragment extends DialogFragment {
 
     private void init(){
         configureViewModel();
-        getRealEstateItems(USER_ID);
+        //getRealEstateItems(USER_ID);
 
     }
 
@@ -81,6 +82,7 @@ public class RealEstateSearchFragment extends DialogFragment {
             // rootView =((RealEstateMainActivity) this.getActivity()).mRootView;
             mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
             mRealEstateSearchDialogBinding.setRealEstateViewModel(mRealEstateViewModel);
+            mRealEstateSearchDialogBinding.setDataConverter(new DataConverter());
 
         }
 
@@ -88,17 +90,18 @@ public class RealEstateSearchFragment extends DialogFragment {
 
 
     // Get all items for a user
-    private void getRealEstateItems(int userId) {
+  /*  private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateItemsList);
     }
-
+*/
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         mRealEstateList.clear();
-        if(SearchResultFragment.getINSTANCE().mRealEstateRecyclerViewAdapter!=null)
+        if(SearchResultFragment.getINSTANCE().mRealEstateRecyclerViewAdapter!=null){
         SearchResultFragment.getINSTANCE().mRealEstateRecyclerViewAdapter.updateWithData(realEstates);
         mRealEstateList.addAll(realEstates);
        Log.d(TAG, "updateRealEstateItemsList: data size = "+ mRealEstateList.size());
+        }
 
 
     }

@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
@@ -35,6 +36,9 @@ public class RealEstateTest {
     private static int numberOfBedRooms=3;
     private static String description="jolie maison à vendre";
     private static String imageList="";
+    private  ArrayList<String>poiList=new ArrayList<>();
+
+
 
    /* private static RealEstate NEW_PENTHOUSE = new RealEstate(USER_ID, Type.PENTHOUSE,price, area, numberOfPieces,numberOfBathrooms, numberOfBedRooms, description,imageList,address);
 

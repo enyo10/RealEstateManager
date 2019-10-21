@@ -402,7 +402,7 @@
                             android:src="@drawable/ic_map_view"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            bind:location="@{realEstate.location}" />
+                            bind:address="@{realEstate.address}" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

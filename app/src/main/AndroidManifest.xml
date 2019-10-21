@@ -43,7 +43,9 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps">
+
+        </activity>
         <activity android:name=".management.activities.RealEstateMainActivity" />
         <activity android:name=".authentication.SignUpActivity" />
         <activity
@@ -59,8 +61,8 @@
         <activity android:name=".SecondActivity" />
 
         <provider
-            android:name=".provider.RealEstateProvider"
-            android:authorities="com.openclassrooms.savemytrip.provider"
+            android:name=".provider.RealEstateContentProvider"
+            android:authorities="com.openclassrooms.realestatemanager.provider"
             android:exported="true" />
     </application>
 

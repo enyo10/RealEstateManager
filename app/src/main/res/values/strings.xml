@@ -129,6 +129,7 @@
     <string name="calculation_result">calculation result</string>
     <string name="stop_calc">Cancel</string>
     <string name="calculate">Send  </string>
+    <string name="Share">share</string>
 
 
 </resources>

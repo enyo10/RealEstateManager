@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="RealEstateViewModel"
             type="com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel" />
@@ -11,22 +14,29 @@
 
     </data>
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".management.search.RealEstateSearchFragment"
-        android:id="@+id/search_layout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
+        android:minWidth="1000dp"
+        android:minHeight="1000dp">
+
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+
+        android:orientation="vertical"
+        tools:context=".management.search.RealEstateSearchFragment">
 
         <TextView
             android:id="@+id/poi_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:padding="15dp"
             android:text="@string/enter_your_criteria"
+            android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -45,8 +55,8 @@
                 android:layout_margin="10dp"
                 android:layout_weight="50"
                 android:hint="@string/type"
-                android:text="@={RealEstateViewModel.searchType}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={RealEstateViewModel.searchType}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/search_area"
@@ -55,9 +65,148 @@
                 android:layout_margin="10dp"
                 android:layout_weight="50"
                 android:hint="@string/area"
-                android:text="@={RealEstateViewModel.searchArea}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={RealEstateViewModel.searchArea}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <LinearLayout
+            android:id="@+id/search_surface_criteria_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_min_surface_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="5dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_min_surface_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minSurface)}"
+                    android:hint="@string/surface_min" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_max_surface_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginStart="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_max_price_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/surface_max"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxSurface)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_room_criteria_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_min_room_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="5dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_min_room_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minRoom)}"
+                    android:hint="@string/room_min"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_max_room_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginStart="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_max_room_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/room_max"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxRoom)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_price_criteria_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_min_price_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="5dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_min_price_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minPrice)}"
+                    android:hint="@string/price_min" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_max_price_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginStart="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_max_surface_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/price_max"
+                    android:inputType="number"
+                    android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxPrice)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+<!--
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -74,8 +223,8 @@
                 android:layout_weight="50"
                 android:hint="@string/surface_min"
                 android:inputType="number"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minSurface)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minSurface)}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/search_surface_max"
@@ -85,8 +234,8 @@
                 android:layout_weight="50"
                 android:hint="@string/surface_max"
                 android:inputType="number"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxSurface)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxSurface)}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -106,8 +255,8 @@
                 android:layout_weight="50"
                 android:hint="@string/price_min"
                 android:inputType="number"
-                android:text="@={DataConverter.convertLongToString(RealEstateViewModel.minPrice)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minPrice)}" />
 
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -116,10 +265,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="50"
-                android:hint="@string/price_max"
+
                 android:inputType="number"
-                android:text="@={DataConverter.convertLongToString(RealEstateViewModel.maxPrice)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxPrice)}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -138,8 +287,8 @@
                 android:layout_weight="50"
                 android:hint="@string/room_min"
                 android:inputType="number"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minRoom)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minRoom)}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/search_room_max"
@@ -149,11 +298,12 @@
                 android:layout_weight="50"
                 android:hint="@string/room_max"
                 android:inputType="number"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxRoom)}"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxRoom)}" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+-->
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -167,10 +317,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@null"
-                android:padding="10dp"
+                android:contentDescription="@string/search_dialog_cancel"
                 android:onClick="dialogButtonClicked"
-                android:src="@drawable/baseline_clear_black_24"
-                android:contentDescription="@string/search_dialog_cancel" />
+                android:padding="10dp"
+                android:src="@drawable/baseline_clear_black_24" />
 
             <ImageButton
                 android:id="@+id/action_search"
@@ -178,14 +328,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@null"
-                android:padding="10dp"
+                android:contentDescription="@string/search_dialog_search"
                 android:onClick="dialogButtonClicked"
-                android:src="@drawable/baseline_search_24"
-                android:contentDescription="@string/search_dialog_search" />
+                android:padding="10dp"
+                android:src="@drawable/baseline_search_24" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     </LinearLayout>
 
-
+    </ScrollView>
 </layout>

@@ -36,6 +36,7 @@ public abstract class RealEstateDataBase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RealEstateDataBase.class, "MyRealEstateDataBase.db")
+                            .fallbackToDestructiveMigration()
                             .addCallback(prepopulateDatabase())
                             .build();
                 }
@@ -46,20 +47,7 @@ public abstract class RealEstateDataBase extends RoomDatabase {
 
 
 
-    // --- INSTANCE ---
-   /* public static RealEstateDataBase getInstance(Context context) {
-        if (INSTANCE == null) {
-            synchronized (RealEstateDataBase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            RealEstateDataBase.class, "MyDatabase.db")
-                            .addCallback(prepopulateDatabase())
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
-    }*/
+
 
     // ---
 

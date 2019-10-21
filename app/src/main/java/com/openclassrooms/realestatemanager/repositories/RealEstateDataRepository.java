@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.models.RealEstate;
@@ -36,12 +37,20 @@ public class RealEstateDataRepository {
     public void updateRealEstate(RealEstate realEstate){ realEstateDao.updateRealEstate(realEstate); }
 
     // --- SEARCH ---
-
+/*
     public LiveData<List<RealEstate>> searchRealEstate(String type, String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
                                                        Integer minRoom, Integer maxRoom, long userId) {
         return this.realEstateDao.searchRealEstate(type, area, minSurface, maxSurface, minPrice, maxPrice,
                 minRoom, maxRoom, userId);
+    }*/
+
+    // The raw search.
+    public LiveData<List<RealEstate>> rawQuerySearch(SupportSQLiteQuery query){
+        return this.realEstateDao.rawQuerySearch(query);
+
     }
+
+
 
 //-- To keep track on insert result.
     public MutableLiveData<Long> getInsertResult() {
