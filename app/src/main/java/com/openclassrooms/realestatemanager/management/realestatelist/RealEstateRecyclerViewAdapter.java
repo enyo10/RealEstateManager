@@ -61,6 +61,7 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
         Log.d(TAG, " real:  "+dataModel.toString());
         holder.itemRowBinding.setRealEstate(dataModel);
         holder.itemRowBinding.setDataConverter(new DataConverter());
+        holder.itemRowBinding.setSold(dataModel.isSold());
         if(dataModel.getImages()!=null)
             if(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).size()!=0)
         holder.itemRowBinding.setRealImage(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));

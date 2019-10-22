@@ -14,6 +14,10 @@
         <variable
             name="realImage"
             type="com.openclassrooms.realestatemanager.models.RealEstateImage" />
+        <variable
+            name="sold"
+            type="java.lang.Boolean"/>
+
 
         <variable
             name="DataConverter"
@@ -65,12 +69,11 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="324dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="@{sold ? View.VISIBLE :View.GONE }"
                 android:contentDescription="@string/image_photo"
-                bind:uri="@{realImage.uri}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                android:visibility="@{realEstate.sold? View.GONE : View.VISIBLE}"
                 app:srcCompat="@drawable/sold_banner" />
 
 

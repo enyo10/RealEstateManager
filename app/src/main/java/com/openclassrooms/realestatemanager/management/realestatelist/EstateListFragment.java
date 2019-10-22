@@ -45,9 +45,7 @@ public class EstateListFragment extends Fragment{
          boolean value= getContext().getResources().getBoolean(R.bool.isTablet);
          if(value)
           //   configureAndShowDetailFragment();
-
          Log.i(TAG, " is tablet.. "+value);
-
 
         return mBinding.getRoot();
 
@@ -66,7 +64,6 @@ public class EstateListFragment extends Fragment{
         Log.i(TAG, "in on activity created");
 
         if(getActivity()!=null){
-
             mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
 
         }
