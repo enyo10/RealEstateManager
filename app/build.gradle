@@ -96,6 +96,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.room:room-runtime:2.2.0'
     annotationProcessor 'androidx.room:room-compiler:2.2.0'
+    // Add Api Google Play Service : Map
+    // implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // Add Api Google Play Service : Places
+    //implementation 'com.google.android.gms:play-services-places:16.1.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
 
     // TESTING
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'

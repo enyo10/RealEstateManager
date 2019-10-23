@@ -24,11 +24,11 @@ import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
  * A simple {@link Fragment} subclass.
  */
 public class TaxationDialogFragment extends DialogFragment {
-    private static final String TAG=TaxationDialogFragment.class.getName();
+    private static final String TAG = TaxationDialogFragment.class.getName();
 
-   private FragmentTaxationDialogBinding mFragmentTaxationDialogBinding;
-   private RealEstateViewModel mRealEstateViewModel;
-   private static final double RATE=0.06;
+    private FragmentTaxationDialogBinding mFragmentTaxationDialogBinding;
+    private RealEstateViewModel mRealEstateViewModel;
+    private static final double RATE = 0.06;
 
 
     public TaxationDialogFragment() {
@@ -39,7 +39,7 @@ public class TaxationDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mFragmentTaxationDialogBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_taxation_dialog,container,false);
+        mFragmentTaxationDialogBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_taxation_dialog, container, false);
         mFragmentTaxationDialogBinding.setLifecycleOwner(this);
 
         return mFragmentTaxationDialogBinding.getRoot();
@@ -53,31 +53,33 @@ public class TaxationDialogFragment extends DialogFragment {
 
     }
 
-    private void configureViewModel(){
-        if(this.getActivity()!=null){
-       // View   rootView =((RealEstateMainActivity) this.getActivity()).mRootView;
-            mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
-           mFragmentTaxationDialogBinding.setRealEstateViewModel(mRealEstateViewModel);
+    private void configureViewModel() {
+        if (this.getActivity() != null) {
+            // View   rootView =((RealEstateMainActivity) this.getActivity()).mRootView;
+            mRealEstateViewModel = ((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
+            mFragmentTaxationDialogBinding.setRealEstateViewModel(mRealEstateViewModel);
+
+            String taxationRate= String.format(getResources().getString(R.string.rate_value),100*RATE,"%");
+            String message =String.format(getResources().getString(R.string.two_string),"You have a rate of ",taxationRate);
+            mFragmentTaxationDialogBinding.taxationRate.setText(message);
 
         }
 
     }
 
-    public void calculateRealEstateRate(double price){
+    public void calculateRealEstateRate(double price) {
 
         int period = new DataConverter().convertStringToInt(
                 String.valueOf(mFragmentTaxationDialogBinding.taxationDurationEditText.getText()));
 
-       double monthly_tax= Utils.calculateInterestRate(price,RATE,period);
-       mFragmentTaxationDialogBinding.taxationResult.setText(DataConverter.formatPriceToDollarFormat(monthly_tax));
+        double monthly_tax = Utils.calculateInterestRate(price, RATE, period);
+        String monthly_tax_to_us_format=DataConverter.formatPriceToDollarFormat(monthly_tax);
+        String ui_text =String.format(getResources().getString(R.string.two_string),monthly_tax_to_us_format,"/month");
+        mFragmentTaxationDialogBinding.taxationResult.setText(ui_text);
 
-    Log.d(TAG," PRICE :" +price +" ,  RATE :"+ RATE +" ,"+period);
-
+        Log.d(TAG, " PRICE :" + price + " ,  RATE :" + RATE + " ," + period);
 
 
     }
-
-
-
 
 }

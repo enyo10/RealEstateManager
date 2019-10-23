@@ -106,10 +106,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //  BottomNavigationView bottomNavigationView=view.findViewById(R.id.bottom_nav_view);
-        //  bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        // mType = Type.PENTHOUSE;
-
         setHasOptionsMenu(true);
 
     }
@@ -169,7 +165,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    protected void getTextValues() {
+    protected void getTextValuesAndSaveRealEstate() {
         Log.d(TAG, " on save button clicked");
 
         final List<TextInputLayout> textInputLayouts = ViewUtils.findViewsWithType(
@@ -189,15 +185,13 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (noErrors) {
 
-           /* for(RealEstateImage estateImage:mEstateImages){
+            for(RealEstateImage estateImage:mEstateImages){
                 saveImage(estateImage);
 
-                Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName());
+                Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName()+"  "+estateImage.getBitmap());
             }
-            mRealEstateViewModel.setSetRealEstateImagesString(Utils.objectToJson(mEstateImages));
+            mRealEstateViewModel.setRealEstateImagesString(Utils.objectToJson(mEstateImages));
             mRealEstateViewModel.onRealEstateSave(USER_ID);
-
-            Log.d(TAG, " Success");*/
         }
 
     }
@@ -292,6 +286,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         if (resultCode == RESULT_CANCELED) {
             // Request again permission or return.
             Log.i(TAG, " Result code  " + RESULT_CANCELED);
+            return;
         }
         if(requestCode==VIDEO_CAPTURE){
             if (resultCode == RESULT_OK) {
@@ -328,6 +323,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
             Toast.makeText(getContext(), "Picture made properly ", Toast.LENGTH_SHORT).show();
         }
+        if(mBitmap!=null)
         createDialog();
 
     }
@@ -351,7 +347,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             wallpaperDirectory.mkdirs();
         }
 
-
         try {
                 /*File f = new File(wallpaperDirectory, Calendar.getInstance()
                         .getTimeInMillis() + ".jpg");*/
@@ -363,10 +358,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                             new String[]{f.getPath()},
                             new String[]{"image/jpeg"}, null);
                     fo.close();
-                    Log.d(TAG, "File Saved::--->" + f.getAbsolutePath());
-                    Log.d(TAG, "File name " + f.getName());
-                    Log.d(TAG, " path " + f.getPath());
-                    Log.d(TAG, " canonical file" + f.getCanonicalFile());
 
                     realEstateImage.setUri(f.getAbsolutePath());
 
@@ -453,16 +444,9 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
     @Override
     public void onRealEstateSaveButtonClicked(View v) {
-        // Check if all text field are filled.
-        getTextValues();
+        // Check if all text field are filled and save the real estate.
+        getTextValuesAndSaveRealEstate();
 
-        for(RealEstateImage estateImage:mEstateImages){
-            saveImage(estateImage);
-
-            Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName()+"  "+estateImage.getBitmap());
-        }
-        mRealEstateViewModel.setRealEstateImagesString(Utils.objectToJson(mEstateImages));
-        mRealEstateViewModel.onRealEstateSave(USER_ID);
     }
 
 
@@ -470,7 +454,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         return (getActivity()!=null && getActivity().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA_ANY));
-
 
     }
     @Override
