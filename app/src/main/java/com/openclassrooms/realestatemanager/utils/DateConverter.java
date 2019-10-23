@@ -2,7 +2,9 @@ package com.openclassrooms.realestatemanager.utils;
 
 import androidx.room.TypeConverter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class DateConverter {
@@ -18,13 +20,17 @@ public class DateConverter {
         }
 */
     @TypeConverter
-    public Date fromTimestamp(Long value) {
+    public static Date fromTimestamp(Long value) {
         return value == null ? null : new Date(value);
     }
 
     @TypeConverter
-    public Long dateToTimestamp(Date date) {
+    public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
+    }
+
+    public static String formatDate( Date date){
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(date.getTime());
     }
 
 }

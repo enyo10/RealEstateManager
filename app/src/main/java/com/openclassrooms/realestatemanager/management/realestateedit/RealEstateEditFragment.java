@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.management.realestateedit;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.openclassrooms.realestatemanager.models.RealEstateImage;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,17 +52,21 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       // binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
+
         binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
         binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
         binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(mRealEstateViewModel.realEstate!=null)
-                    if(checkedId==R.id.sold_radio_button)
+                    if(checkedId==R.id.sold_radio_button){
                         mRealEstateViewModel.realEstate.getValue().setSold(true);
-                    else if(checkedId==R.id.unsold_radio_button)
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
+                    }
+                    else if(checkedId==R.id.unsold_radio_button){
                         mRealEstateViewModel.realEstate.getValue().setSold(false);
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
+                    }
 
             }
         });
@@ -74,10 +78,10 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     private void updateWithSelectedRealEstate(RealEstate realEstate){
         mRealEstateViewModel.realEstate.setValue(realEstate);
 
-
         updateNearbyCheckButton(realEstate);
+        updateImageList(realEstate);
 
-        Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
+       /* Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
        // mEstateImages
           ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
 
@@ -85,8 +89,22 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
                     Log.d(TAG," realEstateImage:-> "+realEstateImage.toString());
 
                     this.updateImageList(realEstateImage);
-                }
-        Log.d(TAG, " images size "+images.size());
+                }*/
+
+    }
+
+    /**
+     * This method to retrieve the list of real estate pictures.
+     * @param realEstate, the real estate to update.
+     */
+    private void updateImageList(RealEstate realEstate){
+
+        ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
+
+        for(RealEstateImage realEstateImage:images){
+            this.updateImageList(realEstateImage);
+        }
+
     }
 
 

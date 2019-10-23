@@ -133,6 +133,11 @@
     <string name="real_estate_update_status_button">Update Status</string>
     <string name="sold_label">Sold</string>
     <string name="unsold_label">Unsold</string>
+    <string name="search_location">location</string>
+    <string name="search_begin_period"> Begin period</string>
+    <string name="search_end_period"> End period</string>
+
+    <string name="cancel">Cancel</string>
 
 
 </resources>

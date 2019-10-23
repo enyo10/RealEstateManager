@@ -11,6 +11,9 @@
         <variable
             name="DataConverter"
             type="com.openclassrooms.realestatemanager.utils.DataConverter" />
+        <variable
+            name="DateConverter"
+            type="com.openclassrooms.realestatemanager.utils.DateConverter" />
 
     </data>
 
@@ -20,14 +23,14 @@
         android:minWidth="1000dp"
         android:minHeight="1000dp">
 
-
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-
         android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
         tools:context=".management.search.RealEstateSearchFragment">
 
         <TextView
@@ -66,7 +69,7 @@
                 android:layout_weight="50"
                 android:hint="@string/area"
                 android:padding="10dp"
-                android:text="@={RealEstateViewModel.searchArea}" />
+                android:text="@={RealEstateViewModel.location}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -206,104 +209,64 @@
         </LinearLayout>
 
 
-<!--
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
+            android:id="@+id/search_date_picker_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_surface_min"
+            <com.google.android.material.textview.MaterialTextView
+
+                android:id="@+id/search_begin_period_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
-                android:hint="@string/surface_min"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minSurface)}" />
+                android:layout_height="50dp"
+                android:layout_weight=".5"
+                android:drawableStart="@drawable/ic_date_range"
+                android:gravity="center"
+                android:hint="@string/search_begin_period"
+                android:textColor="@color/black"
+                android:background="@drawable/custom_text_view"
+                android:layout_marginEnd="5dp"
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_surface_max"
+                android:padding="5dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+
+                android:id="@+id/search_end_period_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
-                android:hint="@string/surface_max"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxSurface)}" />
+                android:layout_height="50dp"
+                android:layout_weight=".5"
+                android:drawableStart="@drawable/ic_date_range"
+                android:gravity="center"
+                android:hint="@string/search_end_period"
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_price_min"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
-                android:hint="@string/price_min"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.minPrice)}" />
+                android:background="@drawable/custom_text_view"
+                android:layout_marginStart="5dp"
+                android:padding="5dp"
+                android:textColor="@color/black" />
 
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_price_max"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
 
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.maxPrice)}" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_room_min"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
-                android:hint="@string/room_min"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.minRoom)}" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/search_room_max"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="50"
-                android:hint="@string/room_max"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="@={DataConverter.convertIntToString(RealEstateViewModel.maxRoom)}" />
+        </LinearLayout>
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
--->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_location_text_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_location_text_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_location">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

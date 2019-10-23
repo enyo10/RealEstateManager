@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.management.search;
 
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,19 +25,31 @@ import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.utils.DataConverter;
 import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RealEstateSearchFragment extends DialogFragment {
+public class RealEstateSearchFragment extends DialogFragment implements View.OnClickListener{
     private static final String TAG= RealEstateSearchFragment.class.getName();
     public static final int USER_ID = 1;
 
     private RealEstateViewModel mRealEstateViewModel;
     private RealEstateSearchDialogBinding mRealEstateSearchDialogBinding;
     private List<RealEstate>mRealEstateList=new ArrayList<>();
+
+    private DatePickerDialog.OnDateSetListener mEntryDateSetListener, mSoldDateSetListener;
+    private Date startDate, endDate;
+
+    private DatePickerDialog  mStartPeriodPickerDialog;
+    private DatePickerDialog  mEndPeriodPickerDialog;
+    private SimpleDateFormat displayDateFormatter;
+    private Calendar newCalendar;
 
 
     public RealEstateSearchFragment() {
@@ -67,19 +82,34 @@ public class RealEstateSearchFragment extends DialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mRealEstateSearchDialogBinding.searchEndPeriodButton.setOnClickListener(this);
+        mRealEstateSearchDialogBinding.searchBeginPeriodButton.setOnClickListener(this);
+       /* mRealEstateSearchDialogBinding.searchDatePickerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId()==R.id.search_begin_period)
+                   {mStartPeriodPickerDialog.show() ;
+                   Log.d(TAG," begin button" );}
+                if(v.getId()==R.id.search_end_period){
+                    mEndPeriodPickerDialog.show();
+                    Log.d(TAG," end button" );
+
+                }
+
+            }
+        });*/
 
        init();
     }
 
     private void init(){
         configureViewModel();
-        //getRealEstateItems(USER_ID);
+        manageDateFields();
 
     }
 
     private void configureViewModel(){
         if(this.getActivity()!=null){
-            // rootView =((RealEstateMainActivity) this.getActivity()).mRootView;
             mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
             mRealEstateSearchDialogBinding.setRealEstateViewModel(mRealEstateViewModel);
             mRealEstateSearchDialogBinding.setDataConverter(new DataConverter());
@@ -89,11 +119,6 @@ public class RealEstateSearchFragment extends DialogFragment {
     }
 
 
-    // Get all items for a user
-  /*  private void getRealEstateItems(int userId) {
-        this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateItemsList);
-    }
-*/
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         mRealEstateList.clear();
@@ -106,6 +131,69 @@ public class RealEstateSearchFragment extends DialogFragment {
 
     }
 
+    // -------------------
+    // MANAGE DATE FIELDS
+    // -------------------
+    private void manageDateFields() {
+        newCalendar = Calendar.getInstance();
+        displayDateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        setBeginPeriodDate();
+        setEndPeriodDate();
+    }
+
+
+
+    public void setBeginPeriodDate() {
+
+        // Create a DatePickerDialog and manage it
+        mStartPeriodPickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                mRealEstateViewModel.beginPeriodDate.setValue(newDate.getTime());
+
+                // Display date selected
+               mRealEstateSearchDialogBinding.searchBeginPeriodButton.setText( displayDateFormatter.format(newDate.getTime()));
+
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        mStartPeriodPickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    Log.i(TAG," Date is cancel ");
+                    mRealEstateViewModel.beginPeriodDate.setValue(null);
+                }
+            }
+        });
+    }
+
+    private void setEndPeriodDate() {
+        // Create a DatePickerDialog and manage it
+        mEndPeriodPickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, month, dayOfMonth);
+
+                mRealEstateViewModel.endPeriodDate.setValue(newDate.getTime());
+
+            }
+
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        mEndPeriodPickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    Log.i(TAG," Date is cancel ");
+                    mRealEstateViewModel.endPeriodDate.setValue(null);
+                }
+            }
+        });
+    }
+
+
     /**
      * This method to make search.
      */
@@ -117,4 +205,12 @@ public class RealEstateSearchFragment extends DialogFragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.search_begin_period_button)
+            this.mStartPeriodPickerDialog.show();
+        if(v.getId()==R.id.search_end_period_button)
+            this.mEndPeriodPickerDialog.show();
+
+    }
 }

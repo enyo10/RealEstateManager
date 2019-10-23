@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.BindingAdapter;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -322,11 +321,6 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
-    @BindingAdapter("app:goneUnless")
-    public static void goneUnless(View view, Boolean visible) {
-      //  view.visibility = visible ? View.VISIBLE : View.GONE;
-
-    }
 
 
 

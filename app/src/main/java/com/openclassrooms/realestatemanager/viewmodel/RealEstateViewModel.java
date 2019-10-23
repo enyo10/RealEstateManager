@@ -28,7 +28,6 @@ public class RealEstateViewModel extends ViewModel {
 
 
     //  FOR SEARCH DATA.
-    public MutableLiveData<String>searchArea = new MutableLiveData<>();
     public MutableLiveData<Integer>minRoom = new MutableLiveData<>();
     public MutableLiveData<Integer>maxRoom = new MutableLiveData<>();
     public MutableLiveData<Double>minSurface = new MutableLiveData<>();
@@ -36,6 +35,9 @@ public class RealEstateViewModel extends ViewModel {
     public MutableLiveData<Double>minPrice = new MutableLiveData<>();
     public MutableLiveData<Double>maxPrice = new MutableLiveData<>();
     public MutableLiveData<String>searchType = new MutableLiveData<>();
+    public MutableLiveData<Date>beginPeriodDate=new MutableLiveData<>();
+    public MutableLiveData<Date>endPeriodDate=new MutableLiveData<>();
+    public MutableLiveData<String>location=new MutableLiveData<>();
 
     // FOR CAMERA.
     public MutableLiveData<Boolean>hasCamera=new MutableLiveData<>();
@@ -116,12 +118,6 @@ public class RealEstateViewModel extends ViewModel {
         });
     }
 
-    // Search
-   /* public LiveData<List<RealEstate>> searchRealEstate(String type, String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
-                                                       Integer minRoom, Integer maxRoom, long userId) {
-        return realEstateDataSource.searchRealEstate(type, area, minSurface, maxSurface, minPrice, maxPrice,
-                minRoom, maxRoom, userId);
-    }*/
 
 
     public MutableLiveData<RealEstate> getRealEstate() {
@@ -184,13 +180,15 @@ public class RealEstateViewModel extends ViewModel {
     public LiveData<List<RealEstate>> getSearchResult(long userId){
 
         Double surfaceMax = maxSurface.getValue()!=null ? maxSurface.getValue():0.0;
-        Double surfaceMin =minSurface.getValue()!=null?minSurface.getValue():0.0;
+        Double surfaceMin =minSurface.getValue()!=null ?minSurface.getValue():0.0;
         Double priceMin = minPrice.getValue()!=null ? minPrice.getValue() :0.0;
         Double priceMax = maxPrice.getValue()!=null ? maxPrice.getValue() :0.0;
         String type = searchType.getValue()!=null ? searchType.getValue():"";
-        String area = searchArea.getValue()!=null? searchArea.getValue() :"";
+        String searchLocation = location.getValue()!=null? location.getValue() :"";
         Integer roomMin = minRoom.getValue()!=null? minRoom.getValue() :0;
         Integer roomMax = maxRoom.getValue()!=null ? maxRoom.getValue() :0;
+        Date searchPeriodBeginDate = beginPeriodDate.getValue();
+        Date searchPeriodEndDate = endPeriodDate.getValue();
 
         Log.d(TAG, " minRoom " +minRoom.getValue());
         Log.d(TAG, " maxRoom " +maxRoom.getValue());
@@ -199,7 +197,7 @@ public class RealEstateViewModel extends ViewModel {
         Log.d(TAG, " minPrice " +minPrice.getValue());
         Log.d(TAG, " maxPrice " +maxPrice.getValue());
 
-        Log.d(TAG, " SearchArea " +searchArea.getValue());
+        Log.d(TAG, " SearchArea " +location.getValue());
 
         // Query string
        // String queryString =new String();
@@ -237,9 +235,27 @@ public class RealEstateViewModel extends ViewModel {
             args.add(priceMin);
         }
         if(priceMax!=0){
-            queryString+="AND price < ?";
+            queryString+="AND price < ? ";
             args.add(priceMax);
         }
+        if(searchPeriodBeginDate!=null){
+            queryString+="AND dateOfEntry > ? ";
+            args.add(searchPeriodBeginDate);
+        }
+
+        if(searchPeriodEndDate!=null){
+            queryString+="AND dateOfEntry < ? ";
+            args.add(searchPeriodEndDate);
+        }
+
+        if(!TextUtils.isEmpty(searchLocation)){
+           // queryString+="AND city ";
+            queryString+="AND city COLLATE SQL_Latin1_General_CP1_CI_AS LIKE ? ";
+            args.add(searchLocation);
+
+           // LIKE '%cats%'
+        }
+
 
 
 
