@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -17,12 +18,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
@@ -35,7 +35,8 @@ import com.openclassrooms.realestatemanager.viewmodel.RealEstateViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RealEstateMainActivity extends AppCompatActivity {
+public class RealEstateMainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = RealEstateMainActivity.class.getName();
 
     public final int USER_ID = 1;
@@ -45,8 +46,12 @@ public class RealEstateMainActivity extends AppCompatActivity {
     private static final String SEARCH_DIALOG_TAG="SEARCH_DIALOG";
     private static final String TAXATION_DIALOG_TAG ="TAXATION_DIALOG";
 
-    MaterialToolbar mToolbar;
-    BottomNavigationView mBottomNavigationView;
+    public MaterialToolbar mToolbar;
+    public DrawerLayout mDrawerLayout;
+    public NavController mNavController;
+    public NavigationView mNavigationView;
+
+    // BottomNavigationView mBottomNavigationView;
     EstateDetailsFragment mEstateDetailsFragment;
     RealEstateSearchFragment mRealEstateSearchFragment;
     TaxationDialogFragment mTaxationDialogFragment;
@@ -64,26 +69,21 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
         initViewModel();
         getCurrentUser(USER_ID);
+        setUpNavigation();
 
-        NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
-        DrawerLayout drawerLayout =findViewById(R.id.drawer_layout);
-        AppBarConfiguration appBarConfiguration =
+     //   NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
+     //   DrawerLayout drawerLayout =findViewById(R.id.activity_real_estate_main_drawer_layout);
+       /* AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
+*/
 
 
+      //  MaterialToolbar toolbar = findViewById(R.id.my_toolBar);
+      //  setSupportActionBar(toolbar);
 
-        MaterialToolbar toolbar = findViewById(R.id.my_toolBar);
-        setSupportActionBar(toolbar);
-      //  NavigationUI.setupWithNavController(toolbar, navController);
+      //  NavigationUI.setupWithNavController(mToolbar,mNavController,mDrawerLayout);
 
-        NavigationUI.setupWithNavController(toolbar,navController,drawerLayout);
-       // NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-       // NavigationView navView = findViewById(R.id.nav_view);
-     //   NavigationUI.setupWithNavController(navView, navController);
-
-
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+        mNavController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
@@ -101,7 +101,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
                 } else {
                     frameLayout.setVisibility(View.VISIBLE);
-                    toolbar.setVisibility(View.VISIBLE);
+                    mToolbar.setVisibility(View.VISIBLE);
                    // bottomNavigationView.setVisibility(View.VISIBLE);
                 }
             }
@@ -118,6 +118,32 @@ public class RealEstateMainActivity extends AppCompatActivity {
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
         this.mRealEstateViewModel.init(USER_ID);
 
+    }
+    private void setUpNavigation(){
+        setUpToolBar();
+
+         mNavController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
+         mDrawerLayout =findViewById(R.id.activity_real_estate_main_drawer_layout);
+         mNavigationView=findViewById(R.id.nav_view);
+
+
+       // NavigationUI.setupActionBarWithNavController(this, mNavController, mDrawerLayout);
+
+        //NavigationUI.setupWithNavController(mNavigationView, mNavController);
+        NavigationUI.setupWithNavController(mToolbar,mNavController,mDrawerLayout);
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+
+    }
+
+    private void setUpToolBar(){
+        mToolbar = findViewById(R.id.my_toolBar);
+        setSupportActionBar(mToolbar);
+
+       // if(getSupportActionBar()!=null){
+     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setDisplayShowHomeEnabled(true);}
 
     }
 
@@ -260,7 +286,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
     }
 
 
-
+/*
     public boolean ischecked(View view){
         MaterialCheckBox box=(MaterialCheckBox) view;
         List<String> list=new ArrayList<>();
@@ -270,7 +296,7 @@ public class RealEstateMainActivity extends AppCompatActivity {
             return true;
 
 
-    }
+    }*/
 
 
     public void dialogButtonClicked(View view){
@@ -320,12 +346,44 @@ public class RealEstateMainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.my_nav_host_fragment), mDrawerLayout);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
 
+        mDrawerLayout.closeDrawers();
 
+        int id = item.getItemId();
 
+        switch (id) {
 
+            case R.id.map_navigation_button:
+                mNavController.navigate(R.id.mapViewFragment);
+                break;
 
+          /*  case R.id.second:
+                navController.navigate(R.id.secondFragment);
+                break;
 
+            case R.id.third:
+                navController.navigate(R.id.thirdFragment);
+                break;*/
+
+        }
+        return true;
+    }
 }

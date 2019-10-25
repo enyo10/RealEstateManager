@@ -307,4 +307,15 @@ public class RealEstate {
                 .into(view);
     }
 
+    public  String formatSnippet() {
+
+        return "- Type: " + getType()
+                + "\n- Area: " + getAddress().getCity()
+                + "\n- Price: " + getFormattedPrice()
+                + "\n- Surface: " + getSurface() + " sq m"
+                + "\n- Nb of room: " + getNumberOfRooms()
+                + "\n- Nb of Bathroom: " + getNumberOfBathRooms()
+                + "\n- Nb of Bedroom: " + getNumberOfBedRooms();
+    }
+
 }

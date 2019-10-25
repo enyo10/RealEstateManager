@@ -87,10 +87,6 @@ public class Utils {
 
 
 
-
-
-
-
     public static  boolean isIntegerrValue(String value){
         try
         {
@@ -201,7 +197,7 @@ public class Utils {
     }
 
     public static void main (String []args){
-        System.out.println(calculateInterestRate(70000,0.06,12));
+        System.out.println(calculateInterestRate(10000,0.06,36));
     }
 
 

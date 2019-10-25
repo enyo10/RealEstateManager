@@ -142,6 +142,8 @@
     <string name="rate_value"> "%,2.2f" %2$s</string>
     <string name="two_string"> %1$s %2$s </string>
     <string name="location_permission_denied">Permission denied</string>
+    <string name="fragment_map_view">Realestates map view</string>
+    <string name="fragment_taxation_dialog">Taxation</string>
 
 
 </resources>

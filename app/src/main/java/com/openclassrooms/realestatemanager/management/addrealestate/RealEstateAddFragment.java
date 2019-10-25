@@ -305,7 +305,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             if (data != null) {
                 Uri contentURI = data.getData();
 
-                Log.i(TAG, " the image Uri object: " + contentURI.toString());
                 try {
                     this.mBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
                     Toast.makeText(getContext(), "Picture choose from gallery", Toast.LENGTH_LONG).show();
@@ -413,7 +412,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
                mString = inputText.getText().toString();
                Log.i(TAG, " input text -> "+mString);
-               RealEstateImage realEstateImage=new RealEstateImage(mString,mBitmap,mString);
+               RealEstateImage realEstateImage = new RealEstateImage(mString,mBitmap,mString);
                updateImageList(realEstateImage);
 
             }

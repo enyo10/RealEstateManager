@@ -71,9 +71,12 @@ public class TaxationDialogFragment extends DialogFragment {
 
         int period = new DataConverter().convertStringToInt(
                 String.valueOf(mFragmentTaxationDialogBinding.taxationDurationEditText.getText()));
+        Log.d(TAG, " price "+period);
 
         double monthly_tax = Utils.calculateInterestRate(price, RATE, period);
+        Log.d(TAG," monthly payment : "+monthly_tax);
         String monthly_tax_to_us_format=DataConverter.formatPriceToDollarFormat(monthly_tax);
+        Log.d(TAG, " in US format : "+monthly_tax_to_us_format);
         String ui_text =String.format(getResources().getString(R.string.two_string),monthly_tax_to_us_format,"/month");
         mFragmentTaxationDialogBinding.taxationResult.setText(ui_text);
 

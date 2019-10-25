@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.management.realestateedit;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -102,6 +103,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
         ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
 
         for(RealEstateImage realEstateImage:images){
+            Log.i(TAG, " image  "+realEstateImage);
             this.updateImageList(realEstateImage);
         }
 

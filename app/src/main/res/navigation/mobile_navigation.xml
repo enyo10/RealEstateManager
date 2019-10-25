@@ -5,7 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/estateListFragment">
 
-
     <fragment
         android:id="@+id/estateListFragment"
         android:name="com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment"
@@ -26,6 +25,9 @@
         <action
             android:id="@+id/action_estateListFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_estateListFragment_to_mapViewFragment"
+            app:destination="@id/mapViewFragment" />
 
     </fragment>
 
@@ -69,7 +71,12 @@
     <dialog
         android:id="@+id/taxationDialogFragment"
         android:name="com.openclassrooms.realestatemanager.management.taxation.TaxationDialogFragment"
-        android:label="fragment_taxation_dialog"
+        android:label="@string/fragment_taxation_dialog"
         tools:layout="@layout/fragment_taxation_dialog" />
+    <fragment
+        android:id="@+id/mapViewFragment"
+        android:name="com.openclassrooms.realestatemanager.management.location.MapViewFragment"
+        android:label="@string/fragment_map_view"
+        tools:layout="@layout/fragment_map_view" />
 
 </navigation>
