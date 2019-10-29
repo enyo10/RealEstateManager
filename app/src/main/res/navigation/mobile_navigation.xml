@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_estateDetailsFragment_to_realEstateEditFragment"
             app:destination="@id/realEstateEditFragment" />
+        <action
+            android:id="@+id/action_estateDetailsFragment_to_realEstateAddFragment"
+            app:destination="@id/realEstateAddFragment" />
     </fragment>
 
     <fragment

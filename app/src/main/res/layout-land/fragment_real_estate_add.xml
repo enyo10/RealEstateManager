@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="10dp">
+                android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/registration_text_form_label"
@@ -66,11 +66,14 @@
 
             </LinearLayout>
 
+
+
             <LinearLayout
                 android:id="@+id/spinner_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+
                 android:layout_below="@+id/registration_text_form_layout"
                 android:orientation="horizontal">
 
@@ -116,14 +119,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginEnd="5dp"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/real_estate_nbr_of_room_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
                         android:inputType="number"
                         android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfRooms)}"
                         android:hint="@string/number_of_pieces" />
@@ -136,7 +137,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:textSize="20sp"
                     android:layout_marginStart="5dp"
                     app:errorEnabled="true">
 
@@ -146,7 +146,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/surface"
                         android:inputType="numberDecimal"
-                        android:textSize="20sp"
                         android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realEstate.surface)}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,7 +166,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginEnd="5dp"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -175,7 +173,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:textSize="20sp"
                         android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfBathRooms)}"
                         android:hint="@string/number_of_bedrooms" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -187,7 +184,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:textSize="20sp"
                     android:layout_marginStart="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -196,7 +192,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/number_of_bathroom"
                         android:inputType="number"
-                        android:textSize="20sp"
                         android:text="@={DataConverter.convertIntToString(RealEstateViewModel.realEstate.numberOfBedRooms)}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,7 +208,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -222,7 +216,6 @@
                         android:layout_height="wrap_content"
                         android:text="@={RealEstateViewModel.realEstate.completeDescription}"
                         android:inputType="textMultiLine"
-                        android:textSize="20sp"
                         android:hint="@string/description" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -232,14 +225,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/real_estate_country_text_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
                         android:inputType="text"
                         android:text="@={RealEstateViewModel.realEstate.address.country}"
                         android:hint="@string/country" />
@@ -263,7 +254,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
-                    android:textSize="20sp"
                     android:layout_marginEnd="5dp"
                     app:errorEnabled="true">
 
@@ -272,7 +262,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={RealEstateViewModel.realEstate.address.city}"
-                        android:textSize="20sp"
                         android:hint="@string/city_label" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -284,14 +273,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginStart="5dp"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/real_estate_zip_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
                         android:text="@={RealEstateViewModel.realEstate.address.zip}"
                         android:hint="@string/label_zip" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -312,14 +299,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".70"
                     android:layout_marginEnd="5dp"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/real_estate_street_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
                         android:text="@={RealEstateViewModel.realEstate.address.street}"
                         android:hint="@string/street" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -331,7 +316,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
                     android:layout_marginStart="5dp"
-                    android:textSize="20sp"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -339,7 +323,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:textSize="20sp"
                         android:text="@={RealEstateViewModel.realEstate.address.number}"
                         android:hint="@string/street_number" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -362,7 +345,6 @@
                     android:layout_height="wrap_content"
                     android:onClick="onCheckboxClicked"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/shopping_center" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
@@ -372,7 +354,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/bus_station" />
             </LinearLayout>
 
@@ -390,7 +371,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/hospital" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
@@ -400,7 +380,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/school" />
             </LinearLayout>
 
@@ -418,7 +397,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/sport_center" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
@@ -428,30 +406,57 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:text="@string/park" />
             </LinearLayout>
 
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/real_estate_price_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:id="@+id/real_estate_price_and_status_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sport_and_park_layout"
-                app:errorEnabled="true">
+                android:orientation="horizontal"
+                android:layout_below="@+id/sport_and_park_layout">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/real_estate_price_edit_text"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/real_estate_price_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:textSize="20sp"
-                    android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realEstate.price)}"
-                    android:hint="@string/price" />
+                    android:layout_weight=".50"
+                    app:errorEnabled="true">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/real_estate_price_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={DataConverter.convertDoubleToString(RealEstateViewModel.realEstate.price)}"
+                        android:hint="@string/price" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/real_estate_update_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".50"
+                    android:checkedButton="@+id/unsold_radio_button"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/sold_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sold_label"/>
+                    <RadioButton
+                        android:id="@+id/unsold_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unsold_label"/>
+                </RadioGroup>
+
+            </LinearLayout>
 
 
 
@@ -460,7 +465,7 @@
                 android:id="@+id/recycler_view_relative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/real_estate_price_input_layout">
+                android:layout_below="@+id/real_estate_price_and_status_layout">
 
                 <androidx.recyclerview.widget.RecyclerView
 
@@ -490,27 +495,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/real_estate_add_picture_button"
                     android:textColor="#fff"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/default_text_size"
                     android:onClick="@{MyListener::onChoosePictureButtonClicked}"
                     android:background="@drawable/button_radius_primary_color"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_margin="@dimen/default_margin"
                     android:padding="@dimen/default_large_margin"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/real_estate_add_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/real_estate_add_save_button"
-                    android:textColor="#fff"
-                    android:textSize="20sp"
-                    android:background="@drawable/button_radius_accent_color"
-                    android:visibility="@{RealEstateViewModel.hasCamera? View.GONE : View.VISIBLE}"
-                    android:onClick="@{MyListener::onStartRecording}"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_margin="@dimen/default_margin"
-                    android:padding="@dimen/default_large_margin"/>
-
 
                 <!-- BUTTON save -->
                 <com.google.android.material.button.MaterialButton
@@ -519,7 +509,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/real_estate_add_save_button"
                     android:textColor="#fff"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/default_text_size"
                     android:onClick="@{MyListener::onRealEstateSaveButtonClicked}"
                     android:background="@drawable/button_radius_accent_color"
                     style="?android:attr/borderlessButtonStyle"

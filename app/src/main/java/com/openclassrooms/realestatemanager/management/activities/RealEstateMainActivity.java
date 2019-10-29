@@ -58,30 +58,27 @@ public class RealEstateMainActivity extends AppCompatActivity implements
     public List<String>nearBy=new ArrayList<>();
 
     public double selectedRealEstatePrice;
+    public boolean actionEdit;
 
-  //  private boolean isTablet=false;
+    public boolean isActionEdit() {
+        return actionEdit;
+    }
+
+    public void setActionEdit(boolean actionEdit) {
+        this.actionEdit = actionEdit;
+    }
+
+    //  private boolean isTablet=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_estate_main);
-        Log.d(TAG, " in on Create ");
+        Log.d(TAG, " in on Create RealEstateMainActivity");
 
         initViewModel();
         getCurrentUser(USER_ID);
         setUpNavigation();
-
-     //   NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
-     //   DrawerLayout drawerLayout =findViewById(R.id.activity_real_estate_main_drawer_layout);
-       /* AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
-*/
-
-
-      //  MaterialToolbar toolbar = findViewById(R.id.my_toolBar);
-      //  setSupportActionBar(toolbar);
-
-      //  NavigationUI.setupWithNavController(mToolbar,mNavController,mDrawerLayout);
 
         mNavController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -125,7 +122,6 @@ public class RealEstateMainActivity extends AppCompatActivity implements
          mNavController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
          mDrawerLayout =findViewById(R.id.activity_real_estate_main_drawer_layout);
          mNavigationView=findViewById(R.id.nav_view);
-
 
        // NavigationUI.setupActionBarWithNavController(this, mNavController, mDrawerLayout);
 
@@ -280,23 +276,10 @@ public class RealEstateMainActivity extends AppCompatActivity implements
                 }
                 break;
 
-
         }
         Log.d(TAG, " list value "+ mRealEstateViewModel.nearbyValues.toString());
     }
 
-
-/*
-    public boolean ischecked(View view){
-        MaterialCheckBox box=(MaterialCheckBox) view;
-        List<String> list=new ArrayList<>();
-        if(nearBy.contains("Park"))
-            if(view.getId()==R.id.park_check_box)
-                box.setChecked(true);
-            return true;
-
-
-    }*/
 
 
     public void dialogButtonClicked(View view){
@@ -375,13 +358,6 @@ public class RealEstateMainActivity extends AppCompatActivity implements
                 mNavController.navigate(R.id.mapViewFragment);
                 break;
 
-          /*  case R.id.second:
-                navController.navigate(R.id.secondFragment);
-                break;
-
-            case R.id.third:
-                navController.navigate(R.id.thirdFragment);
-                break;*/
 
         }
         return true;

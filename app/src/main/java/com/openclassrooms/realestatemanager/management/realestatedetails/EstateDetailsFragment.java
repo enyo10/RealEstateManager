@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.openclassrooms.realestatemanager.R;
@@ -34,6 +36,7 @@ import java.util.List;
 public class EstateDetailsFragment extends Fragment {
     private static final String TAG = EstateDetailsFragment.class.getName();
 
+    private NavController mNavController;
     private FragmentEstateDetailsBinding mFragmentEstateDetailsBinding;
     private DetailsRecyclerViewAdapter mDetailsRecyclerViewAdapter;
     private RealEstateViewModel mRealEstateViewModel;
@@ -47,20 +50,34 @@ public class EstateDetailsFragment extends Fragment {
     }
 
 
-    @Override
+  /*  @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getActivity()!=null){
+            mNavController=((RealEstateMainActivity) this.getActivity()).mNavController;
 
-    }
+        }
+        initAndSetRecyclerViewAdapter();
+        mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
+
+        if(this.getActivity()!=null)
+            mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
+
+        mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateUI);
+
+    }*/
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentEstateDetailsBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_estate_details,container,false);
         mRealEstateImageList=new ArrayList<>();
-        if(this.getActivity()!=null)
-        mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
+        /*if(this.getActivity()!=null)
+        mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);*/
 
+       /* initAndSetRecyclerViewAdapter();
+        mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
+*/
 
         return mFragmentEstateDetailsBinding.getRoot();
 
@@ -81,19 +98,32 @@ public class EstateDetailsFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.action_update){
+           // mRealEstateViewModel.setActionUpdate(true);
+            RealEstateMainActivity mainActivity = ((RealEstateMainActivity) this.getActivity());
+            if(mainActivity!=null)
+            mainActivity.setActionEdit(true);
 
+            mNavController.navigate(R.id.realEstateAddFragment);
+        }
 
+        return true;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(this.getActivity()!=null){
+            mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
+
+            mNavController=((RealEstateMainActivity) this.getActivity()).mNavController;
+        }
+
         initAndSetRecyclerViewAdapter();
         mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
-
         mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateUI);
-
-
-
 
     }
 
@@ -127,11 +157,7 @@ public class EstateDetailsFragment extends Fragment {
 
         Log.d(TAG," real estate "+realEstate.getType());
 
-
     }
-
-
-
 
 
 }

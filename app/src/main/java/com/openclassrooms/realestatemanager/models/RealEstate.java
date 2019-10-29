@@ -298,8 +298,8 @@ public class RealEstate {
     @BindingAdapter("address")
     public static void loadMapFromUri(ImageView view, Address location){
         Log.i(TAG," the load image from uri method is call");
-       String uri="";
-      // String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
+      String uri="";
+     // String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
         Log.d(TAG, uri);
         Glide.with(view.getContext())
                 .load(uri)

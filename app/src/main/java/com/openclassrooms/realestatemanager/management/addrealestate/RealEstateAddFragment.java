@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -36,6 +38,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateAddBinding;
+import com.openclassrooms.realestatemanager.injection.Injection;
+import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
@@ -51,6 +55,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -81,7 +86,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     protected View rootView;
     protected RealEstateViewModel mRealEstateViewModel;
     protected FragmentRealEstateAddBinding binding;
-    protected AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
+    private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
     protected static  int USER_ID;
 
     protected Uri fileUri;
@@ -97,7 +102,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                 inflater, R.layout.fragment_real_estate_add, container, false);
 
         // Observe the insertion.
-
         binding.setLifecycleOwner(this);
         return binding.getRoot();
 
@@ -106,7 +110,14 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
 
@@ -116,28 +127,27 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
         if (this.getActivity() != null) {
             rootView = ((RealEstateMainActivity) this.getActivity()).mRootView;
-            mRealEstateViewModel = ((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
+            boolean isActionEdit = ((RealEstateMainActivity) this.getActivity()).actionEdit;
+            ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
+           // this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+            mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
             USER_ID=((RealEstateMainActivity) this.getActivity()).USER_ID;
+            binding.setRealEstateViewModel(mRealEstateViewModel);
+            binding.setDataConverter(new DataConverter());
             //Check if the device hat camera.
             mRealEstateViewModel.hasCamera.setValue(hasCamera());
 
-            binding.setDataConverter(new DataConverter());
-            RealEstate realEstate=new RealEstate();
-            realEstate.setUserId(USER_ID);
-            realEstate.setAddress(new Address());
-            mRealEstateViewModel.realEstate.setValue(realEstate);
-            binding.setRealEstateViewModel(mRealEstateViewModel);
-            binding.realEstateUpdateStatus.setVisibility(View.GONE);
+            initAndSetRecyclerViewAdapter();
 
-            String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
-
-            binding.setSpinAdapter(new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_spinner_dropdown_item, real_estate_types));
+            if(isActionEdit)
+                editRealEstate();
+            else
+                initNewRealEstateCreation();
 
             //Set listener for the button click.
             binding.setMyListener(this);
 
-            initAndSetRecyclerViewAdapter();
+           // initAndSetRecyclerViewAdapter();
         }
 
         mRealEstateViewModel.getInsertResult().observe(this, new Observer<Long>() {
@@ -150,8 +160,41 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             }
         });
 
+    }
+
+    private void initNewRealEstateCreation(){
+        Log.d(TAG, "init Real estate creation");
+        initRealEstateTypeAdapter();
+        initRealEstateCreationData();
 
     }
+
+    private void editRealEstate(){
+        Log.d(TAG, " Edit real estate");
+        updateRealStateStatusUI();
+        mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
+       // mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
+
+    }
+    private void initRealEstateCreationData(){
+       // binding.setDataConverter(new DataConverter());
+        RealEstate realEstate=new RealEstate();
+        realEstate.setUserId(USER_ID);
+        realEstate.setAddress(new Address());
+        mRealEstateViewModel.realEstate.setValue(realEstate);
+
+        binding.realEstateUpdateStatus.setVisibility(View.GONE);
+
+    }
+
+    private void initRealEstateTypeAdapter(){
+        String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
+        binding.setSpinAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, real_estate_types));
+
+    }
+
+
 
     public RealEstateAddFragment() {
         // Required empty public constructor
@@ -382,7 +425,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
     protected void updateImageList(RealEstateImage image){
             this.mEstateImages.add(image);
-            mAddImageRecyclerViewAdapter.notifyDataSetChanged();
+           mAddImageRecyclerViewAdapter.notifyDataSetChanged();
 
     }
 
@@ -413,6 +456,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
                mString = inputText.getText().toString();
                Log.i(TAG, " input text -> "+mString);
                RealEstateImage realEstateImage = new RealEstateImage(mString,mBitmap,mString);
+               Log.d(TAG, " Real estate image ");
                updateImageList(realEstateImage);
 
             }
@@ -470,5 +514,97 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         
         Log.i(TAG, "Video recorded");
     }
+
+
+    //***************************Method for Edit.******************************************************
+
+    /**
+     * this method update the state of the check button,
+     * @param realEstate, the real estate to be edited.
+     */
+    private void updateNearbyCheckButton(RealEstate realEstate){
+        List<String>nearbyList=realEstate.getNearbyPointOfInterest();
+
+        if(nearbyList.contains(getResources().getString(R.string.park)))
+            binding.parkCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.school)))
+            binding.schoolCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.hospital)))
+            binding.hospitalCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.bus_station)))
+            binding.busStationCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.shopping_center)))
+            binding.shoppingCenterCheckBox.setChecked(true);
+        if(nearbyList.contains(getResources().getString(R.string.sport_center)))
+            binding.sportCenterCheckBox.setChecked(true);
+
+        if(realEstate.isSold())
+            binding.soldRadioButton.setChecked(true);
+        else binding.soldRadioButton.setChecked(false);
+
+    }
+
+
+    /**
+     * This method to retrieve the list of real estate pictures.
+     * @param realEstate, the real estate to update.
+     */
+    private void loadImageListAndUpdateUI(RealEstate realEstate){
+
+        ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
+
+        for(RealEstateImage realEstateImage:images) {
+            if(realEstateImage.getBitmap()!=null)
+                Log.d(TAG, " Bitmap "+realEstateImage.getBitmap());
+            Log.d(TAG, " image  " + realEstateImage);
+            if (mEstateImages != null)
+                Log.d(TAG, "images size " + mEstateImages.size());
+            if (mAddImageRecyclerViewAdapter != null) {
+                Log.d(TAG, "adapter not null");
+               // updateImageList(realEstateImage);
+                Bitmap bitmap = BitmapFactory.decodeFile(realEstateImage.getUri());
+                Log.d(TAG, " converted bitmap" +bitmap);
+                RealEstateImage rImage=new RealEstateImage(realEstateImage.getImageName(),bitmap,realEstateImage.getImageName());
+                updateImageList(rImage);
+
+            }
+        }
+    }
+
+    private void updateRealStateStatusUI(){
+        binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
+        binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
+        binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(mRealEstateViewModel.realEstate!=null)
+                    if(checkedId==R.id.sold_radio_button){
+                        mRealEstateViewModel.realEstate.getValue().setSold(true);
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
+                    }
+                    else if(checkedId==R.id.unsold_radio_button){
+                        mRealEstateViewModel.realEstate.getValue().setSold(false);
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
+                    }
+
+            }
+        });
+
+    }
+
+
+
+    private void updateWithSelectedRealEstate(RealEstate realEstate){
+        Log.d(TAG, " in update with selectedRealEstateMethod");
+        if(realEstate!=null){
+        Log.d(TAG," Real estate not null" );
+       mRealEstateViewModel.realEstate.setValue(realEstate);
+
+        updateNearbyCheckButton(realEstate);
+        loadImageListAndUpdateUI(realEstate);}
+
+
+    }
+
 
 }

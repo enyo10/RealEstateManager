@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.management.addrealestate.AddImageRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.management.addrealestate.RealEstateAddFragment;
 import com.openclassrooms.realestatemanager.models.RealEstate;
 import com.openclassrooms.realestatemanager.models.RealEstateImage;
@@ -29,6 +30,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     private static final String TAG = RealEstateEditFragment.class.getName();
 
     private RealEstate mRealEstate;
+    private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
 
 
 
@@ -40,6 +42,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+      //  binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
         setHasOptionsMenu(true);
     }
 
@@ -50,6 +53,33 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     }
 
 
+
+    /*@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
+        binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
+        binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(mRealEstateViewModel.realEstate!=null)
+                    if(checkedId==R.id.sold_radio_button){
+                        mRealEstateViewModel.realEstate.getValue().setSold(true);
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
+                    }
+                    else if(checkedId==R.id.unsold_radio_button){
+                        mRealEstateViewModel.realEstate.getValue().setSold(false);
+                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
+                    }
+
+            }
+        });
+        mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
+
+
+    }
+
+*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -80,7 +110,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
         mRealEstateViewModel.realEstate.setValue(realEstate);
 
         updateNearbyCheckButton(realEstate);
-        updateImageList(realEstate);
+        loadImageListAndUpdateUI(realEstate);
 
        /* Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
        // mEstateImages
@@ -98,15 +128,21 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
      * This method to retrieve the list of real estate pictures.
      * @param realEstate, the real estate to update.
      */
-    private void updateImageList(RealEstate realEstate){
+    private void loadImageListAndUpdateUI(RealEstate realEstate){
 
         ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
 
-        for(RealEstateImage realEstateImage:images){
-            Log.i(TAG, " image  "+realEstateImage);
-            this.updateImageList(realEstateImage);
+        for(RealEstateImage realEstateImage:images) {
+            if(realEstateImage.getBitmap()!=null)
+                Log.d(TAG, " Bitmap "+realEstateImage.getBitmap());
+            Log.d(TAG, " image  " + realEstateImage);
+            if (mEstateImages != null)
+                Log.d(TAG, "images size " + mEstateImages.size());
+            if (mAddImageRecyclerViewAdapter != null) {
+                Log.d(TAG, "adapter not null");
+                 updateImageList(realEstateImage);
+            }
         }
-
     }
 
 
@@ -135,4 +171,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
         else binding.soldRadioButton.setChecked(false);
 
     }
+
+
+
 }

@@ -50,6 +50,8 @@ public class RealEstateViewModel extends ViewModel {
 
     public MutableLiveData<RealEstate> realEstate=new MutableLiveData<>();
     private MutableLiveData<Long> insertResult;
+    private boolean actionUpdate;
+
 
 
     private String realEstateImagesString;
@@ -129,7 +131,13 @@ public class RealEstateViewModel extends ViewModel {
 
     }
 
+    public boolean isActionUpdate() {
+        return actionUpdate;
+    }
 
+    public void setActionUpdate(boolean actionUpdate) {
+        this.actionUpdate = actionUpdate;
+    }
 
     public MutableLiveData<Long> getInsertResult() {
         return insertResult;

@@ -7,8 +7,11 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_attach_money_white_36"/>
 
+
+<!--android:id="@+id/action_estateDetailsFragment_to_realEstateEditFragment"-->
+
     <item
-        android:id="@+id/action_estateDetailsFragment_to_realEstateEditFragment"
+        android:id="@+id/action_update"
         android:title="@string/action_edit"
         android:icon="@drawable/ic_edit"
         app:showAsAction="ifRoom"/>

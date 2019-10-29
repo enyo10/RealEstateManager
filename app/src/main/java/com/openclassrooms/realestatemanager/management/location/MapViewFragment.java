@@ -67,7 +67,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     private Location mCurrentLocation;
     private Location mLastKnownLocation;
     private boolean mLocationPermissionGranted;
-//    PlacesClient mPlacesClient;
     private GoogleMap mMap;
     private Marker mMarker;
     private RealEstateViewModel mRealEstateViewModel;
@@ -96,6 +95,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         createLocationRequest();
         getCurrentLocationSettings();
         this.initMap();
+        getDeviceLocation();
     }
 
     @Override
@@ -130,11 +130,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         mMap = googleMap;
        // getLocationPermission();
 
-       /* LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-*/
 
         //updateUI();
         updateLocationUI();
@@ -259,12 +254,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                // mMap.getUiSettings().setCompassEnabled(true);
 
-               /* mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-
-*/
             } else {
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);

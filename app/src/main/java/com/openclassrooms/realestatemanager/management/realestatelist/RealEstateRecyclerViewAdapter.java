@@ -81,6 +81,7 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
     public void onEstateClicked(RealEstate realEstate) {
 
         this.mViewModel.getSelectedRealEstate().postValue(realEstate);
+       // this.mViewModel.setSelectedRealEstate(realEstate);
         this.mRealEstateMainActivity.showDetailsFragment();
         Toast.makeText(context, "You clicked " + realEstate.getType(),
                 Toast.LENGTH_LONG).show();
