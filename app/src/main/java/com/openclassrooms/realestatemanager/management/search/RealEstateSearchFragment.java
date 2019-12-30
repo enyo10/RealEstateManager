@@ -84,20 +84,6 @@ public class RealEstateSearchFragment extends DialogFragment implements View.OnC
         super.onActivityCreated(savedInstanceState);
         mRealEstateSearchDialogBinding.searchEndPeriodButton.setOnClickListener(this);
         mRealEstateSearchDialogBinding.searchBeginPeriodButton.setOnClickListener(this);
-       /* mRealEstateSearchDialogBinding.searchDatePickerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v.getId()==R.id.search_begin_period)
-                   {mStartPeriodPickerDialog.show() ;
-                   Log.d(TAG," begin button" );}
-                if(v.getId()==R.id.search_end_period){
-                    mEndPeriodPickerDialog.show();
-                    Log.d(TAG," end button" );
-
-                }
-
-            }
-        });*/
 
        init();
     }

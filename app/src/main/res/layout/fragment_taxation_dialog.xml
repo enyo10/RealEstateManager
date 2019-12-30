@@ -106,43 +106,7 @@
 
     </LinearLayout>
 
-   <!-- <LinearLayout
-        android:id="@+id/buttons_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/taxation_result_linear_layout"
-        android:orientation="horizontal"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="60dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/taxation_stop_calc_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:hint="@string/stop_calc"
-            android:background="@drawable/button_radius_primary_color"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="#fff"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/taxation_calc_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:hint="@string/calculate"
-            android:background="@drawable/button_radius_primary_color"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="#fff"
-            />
-
-    </LinearLayout>
-
--->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/button_linear_compat"
         android:layout_width="match_parent"

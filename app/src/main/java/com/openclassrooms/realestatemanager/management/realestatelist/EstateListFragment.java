@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.management.realestatelist;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.openclassrooms.realestatemanager.R;
@@ -41,8 +43,10 @@ public class EstateListFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-         mBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_estate_list,container,false);
-         boolean value= getContext().getResources().getBoolean(R.bool.isTablet);
+        mBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_estate_list,container,false);
+
+         if(isLandscape()&& isTablet())
+             configureAndShowDetailFragment();
 
         return mBinding.getRoot();
 
@@ -54,6 +58,7 @@ public class EstateListFragment extends Fragment{
 
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -63,6 +68,7 @@ public class EstateListFragment extends Fragment{
         if(getActivity()!=null){
             mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
             ((RealEstateMainActivity) this.getActivity()).actionEdit=false;
+
 
         }
 
@@ -85,8 +91,7 @@ public class EstateListFragment extends Fragment{
 
     protected void updateRealEstateList(List<RealEstate>list){
        mRealEstateRecyclerViewAdapter.updateWithData(list);
-       for(RealEstate estate:list)
-           Log.d(TAG, " status -- "+estate.isSold());
+
     }
 
     // Get all RealEstate for a given  user id.
@@ -104,7 +109,7 @@ public class EstateListFragment extends Fragment{
         Log.d(TAG, " details fragment " +mEstateDetailsFragment);
 
         //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
-        if (mEstateDetailsFragment == null) {
+        if (mEstateDetailsFragment == null||!mEstateDetailsFragment.isVisible()) {
             Log.i(TAG, " nous sommes bien sur une tablette ");
             mEstateDetailsFragment = new EstateDetailsFragment();
             getChildFragmentManager().beginTransaction()
@@ -114,6 +119,30 @@ public class EstateListFragment extends Fragment{
 
         }
     }
+
+    public void showDetailsFragment(){
+        Log.d(TAG, "show details method call");
+        Log.d(TAG, " Device type "+isTablet());
+        if(getActivity()!=null)
+        if(isTablet() && isLandscape()){
+            Log.d(TAG ," Orientation" +isLandscape());
+            configureAndShowDetailFragment();}
+        else
+            Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_estateDetailsFragment);
+
+
+    }
+
+    private boolean isLandscape() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+    }
+
+    private boolean isTablet(){
+        return getResources().getBoolean(R.bool.isTablet);
+    }
+
+
 
 
 

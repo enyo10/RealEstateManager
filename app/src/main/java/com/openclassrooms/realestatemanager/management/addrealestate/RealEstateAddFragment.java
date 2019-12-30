@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.management.addrealestate;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,24 +23,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateAddBinding;
-import com.openclassrooms.realestatemanager.injection.Injection;
-import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.management.activities.RealEstateMainActivity;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.RealEstate;
@@ -72,53 +68,50 @@ import static android.app.Activity.RESULT_OK;
 public class RealEstateAddFragment extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener, MyListener {
     private static final String TAG = RealEstateAddFragment.class.getName();
 
-    protected static final String IMAGE_DIRECTORY = "/estate";
-    protected static final int RC_IMAGE_PERM = 200;
-    protected static final int RC_CAMERA_PERM = 300;
+    private static final String IMAGE_DIRECTORY = "/estate";
+    private static final int RC_IMAGE_PERM = 200;
+    private static final int RC_CAMERA_PERM = 300;
 
-    VideoView videoView;
-    Uri videoFileUri;
-    protected static int VIDEO_CAPTURE = 3;
-    protected static final int GALLERY = 1;
-    protected static final int CAMERA = 2;
+    //VideoView videoView;
+   // Uri videoFileUri;
+    private static int VIDEO_CAPTURE = 3;
+    private static final int GALLERY = 1;
+    private static final int CAMERA = 2;
 
     protected ArrayList<RealEstateImage> mEstateImages = new ArrayList<>();
-    protected View rootView;
+    private View rootView;
     protected RealEstateViewModel mRealEstateViewModel;
     protected FragmentRealEstateAddBinding binding;
     private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
-    protected static  int USER_ID;
+    private RealEstateMainActivity mEstateMainActivity;
+    private Context mContext;
+  //  private NavController mNavController;
+    private static  int USER_ID;
 
-    protected Uri fileUri;
+    private Uri fileUri;
 
-    protected Bitmap mBitmap;
-    protected String mString = "";
+    private Bitmap mBitmap;
+    private String mString = "";
+
+
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_real_estate_add, container, false);
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_real_estate_add, container, false);
         // Observe the insertion.
         binding.setLifecycleOwner(this);
-        return binding.getRoot();
-
-    }
+        return binding.getRoot(); }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setHasOptionsMenu(true);
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -126,12 +119,13 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         super.onActivityCreated(savedInstanceState);
 
         if (this.getActivity() != null) {
-            rootView = ((RealEstateMainActivity) this.getActivity()).mRootView;
+           mEstateMainActivity =(RealEstateMainActivity) this.getActivity();
+           mContext =getContext();
+            rootView=mEstateMainActivity.mRootView;
             boolean isActionEdit = ((RealEstateMainActivity) this.getActivity()).actionEdit;
-            ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
-           // this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
-            mRealEstateViewModel=((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
-            USER_ID=((RealEstateMainActivity) this.getActivity()).USER_ID;
+            mRealEstateViewModel=mEstateMainActivity.mRealEstateViewModel;
+
+            USER_ID=mEstateMainActivity.USER_ID;
             binding.setRealEstateViewModel(mRealEstateViewModel);
             binding.setDataConverter(new DataConverter());
             //Check if the device hat camera.
@@ -139,26 +133,49 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
             initAndSetRecyclerViewAdapter();
 
-            if(isActionEdit)
+            if(isActionEdit){
                 editRealEstate();
+                 binding.registrationTextFormLabel.setVisibility(View.GONE);
+
+                if(mEstateMainActivity.getSupportActionBar()!=null)
+                mEstateMainActivity.getSupportActionBar().setTitle(R.string.fragment_real_estate_edit);
+
+            }
             else
                 initNewRealEstateCreation();
 
             //Set listener for the button click.
             binding.setMyListener(this);
 
-           // initAndSetRecyclerViewAdapter();
         }
 
-        mRealEstateViewModel.getInsertResult().observe(this, new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                if (aLong > 0)
-                    Toast.makeText(getContext(), " Insertion to DB success", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getContext(), "Insertion to db fail", Toast.LENGTH_LONG).show();
+        mRealEstateViewModel.getInsertResult().observe(this, aLong -> {
+            if (aLong > 0){
+                Toast.makeText(getContext(), " Insertion to DB success", Toast.LENGTH_LONG).show();
+
+                long initValue=0;
+                mRealEstateViewModel.getInsertResult().postValue(initValue);
+
+               mEstateMainActivity.mNavController.navigate(R.id.estateListFragment);
+
             }
+
         });
+
+
+        mRealEstateViewModel.getUpdateResult().observe(this, integer -> {
+            if (integer > 0){
+                Toast.makeText(getContext(), " Update to DB success", Toast.LENGTH_LONG).show();
+                Integer initValue=0;
+                mRealEstateViewModel.getUpdateResult().postValue(initValue);
+
+                mEstateMainActivity.mNavController.navigate(R.id.estateListFragment);
+
+            }
+
+
+        });
+
 
     }
 
@@ -173,28 +190,23 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         Log.d(TAG, " Edit real estate");
         updateRealStateStatusUI();
         mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
-       // mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
-
     }
+
     private void initRealEstateCreationData(){
        // binding.setDataConverter(new DataConverter());
         RealEstate realEstate=new RealEstate();
         realEstate.setUserId(USER_ID);
         realEstate.setAddress(new Address());
         mRealEstateViewModel.realEstate.setValue(realEstate);
-
         binding.realEstateUpdateStatus.setVisibility(View.GONE);
-
     }
 
     private void initRealEstateTypeAdapter(){
         String[] real_estate_types = getResources().getStringArray(R.array.real_estate_type);
-        binding.setSpinAdapter(new ArrayAdapter<>(getContext(),
+        binding.setSpinAdapter(new ArrayAdapter<>(mContext,
                 android.R.layout.simple_spinner_dropdown_item, real_estate_types));
 
     }
-
-
 
     public RealEstateAddFragment() {
         // Required empty public constructor
@@ -207,12 +219,10 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         menu.clear();
     }
 
-
-    protected void getTextValuesAndSaveRealEstate() {
+    private void getTextValuesAndSaveRealEstate() {
         Log.d(TAG, " on save button clicked");
 
-        final List<TextInputLayout> textInputLayouts = ViewUtils.findViewsWithType(
-                rootView, TextInputLayout.class);
+        final List<TextInputLayout> textInputLayouts = ViewUtils.findViewsWithType(rootView, TextInputLayout.class);
 
         boolean noErrors = true;
         for (TextInputLayout textInputLayout : textInputLayouts) {
@@ -231,10 +241,10 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             for(RealEstateImage estateImage:mEstateImages){
                 saveImage(estateImage);
 
-                Log.i(TAG, " image: " + " uri " +estateImage.getUri() + " "+ " name "+estateImage.getImageName()+"  "+estateImage.getBitmap());
             }
             mRealEstateViewModel.setRealEstateImagesString(Utils.objectToJson(mEstateImages));
             mRealEstateViewModel.onRealEstateSave(USER_ID);
+
         }
 
     }
@@ -257,10 +267,9 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         return true;
     }
 
+    private void showPictureChoiceDialog() {
 
-    protected void showPictureChoiceDialog() {
-
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(mContext);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
                 "Select photo from gallery",
@@ -286,14 +295,13 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
      * This method to take picture from user gallery.
      */
     @AfterPermissionGranted(RC_IMAGE_PERM)
-    protected void chooseImageFromGallery() {
+    private void chooseImageFromGallery() {
         if(getActivity()!=null)
         if (!EasyPermissions.hasPermissions(getActivity(), WRITE_EXTERNAL_STORAGE)) {
             EasyPermissions.requestPermissions(this, getString(R.string.gallery_permission), RC_IMAGE_PERM, WRITE_EXTERNAL_STORAGE);
             return;
         }
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(galleryIntent, GALLERY);
 
@@ -303,7 +311,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
      * This to make a new picture with camera.
      */
     @AfterPermissionGranted(RC_CAMERA_PERM)
-    protected void makeNewPictureWithCamera() {
+    private void makeNewPictureWithCamera() {
         if(getActivity()!=null)
         if (!EasyPermissions.hasPermissions(getActivity(), Manifest.permission.CAMERA)) {
             EasyPermissions.requestPermissions(this, getString(R.string.gallery_permission), RC_CAMERA_PERM, Manifest.permission.CAMERA);
@@ -324,7 +332,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    protected void handleResponse(int requestCode, int resultCode, Intent data) {
+    private void handleResponse(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_CANCELED) {
             // Request again permission or return.
@@ -360,7 +368,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
             }
 
         } else if (requestCode == CAMERA && null != data.getExtras()) {
-            Log.i(TAG, " data type " + data.getExtras().get("data").getClass());
+
             mBitmap = (Bitmap) data.getExtras().get("data");
 
             Toast.makeText(getContext(), "Picture made properly ", Toast.LENGTH_SHORT).show();
@@ -374,9 +382,9 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     /**
      * This method to save the Real Estate data in the external directory.
      * @param realEstateImage, an real estate data (Bit map and description.)
-     * @return, the path of the Bitmap.
+     * @return string, the path of the Bitmap.
      */
-    protected String saveImage(RealEstateImage realEstateImage){
+    private String saveImage(RealEstateImage realEstateImage){
         // Here I have a real estate image with bitmap.
         Bitmap myBitmap = realEstateImage.getBitmap();
 
@@ -390,8 +398,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         }
 
         try {
-                /*File f = new File(wallpaperDirectory, Calendar.getInstance()
-                        .getTimeInMillis() + ".jpg");*/
                     File f = new File(wallpaperDirectory, Utils.getRandomNumber(1,999999) + ".jpg");
                     f.createNewFile();
                     FileOutputStream fo = new FileOutputStream(f);
@@ -413,7 +419,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
 
-    protected void initAndSetRecyclerViewAdapter(){
+    private void initAndSetRecyclerViewAdapter(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -440,9 +446,9 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
 
 
 
-    protected void createDialog(){
+    private void createDialog(){
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
         builder.setTitle("Add name");
 
         final EditText inputText = new EditText(getActivity());
@@ -489,11 +495,11 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     public void onRealEstateSaveButtonClicked(View v) {
         // Check if all text field are filled and save the real estate.
         getTextValuesAndSaveRealEstate();
-
+        
     }
 
 
-    protected boolean hasCamera() {
+    private boolean hasCamera() {
 
         return (getActivity()!=null && getActivity().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA_ANY));
@@ -502,9 +508,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     @Override
     public void onStartRecording(View view)
     {
-        File mediaFile = new
-                File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/my_video.mp4");
+        File mediaFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/my_video.mp4");
 
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         fileUri = Uri.fromFile(mediaFile);
@@ -516,7 +520,7 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     }
 
 
-    //***************************Method for Edit.******************************************************
+    //*************************** Method for Edit .******************************************************
 
     /**
      * this method update the state of the check button,
@@ -543,7 +547,6 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
         else binding.soldRadioButton.setChecked(false);
 
     }
-
 
     /**
      * This method to retrieve the list of real estate pictures.
@@ -574,35 +577,32 @@ public class RealEstateAddFragment extends Fragment implements BottomNavigationV
     private void updateRealStateStatusUI(){
         binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
         binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
-        binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(mRealEstateViewModel.realEstate!=null)
-                    if(checkedId==R.id.sold_radio_button){
-                        mRealEstateViewModel.realEstate.getValue().setSold(true);
-                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
-                    }
-                    else if(checkedId==R.id.unsold_radio_button){
-                        mRealEstateViewModel.realEstate.getValue().setSold(false);
-                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
-                    }
+        binding.realEstateUpdateStatus.setOnCheckedChangeListener((group, checkedId) -> {
+            if(mRealEstateViewModel.realEstate!=null)
+                if(checkedId==R.id.sold_radio_button &&mRealEstateViewModel.realEstate.getValue()!=null){
+                    mRealEstateViewModel.realEstate.getValue().setSold(true);
+                    mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
+                }
+                else if(checkedId==R.id.unsold_radio_button && mRealEstateViewModel.realEstate.getValue()!=null){
+                    mRealEstateViewModel.realEstate.getValue().setSold(false);
+                    mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
+                }
 
-            }
         });
 
     }
-
 
 
     private void updateWithSelectedRealEstate(RealEstate realEstate){
         Log.d(TAG, " in update with selectedRealEstateMethod");
         if(realEstate!=null){
         Log.d(TAG," Real estate not null" );
-       mRealEstateViewModel.realEstate.setValue(realEstate);
+        mRealEstateViewModel.realEstate.setValue(realEstate);
 
         updateNearbyCheckButton(realEstate);
-        loadImageListAndUpdateUI(realEstate);}
+        loadImageListAndUpdateUI(realEstate);
 
+        }
 
     }
 

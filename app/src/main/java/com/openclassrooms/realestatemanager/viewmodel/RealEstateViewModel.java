@@ -50,6 +50,7 @@ public class RealEstateViewModel extends ViewModel {
 
     public MutableLiveData<RealEstate> realEstate=new MutableLiveData<>();
     private MutableLiveData<Long> insertResult;
+    private MutableLiveData<Integer>updateResult;
     private boolean actionUpdate;
 
 
@@ -75,6 +76,7 @@ public class RealEstateViewModel extends ViewModel {
         this.userDataSource = userDataSource;
         this.executor = executor;
         this.insertResult = this.realEstateDataSource.getInsertResult();
+        this.updateResult=this.realEstateDataSource.getUpdateResult();
     }
 
     public void init(long userId) {
@@ -141,6 +143,8 @@ public class RealEstateViewModel extends ViewModel {
 
     public MutableLiveData<Long> getInsertResult() {
         return insertResult;
+    }
+    public MutableLiveData<Integer>getUpdateResult(){ return updateResult;
     }
 
     public MutableLiveData<RealEstate> getSelectedRealEstate() {
@@ -264,38 +268,6 @@ public class RealEstateViewModel extends ViewModel {
            // LIKE '%cats%'
         }
 
-
-
-
-       // String area = searchArea.getValue();
-       /* double surfaceMin = minSurface.getValue();
-        double surfaceMax = maxSurface.getValue();
-        double priceMin = minPrice.getValue();
-        double priceMax = maxPrice.getValue();
-        int roomMin = minRoom.getValue();
-        int roomMax = maxRoom.getValue();
-
-*/
-
-/*
-
-        String type = searchType.getValue()!=null ? searchType.getValue() : "%";
-        String area = searchArea.getValue()!=null? searchArea.getValue() : "%";
-        String surfaceMin = minSurface.getValue()!=null ? minSurface.getValue().toString() : "0";
-        String surfaceMax = maxSurface.getValue()!=null ? maxSurface.getValue().toString() : "100000";
-        String priceMin = minPrice.getValue()!=null ? minPrice.getValue().toString() : "0";
-        String priceMax = maxPrice.getValue()!=null ? maxPrice.getValue().toString() : "999999999";
-        String roomMin = minRoom.getValue()!=null? minRoom.getValue().toString() : "0";
-        String roomMax = maxRoom.getValue()!=null ? maxRoom.getValue().toString() : "100";
-*/
-
-      /*return   this.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin),Long.valueOf(priceMax),
-                Integer.valueOf(roomMin), Integer.valueOf(roomMax), userId);
-*//*
-        return   this.realEstateDataSource.rawQuerySearch(type, area, surfaceMin, surfaceMax, priceMin,priceMax,
-                roomMin, roomMax, userId);
-
-*/
 
 
         Log.d(TAG, " query : " + queryString);

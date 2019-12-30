@@ -50,34 +50,11 @@ public class EstateDetailsFragment extends Fragment {
     }
 
 
-  /*  @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(getActivity()!=null){
-            mNavController=((RealEstateMainActivity) this.getActivity()).mNavController;
-
-        }
-        initAndSetRecyclerViewAdapter();
-        mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
-
-        if(this.getActivity()!=null)
-            mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);
-
-        mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateUI);
-
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentEstateDetailsBinding= DataBindingUtil.inflate(inflater, R.layout.fragment_estate_details,container,false);
         mRealEstateImageList=new ArrayList<>();
-        /*if(this.getActivity()!=null)
-        mRealEstateViewModel= ViewModelProviders.of(this.getActivity()).get(RealEstateViewModel.class);*/
-
-       /* initAndSetRecyclerViewAdapter();
-        mFragmentEstateDetailsBinding.setDataConverter(new DataConverter());
-*/
 
         return mFragmentEstateDetailsBinding.getRoot();
 

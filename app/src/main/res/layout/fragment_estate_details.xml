@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/tools">
     <data>
+
         <variable
             name="realEstate"
             type="com.openclassrooms.realestatemanager.models.RealEstate" />
@@ -12,12 +13,6 @@
             name="DataConverter"
             type="com.openclassrooms.realestatemanager.utils.DataConverter" />
     </data>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
 
 <ScrollView
     android:id="@+id/detail_main_scrollview_layout"
@@ -117,7 +112,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/baseline_settings_overscan_black_48" />
+                        app:srcCompat="@drawable/baseline_settings_overscan_black_48"
+                        android:contentDescription="@string/surface" />
 
                     <TextView
                         android:id="@+id/surface_text_view"
@@ -139,7 +135,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
                         android:hint="@string/surface"
-                        android:text="@{DataConverter.convertDoubleToString(realEstate.surface)}"
+                        android:text="@{String.format(@string/surface_size,realEstate.surface)}"
                         android:textSize="12sp"
                         app:layout_constraintStart_toEndOf="@+id/surface_image_view"
                         app:layout_constraintTop_toBottomOf="@+id/surface_text_view" />
@@ -162,7 +158,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/baseline_home_black_48" />
+                        app:srcCompat="@drawable/baseline_home_black_48"
+                        android:contentDescription="@string/room_image_view" />
 
                     <TextView
                         android:id="@+id/room_text_view"
@@ -208,7 +205,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/baseline_hot_tub_black_48" />
+                        app:srcCompat="@drawable/baseline_hot_tub_black_48"
+                        android:contentDescription="@string/bathroom_image" />
 
                     <TextView
                         android:id="@+id/bathroom_text_view"
@@ -253,7 +251,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/baseline_local_hotel_black_48" />
+                        app:srcCompat="@drawable/baseline_local_hotel_black_48"
+                        android:contentDescription="@string/bedroom_image" />
 
                     <TextView
                         android:id="@+id/bedroom_text_view"
@@ -402,19 +401,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
 
-
-
         </LinearLayout>
     </ScrollView>
-    </FrameLayout>
 
 </layout>
 

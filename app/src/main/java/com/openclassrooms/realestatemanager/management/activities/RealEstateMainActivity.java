@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.management.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -27,6 +29,7 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injection.Injection;
 import com.openclassrooms.realestatemanager.injection.ViewModelFactory;
 import com.openclassrooms.realestatemanager.management.realestatedetails.EstateDetailsFragment;
+import com.openclassrooms.realestatemanager.management.realestatelist.EstateListFragment;
 import com.openclassrooms.realestatemanager.management.search.RealEstateSearchFragment;
 import com.openclassrooms.realestatemanager.management.taxation.TaxationDialogFragment;
 import com.openclassrooms.realestatemanager.models.User;
@@ -51,6 +54,8 @@ public class RealEstateMainActivity extends AppCompatActivity implements
     public NavController mNavController;
     public NavigationView mNavigationView;
 
+    public boolean priceInDollar=true;
+
     // BottomNavigationView mBottomNavigationView;
     EstateDetailsFragment mEstateDetailsFragment;
     RealEstateSearchFragment mRealEstateSearchFragment;
@@ -59,6 +64,7 @@ public class RealEstateMainActivity extends AppCompatActivity implements
 
     public double selectedRealEstatePrice;
     public boolean actionEdit;
+    private boolean landscape;
 
     public boolean isActionEdit() {
         return actionEdit;
@@ -68,7 +74,14 @@ public class RealEstateMainActivity extends AppCompatActivity implements
         this.actionEdit = actionEdit;
     }
 
-    //  private boolean isTablet=false;
+    public boolean isLandscape() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+    }
+
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +105,15 @@ public class RealEstateMainActivity extends AppCompatActivity implements
                 if(destination.getId() != R.id.estateListFragment) {
 
                       frameLayout.setVisibility(View.GONE);
-                     //  toolbar.setVisibility(View.GONE);
-                   // bottomNavigationView.setVisibility(View.GONE);
-
 
                 } else {
                     frameLayout.setVisibility(View.VISIBLE);
                     mToolbar.setVisibility(View.VISIBLE);
-                   // bottomNavigationView.setVisibility(View.VISIBLE);
+
                 }
             }
         });
          mRootView=findViewById(android.R.id.content);
-
-      //  configureAndShowDetailFragment();
 
     }
 
@@ -120,12 +128,9 @@ public class RealEstateMainActivity extends AppCompatActivity implements
         setUpToolBar();
 
          mNavController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
-         mDrawerLayout =findViewById(R.id.activity_real_estate_main_drawer_layout);
-         mNavigationView=findViewById(R.id.nav_view);
+         mDrawerLayout  = findViewById(R.id.activity_real_estate_main_drawer_layout);
+         mNavigationView = findViewById(R.id.nav_view);
 
-       // NavigationUI.setupActionBarWithNavController(this, mNavController, mDrawerLayout);
-
-        //NavigationUI.setupWithNavController(mNavigationView, mNavController);
         NavigationUI.setupWithNavController(mToolbar,mNavController,mDrawerLayout);
 
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -136,10 +141,6 @@ public class RealEstateMainActivity extends AppCompatActivity implements
     private void setUpToolBar(){
         mToolbar = findViewById(R.id.my_toolBar);
         setSupportActionBar(mToolbar);
-
-       // if(getSupportActionBar()!=null){
-     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      //  getSupportActionBar().setDisplayShowHomeEnabled(true);}
 
     }
 
@@ -157,15 +158,17 @@ public class RealEstateMainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-     //  return super.onCreateOptionsMenu(menu);
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if(getApplicationContext().getResources().getBoolean(R.bool.isTablet))
-            getMenuInflater().inflate(R.menu.menu_tablet, menu);
-         else
             getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(menu.findItem(R.id.price_conversion)!=null)
+            menu.findItem(R.id.price_conversion).setTitle((this.isPriceInDollar() ? getString(R.string.convert_to_euro) : getString(R.string.convert_to_dollar)));
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -174,12 +177,33 @@ public class RealEstateMainActivity extends AppCompatActivity implements
             createSearchDialogFragment();
         if(item.getItemId()==R.id.action_taxation)
             createTaxationDialogFragment();
+        if(item.getItemId()==R.id.price_conversion)
+            doConversion();
 
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
 
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }
+
+
+    private void doConversion(){
+
+        if(isPriceInDollar())
+            setPriceInDollar(false);
+        else setPriceInDollar(true);
+
+        NavHostFragment navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment);
+       EstateListFragment estateListFragment=(EstateListFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
+       if(estateListFragment!=null){
+           Log.d(TAG, "fragment found");
+           estateListFragment.mRealEstateRecyclerViewAdapter.notifyDataSetChanged();
+
+       }
+
+
+    }
+
 
 
     private void configureAndShowDetailFragment(){
@@ -204,8 +228,9 @@ public class RealEstateMainActivity extends AppCompatActivity implements
     public void showDetailsFragment(){
         Log.d(TAG, "show details method call");
         Log.d(TAG, " Device type "+isTablet());
-        if(isTablet())
-            configureAndShowDetailFragment();
+        if(isTablet() && isLandscape()){
+            Log.d(TAG ," Orientation" +isLandscape());
+            configureAndShowDetailFragment();}
         else
             Navigation.findNavController(this,R.id.my_nav_host_fragment).navigate(R.id.action_estateListFragment_to_estateDetailsFragment);
 
@@ -353,6 +378,9 @@ public class RealEstateMainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.realEstateAddFragment:
+                mNavController.navigate(R.id.realEstateAddFragment);
+                break;
 
             case R.id.map_navigation_button:
                 mNavController.navigate(R.id.mapViewFragment);
@@ -361,5 +389,14 @@ public class RealEstateMainActivity extends AppCompatActivity implements
 
         }
         return true;
+    }
+
+
+    public boolean isPriceInDollar() {
+        return priceInDollar;
+    }
+
+    public void setPriceInDollar(boolean priceInDollar) {
+        this.priceInDollar = priceInDollar;
     }
 }

@@ -53,15 +53,4 @@ public class SearchResultFragment extends EstateListFragment {
     }
 
 
-
-
-// Get all RealEstate for a given  user id.
-/*
-protected void getRealEstateItems(long userId) {
-    this.mRealEstateViewModel.getRealEstates(userId).observe(this, this::updateRealEstateList);
-}
-*/
-
-
-
 }

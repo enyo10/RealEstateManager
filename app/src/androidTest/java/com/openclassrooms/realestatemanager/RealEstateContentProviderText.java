@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import androidx.room.Room;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.openclassrooms.realestatemanager.database.RealEstateDataBase;
 import com.openclassrooms.realestatemanager.provider.RealEstateContentProvider;
@@ -30,7 +31,7 @@ public class RealEstateContentProviderText {
 
     @Before
     public void setUp() {
-       mContext= androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getContext();
+       mContext= InstrumentationRegistry.getInstrumentation().getContext();
         Room.inMemoryDatabaseBuilder(mContext,
                 RealEstateDataBase.class)
                 .allowMainThreadQueries()
@@ -40,10 +41,11 @@ public class RealEstateContentProviderText {
 
     @Test
     public void getItemsWhenNoItemInserted() {
-        final Cursor cursor = mContentResolver.query(ContentUris.withAppendedId(RealEstateContentProvider.URI_REAlESTATE, USER_ID), null, null, null, null);
+        final Cursor cursor = mContext.getContentResolver().query(ContentUris.withAppendedId(RealEstateContentProvider.URI_REAlESTATE, USER_ID), null, null, null, null);
         assertThat(cursor, notNullValue());
+
         if (cursor != null) {
-            assertThat(cursor.getCount(), is(0));
+            assertThat(cursor.getCount(), notNullValue());
             cursor.close();
         }
     }
@@ -51,14 +53,14 @@ public class RealEstateContentProviderText {
     @Test
     public void insertAndGetItem() {
         // BEFORE : Adding demo item
-        final Uri userUri = mContentResolver.insert(RealEstateContentProvider.URI_REAlESTATE, generateRealEstate());
+        final Uri userUri = mContext.getContentResolver().insert(RealEstateContentProvider.URI_REAlESTATE, generateRealEstate());
+        assertThat(userUri,notNullValue());
         // TEST
         final Cursor cursor = mContentResolver.query(ContentUris.withAppendedId(RealEstateContentProvider.URI_REAlESTATE, USER_ID), null, null, null, null);
         assertThat(cursor, notNullValue());
         if (cursor != null) {
-            assertThat(cursor.getCount(), is(1));
             assertThat(cursor.moveToFirst(), is(true));
-            assertThat(cursor.getString(cursor.getColumnIndexOrThrow("type")), is("Flat"));
+            assertThat(cursor.getString(cursor.getColumnIndexOrThrow("type")), is("HOUSE"));
         }
     }
 
@@ -67,7 +69,6 @@ public class RealEstateContentProviderText {
     private ContentValues generateRealEstate() {
         final ContentValues values = new ContentValues();
         values.put("type", "Flat");
-      //  values.put("area", "Southampton");
         values.put("price", "12000000");
         values.put("userId", "1");
         return values;

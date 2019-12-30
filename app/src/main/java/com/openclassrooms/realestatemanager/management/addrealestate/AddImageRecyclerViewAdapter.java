@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.management.addrealestate;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -55,8 +54,6 @@ public class AddImageRecyclerViewAdapter extends RecyclerView.Adapter<AddImageRe
     @Override
     public void cardClicked(RealEstateImage f) {
 
-            Toast.makeText(context, "You clicked " + f.getImageName(),
-                    Toast.LENGTH_LONG).show();
             dataModelList.remove(f);
             this.notifyDataSetChanged();
     }

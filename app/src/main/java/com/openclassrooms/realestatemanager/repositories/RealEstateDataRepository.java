@@ -15,6 +15,7 @@ public class RealEstateDataRepository {
     private static final String TAG=RealEstateDataRepository.class.getName();
     private final RealEstateDao realEstateDao;
     private MutableLiveData<Long>insertResult=new MutableLiveData<>();
+    private MutableLiveData<Integer>updateResult=new MutableLiveData<>();
 
     public RealEstateDataRepository(RealEstateDao realEstateDao) { this.realEstateDao = realEstateDao; }
 
@@ -34,15 +35,11 @@ public class RealEstateDataRepository {
     public void deleteRealEstate(long itemId){ realEstateDao.deleteRealEstate(itemId); }
 
     // --- UPDATE ---
-    public void updateRealEstate(RealEstate realEstate){ realEstateDao.updateRealEstate(realEstate); }
+    public void updateRealEstate(RealEstate realEstate){
+        int value = realEstateDao.updateRealEstate(realEstate);
+        updateResult.postValue(value);
+    }
 
-    // --- SEARCH ---
-/*
-    public LiveData<List<RealEstate>> searchRealEstate(String type, String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
-                                                       Integer minRoom, Integer maxRoom, long userId) {
-        return this.realEstateDao.searchRealEstate(type, area, minSurface, maxSurface, minPrice, maxPrice,
-                minRoom, maxRoom, userId);
-    }*/
 
     // The raw search.
     public LiveData<List<RealEstate>> rawQuerySearch(SupportSQLiteQuery query){
@@ -55,5 +52,7 @@ public class RealEstateDataRepository {
 //-- To keep track on insert result.
     public MutableLiveData<Long> getInsertResult() {
         return insertResult;
+    }
+    public MutableLiveData<Integer>getUpdateResult(){ return updateResult;
     }
 }

@@ -18,6 +18,9 @@
             name="sold"
             type="java.lang.Boolean"/>
 
+        <variable
+            name="dollarFormat"
+            type="java.lang.Boolean"/>
 
         <variable
             name="DataConverter"
@@ -110,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/park"
                 android:textSize="25sp"
-                android:text="@{realEstate.getFormattedPrice()}"
+                android:text="@{dollarFormat?realEstate.dollarFormat():realEstate.euroFormat()}"
                 android:layout_marginStart="180dp"
                 android:textColor="@color/primary_darker"
                 app:layout_constraintTop_toBottomOf="@+id/real_estate_place"/>

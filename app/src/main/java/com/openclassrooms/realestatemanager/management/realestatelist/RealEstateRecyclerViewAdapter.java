@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -62,12 +61,12 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
         holder.itemRowBinding.setRealEstate(dataModel);
         holder.itemRowBinding.setDataConverter(new DataConverter());
         holder.itemRowBinding.setSold(dataModel.isSold());
+        holder.itemRowBinding.setDollarFormat(mRealEstateMainActivity.isPriceInDollar());
         if(dataModel.getImages()!=null)
             if(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).size()!=0)
         holder.itemRowBinding.setRealImage(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));
 
         holder.bind(dataModel);
-      //  holder.bind(Utils.jsonStringToRealEstateImageList(dataModel.getImages()).get(0));
         holder.itemRowBinding.setEstateClickListener(this);
 
     }
@@ -81,10 +80,7 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
     public void onEstateClicked(RealEstate realEstate) {
 
         this.mViewModel.getSelectedRealEstate().postValue(realEstate);
-       // this.mViewModel.setSelectedRealEstate(realEstate);
         this.mRealEstateMainActivity.showDetailsFragment();
-        Toast.makeText(context, "You clicked " + realEstate.getType(),
-                Toast.LENGTH_LONG).show();
         Log.d(TAG, " You have selected : "+realEstate.toString());
 
 
@@ -92,6 +88,8 @@ public class RealEstateRecyclerViewAdapter extends RecyclerView.Adapter<RealEsta
 
     public void updateWithData(List<RealEstate> realEstates) {
         this.dataModelList = realEstates;
+        if(realEstates.size()!=0)
+            this.mViewModel.setSelectedRealEstate(realEstates.get(0));
         this.notifyDataSetChanged();
     }
 

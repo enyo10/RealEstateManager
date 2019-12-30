@@ -30,7 +30,6 @@ public class Utils {
     private static final String TAG=Utils.class.getName();
     public static final String apiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=16&markers=size:mid%7Ccolor:blue%7C";
     public static final String apiKey = "&key=";
-    //public static final String keyValue = Resources.getSystem().getString(R.string.google_maps_key);
 
     
     /**
@@ -58,10 +57,7 @@ public class Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd",Locale.FRENCH);
-        return dateFormat.format(new Date());
-    }
+
 
     public static String getTodayDateFormat(){
         DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
@@ -81,13 +77,14 @@ public class Utils {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        return activeNetwork!=null;
+
+        return  activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
     }
 
 
 
-    public static  boolean isIntegerrValue(String value){
+  /*  public static  boolean isIntegerrValue(String value){
         try
         {
             Integer.parseInt( value );
@@ -111,7 +108,7 @@ public class Utils {
         {
             return false;
         }
-    }
+    }*/
 
 
 
@@ -165,7 +162,6 @@ public class Utils {
     }
 
     public static String arrayListToJson(ArrayList<RealEstateImage>list){
-      //  Object o= (Object)list;
         Gson json= new Gson();
         return json.toJson(list);
     }
@@ -202,27 +198,7 @@ public class Utils {
 
 
 
-public static boolean connectivtiy(Context context){
-    boolean connected ;
-    ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    //we are connected to a network
 
-
-    connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-            connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-    return connected;
-
-}
-
-    public static int getActiveNetworkType(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) {
-            return activeNetwork.getType();
-        } else {
-            return -1;
-        }
-    }
 }
 
 

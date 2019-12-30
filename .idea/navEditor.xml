@@ -168,25 +168,12 @@
                 <map>
                   <entry key="estateDetailsFragment2">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-450" />
-                            <option name="y" value="-240" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="estateListFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-682" />
-                            <option name="y" value="-14" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_estateListFragment_to_estateDetailsFragment2">
@@ -206,14 +193,7 @@
                   </entry>
                   <entry key="realEstateAddFragment2">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-126" />
-                            <option name="y" value="-141" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                 </map>

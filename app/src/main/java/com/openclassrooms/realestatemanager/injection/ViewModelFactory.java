@@ -11,7 +11,7 @@ import java.util.concurrent.Executor;
 
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
-    private static final String TAG=ViewModelFactory.class.getName();
+
 
         private final RealEstateDataRepository realEstateDataSource;
         private final UserDataRepository userDataSource;
@@ -30,12 +30,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(RealEstateViewModel.class)) {
             return (T) new RealEstateViewModel(realEstateDataSource, userDataSource, executor);
         }
-       /* if (modelClass.isAssignableFrom(UserViewModel.class)) {
-            return (T) new UserViewModel( userDataSource, executor);
-        }
-        if(modelClass.isAssignableFrom(SignUpViewModel.class)){
-            return (T)new SignUpViewModel(userDataSource,executor);
-        }*/
+
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 

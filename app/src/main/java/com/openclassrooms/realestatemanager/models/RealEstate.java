@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.models;
 
 import android.content.ContentValues;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -16,17 +15,15 @@ import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.openclassrooms.realestatemanager.utils.DataConverter;
+import com.openclassrooms.realestatemanager.BuildConfig;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import static androidx.room.ForeignKey.CASCADE;
-
-/*@Entity(foreignKeys = @ForeignKey(entity = User.class,
-        parentColumns = "id",
-        childColumns = "userId",onDelete = CASCADE,
-        onUpdate = CASCADE ),indices=@Index(value="userId"))*/
 
 @Entity(foreignKeys = {
         @ForeignKey(entity = User.class,
@@ -229,18 +226,6 @@ public class RealEstate {
         this.images = images;
     }
 
-  /*  public String getLocation() {
-        return this.address.format();
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-*/
-    public void addNearBy(View view){
-        Log.i(TAG, " view : " +view.getId());
-
-    }
 
     public boolean isInteger(String value){
 
@@ -255,18 +240,21 @@ public class RealEstate {
             }
         }
 
-        public boolean isPriceValide(){
 
-
-        return false;
-
+        public String dollarFormat(){
+        //return DataConverter.formatPriceToDollarFormat(getPrice());
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.CANADA);
+            int value=(int)getPrice();
+            return format.format(Utils.convertEuroToDollar(value));
         }
 
-        public String getFormattedPrice(){
-        return DataConverter.formatPriceToDollarFormat(getPrice());
+        public String euroFormat(){
+       // return DataConverter.formatPriceToEuroFormat(getPrice());
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+
+            int value=(int)getPrice();
+            return format.format(Utils.convertDollarToEuro(value));
         }
-
-
 
 
     public static RealEstate fromContentValues(ContentValues contentValues){
@@ -288,7 +276,7 @@ public class RealEstate {
         if(contentValues.containsKey("address"))realEstate.setAddress((Address)contentValues.get("address"));
         if(contentValues.containsKey("sold"))realEstate.setSold(contentValues.getAsBoolean("sold"));
 
-        if(contentValues.containsKey("nearbyPointOfInterest"))realEstate.setNearbyPointOfInterest((ArrayList<String>) contentValues.get("nearbyPointOfInterest"));
+        if(contentValues.containsKey("nearbyPointOfInterest"))realEstate.setNearbyPointOfInterest( (ArrayList<String>)contentValues.get("nearbyPointOfInterest"));
         return realEstate;
 
     }
@@ -298,20 +286,23 @@ public class RealEstate {
     @BindingAdapter("address")
     public static void loadMapFromUri(ImageView view, Address location){
         Log.i(TAG," the load image from uri method is call");
-      String uri="";
-     // String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
+
+      //String uri="";
+        if(location!=null){
+      String uri= Utils.apiUri+location.format()+Utils.apiKey+ BuildConfig.map_api_key;
         Log.d(TAG, uri);
         Glide.with(view.getContext())
                 .load(uri)
                 .apply(new RequestOptions())
                 .into(view);
+        }
     }
 
     public  String formatSnippet() {
 
         return "- Type: " + getType()
                 + "\n- Area: " + getAddress().getCity()
-                + "\n- Price: " + getFormattedPrice()
+                + "\n- Price: " + dollarFormat()
                 + "\n- Surface: " + getSurface() + " sq m"
                 + "\n- Nb of room: " + getNumberOfRooms()
                 + "\n- Nb of Bathroom: " + getNumberOfBathRooms()

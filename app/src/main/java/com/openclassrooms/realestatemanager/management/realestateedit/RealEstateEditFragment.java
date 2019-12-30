@@ -33,7 +33,6 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     private AddImageRecyclerViewAdapter mAddImageRecyclerViewAdapter;
 
 
-
     public RealEstateEditFragment() {
         // Required empty public constructor
 
@@ -42,7 +41,6 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
         setHasOptionsMenu(true);
     }
 
@@ -54,32 +52,6 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
 
 
 
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding.realEstateAddSaveButton.setText(getResources().getString(R.string.update));
-        binding.realEstateUpdateStatus.setVisibility(View.VISIBLE);
-        binding.realEstateUpdateStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(mRealEstateViewModel.realEstate!=null)
-                    if(checkedId==R.id.sold_radio_button){
-                        mRealEstateViewModel.realEstate.getValue().setSold(true);
-                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(new Date());
-                    }
-                    else if(checkedId==R.id.unsold_radio_button){
-                        mRealEstateViewModel.realEstate.getValue().setSold(false);
-                        mRealEstateViewModel.realEstate.getValue().setDateOfSale(null);
-                    }
-
-            }
-        });
-        mRealEstateViewModel.getSelectedRealEstate().observe(this,this::updateWithSelectedRealEstate);
-
-
-    }
-
-*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -112,15 +84,7 @@ public class RealEstateEditFragment extends RealEstateAddFragment  {
         updateNearbyCheckButton(realEstate);
         loadImageListAndUpdateUI(realEstate);
 
-       /* Log.d(TAG, " place near by "+mRealEstateViewModel.nearbyValues);
-       // mEstateImages
-          ArrayList<RealEstateImage>images = Utils.jsonStringToRealEstateImageList(realEstate.getImages());
 
-                for(RealEstateImage realEstateImage:images){
-                    Log.d(TAG," realEstateImage:-> "+realEstateImage.toString());
-
-                    this.updateImageList(realEstateImage);
-                }*/
 
     }
 

@@ -55,7 +55,6 @@ public class TaxationDialogFragment extends DialogFragment {
 
     private void configureViewModel() {
         if (this.getActivity() != null) {
-            // View   rootView =((RealEstateMainActivity) this.getActivity()).mRootView;
             mRealEstateViewModel = ((RealEstateMainActivity) this.getActivity()).mRealEstateViewModel;
             mFragmentTaxationDialogBinding.setRealEstateViewModel(mRealEstateViewModel);
 
@@ -84,5 +83,7 @@ public class TaxationDialogFragment extends DialogFragment {
 
 
     }
+
+
 
 }

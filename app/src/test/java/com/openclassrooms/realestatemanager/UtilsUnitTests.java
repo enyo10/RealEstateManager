@@ -4,8 +4,10 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 
 import org.junit.Test;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class UtilsUnitTests {
 
@@ -22,17 +24,25 @@ public class UtilsUnitTests {
         assertEquals(100,Utils.convertEuroToDollar(81));
     }
 
-    @Test
-    public void getTodayDate() {
-        assertEquals("2019/08/18",Utils.getTodayDate());
-    }
 
     @Test
-    public void getTodayDateFormat() {
-        assertEquals("18/08/2019",Utils.getTodayDateFormat());
+    public void getTodayDateFormatTest() {
+
+        Date date = new Date();
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        month=month+1;
+        int dateOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+        String format =dateOfMonth+"/"+month+"/"+year;
+
+
+
+        assertEquals(format,Utils.getTodayDateFormat());
     }
 
-    @Test
-    public void isInternetAvailable() {
-    }
+
 }

@@ -5,22 +5,16 @@
     <group android:id="@+id/primary">
 
         <item
-            android:id="@+id/action_estateListFragment_to_realEstateAddFragment"
+            android:id="@+id/realEstateAddFragment"
             android:title="@string/action_add"
             android:icon="@drawable/ic_add"
             />
-        <item
-            android:id="@+id/action_estateListFragment_to_realEstateEditFragment"
-            android:title="@string/action_edit"
-            android:icon="@drawable/ic_edit"
 
-            />
         <item
             android:id="@+id/map_navigation_button"
             android:title="@string/location_map"
            android:icon="@drawable/baseline_my_location_white_48"
             />
-
 
 
     </group>
